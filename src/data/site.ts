@@ -5,10 +5,9 @@ export const siteConfig = {
   name: 'Darina Usanova',
   role: 'Product Designer',
   email: 'darinushkaaaa@gmail.com',
-  bio: 'Currently Design Lead at Buzz.ai. I work across both product and brand, helping shape the visual identity and user experience. I make data-informed decisions and bring both strategic clarity and hands-on execution to the work. Big on functional design, clarity, and intentional choices.',
-  previous: 'Previously at DataForce Solutions and RZD.',
-  availability:
-    'I’m always open to connecting with thoughtful people and collaborating on ambitious projects.',
+  bio: 'I’m a Design Lead at Buzz.ai, where I help build AI features and tools for sales and marketing teams. Before that, I was the founding designer at DataForce Solutions and helped take the product from an early idea to its first clients.',
+  previous:
+    'I like joining the conversation early, when we’re figuring out what to build and why. That means talking things through with the team and asking lots of questions. When we start designing, I care just as much about the details that make the product easier to use.',
   links: {
     linkedin: 'https://www.linkedin.com/in/darina-usanova',
     telegram: 'https://t.me/darinushkaaa',

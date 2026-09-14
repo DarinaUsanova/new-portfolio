@@ -37,20 +37,22 @@ export function PortfolioLayout() {
 
   return (
     <main className="mx-auto mt-10 flex w-[calc(100%-40px)] max-w-[600px] flex-col gap-10 pb-5 sm:pb-10 min-[1346px]:mt-20">
-      <ProfileSection />
-      <div className="grid">
-        <AnimatePresence initial={false} mode="sync">
-          <motion.div
-            animate="visible"
-            className="[grid-area:1/1]"
-            exit="hidden"
-            initial="hidden"
-            key={location.pathname}
-            variants={contentVariants}
-          >
-            {outlet}
-          </motion.div>
-        </AnimatePresence>
+      <div className="flex flex-col gap-5">
+        <ProfileSection />
+        <div className="grid">
+          <AnimatePresence initial={false} mode="sync">
+            <motion.div
+              animate="visible"
+              className="[grid-area:1/1]"
+              exit="hidden"
+              initial="hidden"
+              key={location.pathname}
+              variants={contentVariants}
+            >
+              {outlet}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
       <PortfolioFooter />
     </main>

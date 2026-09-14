@@ -21,7 +21,7 @@ function tabClassName(isActive: boolean) {
 export function ProfileSection() {
   return (
     <section aria-labelledby="about-heading" className="bg-canvas">
-      <div className="flex flex-col gap-10 pb-2">
+      <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-5">
           <img
             alt="Darina Usanova"
@@ -42,7 +42,6 @@ export function ProfileSection() {
             <div className="flex max-w-[600px] flex-col gap-4 text-sm leading-5">
               <p>{siteConfig.bio}</p>
               <p>{siteConfig.previous}</p>
-              <p>{siteConfig.availability}</p>
 
               <div className="flex flex-wrap items-center gap-1.5 text-muted">
                 <a
