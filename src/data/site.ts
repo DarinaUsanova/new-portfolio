@@ -28,12 +28,13 @@ export const projects = [
     href: '/projects/campaign-builder-discovery',
   },
   {
-    title: 'Voice Messaging for Outreach',
+    title: 'Voice Notes for Outreach',
     description:
       'Designed a voice messaging feature for the Buzz.ai sales outreach platform. Users can send quick voice messages in conversations or add pre-recorded voice notes to campaigns.',
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',
     cover: voiceMessagingCover,
+    href: '/projects/voice-notes-for-outreach',
   },
 ] as const

@@ -45,8 +45,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
     'Status: MVP concept; development did not begin because product priorities changed',
   ],
   introduction: [
-    'Buzz.ai helps sales and marketing teams automate outreach. Its campaign builder is where they set up the steps of a campaign and decide what should happen next.',
-    'I led discovery and MVP design for one workflow that could support sales managers, marketing teams, and others responsible for automating outreach.',
+    'I led discovery and MVP design for Buzz.ai’s campaign builder, exploring one workflow for sales managers, marketing teams, and others responsible for automating outreach and sales.',
   ],
   heroFigure: {
     src: workflowBranching,
@@ -59,7 +58,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
     {
       title: 'Why the builder needed to change',
       paragraphs: [
-        'The product had two campaign modes. Simple Campaigns supported linear sequences. Smart Campaigns added conditions and branches in a canvas editor, where users arranged steps manually.',
+        'Buzz.ai helps sales and marketing teams automate outreach. Its campaign builder is where they set up the steps of a campaign and decide what should happen next.',
+        'The product had two campaign modes. Simple Campaigns let users arrange steps in a single sequence. Smart Campaigns added conditions and branches in a canvas editor, where users arranged steps manually.',
         'As campaigns grew, the canvas became harder to follow. Users had to make sense of long sequences and their branches while editing individual steps. New users also had to choose between Simple and Smart Campaigns before they understood which one they needed.',
         'One customer interview also highlighted a saving problem. A customer could rename a campaign and continue working, assuming the new name had been saved. The interface still required a separate confirmation.',
       ],
@@ -84,15 +84,15 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       title: 'Research and evidence',
       paragraphs: [
         'I spoke with three Buzz.ai customers about how they built campaigns and showed them early prototypes. Their feedback pointed to three needs: less visual clutter, campaign logic that was easier to follow, and a starting point that did not require choosing a campaign type upfront.',
-        'I also reviewed around 15–20 campaign editor suggestions in Canny, the product’s feedback board. These raised concerns about campaign structure, editing, and setup. Support tickets and internal feedback surfaced recurring concerns about how to tell whether a campaign was ready to launch.',
-        'Together, these sources suggested that refreshing the existing canvas would leave important parts of the problem unresolved.',
+        'I also reviewed around 15–20 campaign editor suggestions in Canny, the product’s feedback board. These raised concerns about campaign structure, editing, and setup. The same question came up repeatedly in support tickets and feedback from the team: how could users tell whether a campaign was ready to launch?',
+        'This feedback suggested that updating the canvas alone would not solve all of these problems.',
       ],
       figures: [
         {
           src: researchBoard,
           alt: 'Research board connecting customer feedback to workflow and editing decisions',
           caption:
-            'Customer feedback connected research evidence to decisions about workflow structure, starting a campaign, and editing.',
+            'Customer feedback connected research evidence to decisions about workflow structure, starting a campaign, and editing',
         },
       ],
     },
@@ -105,23 +105,23 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Long workflows needed a predictable reading order',
           icon: workflowOrderIcon,
           paragraphs: [
-            'The existing canvas made complex sequences difficult to scan as they grew. This led to a vertical workflow with predictable step placement.',
+            'The existing canvas made complex sequences difficult to scan as they grew. This led to a vertical workflow where each step had a clear place in the sequence.',
           ],
           figures: [],
         },
         {
-          title: 'Users needed guidance before choosing campaign complexity',
+          title: 'Users needed guidance before choosing a campaign type',
           icon: campaignGuidanceIcon,
           paragraphs: [
-            'The separate Simple and Smart Campaign entry points asked people to choose a mode before they understood the task. This led to one guided starting point with conditions and branches revealed when relevant.',
+            'Users had to choose between Simple and Smart Campaigns before they understood what building a campaign involved. I designed one starting flow that guided users and showed conditions and branches when they were relevant.',
           ],
           figures: [],
         },
         {
-          title: 'Editing needed visible save and recovery safeguards',
+          title: 'Users needed to see what was saved and be able to recover their work',
           icon: saveRecoveryIcon,
           paragraphs: [
-            'A customer interview exposed unclear save behaviour, and six of seven internal participants prioritised warnings and recovery. This made draft states, warnings, and recovery controls priorities for the MVP concept.',
+            'A customer interview showed that it was not always clear whether changes had been saved. Six of seven colleagues in the internal test also said warnings and ways to recover work were especially important. This made drafts, warnings, and the ability to recover work priorities for the MVP concept.',
           ],
           figures: [],
         },
@@ -131,7 +131,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       title: 'The decision: one vertical workflow',
       paragraphs: [
         'I considered improving the Smart Campaign canvas, but keeping it would still require users to arrange steps manually and choose between two campaign modes.',
-        'I proposed a single builder with a vertical workflow. Steps would have a predictable place in the sequence, and users could add conditions and branches as the campaign needed them. This traded free placement on the canvas for a consistent reading order. The design still needed to make branching paths clear; a vertical layout alone would not solve that.',
+        'I proposed a single builder with a vertical workflow. Steps would have a predictable place in the sequence, and users could add conditions and branches as the campaign needed them. The trade-off was less freedom to arrange steps, but a consistent order to read them in. The design still needed to make branching paths clear; a vertical layout alone would not solve that.',
       ],
       figures: [],
       subsections: [
@@ -168,7 +168,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Let people build a draft, then check it before launch',
           paragraphs: [
             'I designed the flow so users could work on an incomplete campaign. When they were ready to launch, a checklist showed what was missing and pointed to the step that needed attention.',
-            'Missing inputs and connection issues appeared alongside the workflow, so users could see where each problem occurred without leaving the campaign.',
+            'Missing information and connection issues appeared alongside the workflow, so users could see where each problem occurred without leaving the campaign.',
           ],
           figures: [
             {
@@ -181,7 +181,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
               src: workflowBranching,
               alt: 'Campaign builder workflow with readable branching paths and launch issues in context',
               caption:
-                'Branching paths and connection issues stay visible in the workflow while the campaign is prepared for launch.',
+                'Branching paths and connection issues stay visible in the workflow while the campaign is prepared for launch',
             },
           ],
         },
@@ -190,9 +190,9 @@ export const campaignBuilderCase: CampaignBuilderCase = {
     {
       title: 'What the internal test told me',
       paragraphs: [
-        'I created a concept test in Windy for seven colleagues from Sales, Customer Success, Support, and Product. It combined prototypes with multiple-choice and open-ended questions about the main campaign-building flows.',
-        'Six of the seven participants prioritised warnings about unsaved changes and the ability to undo a deletion or recover a step. Together with the saving problem raised in the customer interview, this made save status and recovery priorities for the MVP. I explored draft states, warnings, and recovery controls as part of the editing experience.',
-        'The test helped identify what the team considered most important. It did not establish whether customers could build or edit campaigns more easily; that still needed to be tested with campaign creators.',
+        'I created a concept test in Windy for seven colleagues from Sales, Customer Success, Support, and Product. It combined prototypes with multiple-choice and open-ended questions about the main tasks involved in building a campaign.',
+        'Six of the seven participants prioritised warnings about unsaved changes and the ability to undo a deletion or recover a step. Along with the saving problem raised in the customer interview, this helped set priorities for the MVP: showing whether changes were saved and letting users recover their work. I explored how drafts, warnings, and options to recover work could help users while editing.',
+        'The test helped identify what the team considered most important. It did not show whether customers could build or edit campaigns more easily; that still needed to be tested with campaign creators.',
       ],
       figures: [],
     },
@@ -200,8 +200,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       title: 'Where the project ended',
       paragraphs: [
         'Product priorities changed, and the project stopped before development.',
-        'I delivered a proposal for how one campaign builder could support both simple and branching campaigns, with MVP priorities and prototypes covering setup, step editing, and launch checks. This gave the team a concrete design to review beyond the original request to refresh Smart Campaign Builder.',
-        'The next step would have been to test the full flow with customers: could they build a campaign, follow its branches, change a step, and resolve an issue before launch? Those findings would guide the final MVP scope with engineering.',
+        'I delivered a proposal for how one campaign builder could support both simple and branching campaigns, with MVP priorities and prototypes covering setup, step editing, and launch checks. This gave the team a design to review that went beyond the original request to update Smart Campaign Builder.',
+        'The next step would have been to test the full flow with customers: could they build a campaign, follow its branches, change a step, and resolve an issue before launch? The results would help me and the engineering team decide what to include in the MVP.',
       ],
       figures: [],
     },
