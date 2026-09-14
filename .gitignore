@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editor and OS files
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+
+# Local AI/editor instructions and generated working files
+.claude/
+.codex/
+.cursor/
+.gemini/
+.opencode/
+.windsurf/
+outputs/
+tmp/
+work/
