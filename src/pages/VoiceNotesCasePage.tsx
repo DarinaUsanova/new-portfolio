@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import libraryIcon from '@/assets/voice-notes-case/icons/library.svg'
@@ -127,7 +127,7 @@ function CaseStudySubsection({
 }) {
   return (
     <div
-      className={insight ? 'flex w-full flex-col gap-2 rounded-xl p-1' : 'mt-8'}
+      className={insight ? 'flex w-full flex-col gap-2 rounded-xl' : 'mt-8'}
     >
       <div className={insight ? 'flex w-full items-center gap-2' : 'mx-auto max-w-[600px]'}>
         {insight && subsection.icon ? (
@@ -263,6 +263,10 @@ function CaseStudyAside() {
 }
 
 export function VoiceNotesCasePage() {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [])
+
   useEffect(() => {
     const previousTitle = document.title
     document.title =

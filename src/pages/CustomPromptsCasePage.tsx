@@ -1,25 +1,33 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import libraryIcon from '@/assets/custom-prompts-case/library.svg'
+import shieldIcon from '@/assets/custom-prompts-case/shield.svg'
+import slidersIcon from '@/assets/custom-prompts-case/sliders.svg'
+import workflowIcon from '@/assets/custom-prompts-case/workflow.svg'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
-import { campaignBuilderCase } from '@/data/campaignBuilderCase'
+import { customPromptsCase } from '@/data/customPromptsCase'
 
-type CaseStudyFigureProps = {
+type CaseStudyFigure = {
   alt: string
   caption: string
   priority?: boolean
   src: string
 }
 
+type CaseStudySubsection = {
+  title: string
+  paragraphs: readonly string[]
+  figures: readonly CaseStudyFigure[]
+  icon?: 'library' | 'shield' | 'sliders' | 'workflow'
+}
+
 const markerPhrases = [
-  'I led discovery and MVP design',
-  'sole product designer',
-  'users arranged steps manually',
-  'a single builder with a vertical workflow',
-  'workflow still visible',
-  'pointed to the step that needed attention',
-  'six of seven internal participants',
-  'MVP priorities and prototypes',
+  'I led the product design for Custom Prompts',
+  'customer feedback',
+  'internal validation',
+  'a centralized prompt library',
+  'substantially fewer complaints',
 ] as const
 
 const markerPhraseSet = new Set<string>(markerPhrases)
@@ -58,7 +66,7 @@ function renderMarkedText(text: string) {
 }
 
 function getSectionId(title: string) {
-  return title.toLowerCase().replace(/\s+/g, '-')
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
 function CaseStudyFigure({
@@ -66,29 +74,25 @@ function CaseStudyFigure({
   caption,
   priority = false,
   src,
-}: CaseStudyFigureProps) {
+}: CaseStudyFigure) {
   return (
     <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
       <img
         alt={alt}
-        className="aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
+        className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
         decoding="async"
         fetchPriority={priority ? 'high' : 'auto'}
         loading={priority ? 'eager' : 'lazy'}
         src={src}
       />
-      <figcaption className="px-2 text-center text-xs leading-5 text-muted">
+      <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
         {caption}
       </figcaption>
     </figure>
   )
 }
 
-function CaseStudyFigures({
-  figures,
-}: {
-  figures: readonly CaseStudyFigureProps[]
-}) {
+function CaseStudyFigures({ figures }: { figures: readonly CaseStudyFigure[] }) {
   if (figures.length === 0) return null
 
   return (
@@ -100,42 +104,42 @@ function CaseStudyFigures({
   )
 }
 
+const insightIcons: Record<NonNullable<CaseStudySubsection['icon']>, string> = {
+  library: libraryIcon,
+  shield: shieldIcon,
+  sliders: slidersIcon,
+  workflow: workflowIcon,
+}
+
+function InsightIcon({ icon }: { icon: NonNullable<CaseStudySubsection['icon']> }) {
+  const src = insightIcons[icon]
+
+  return <img alt="" aria-hidden="true" className="size-4" src={src} />
+}
+
 function CaseStudySubsection({
-  subsection,
+  first = false,
   insight = false,
+  subsection,
 }: {
-  subsection: {
-    title: string
-    paragraphs: readonly string[]
-    figures: readonly CaseStudyFigureProps[]
-    icon?: string
-  }
+  first?: boolean
   insight?: boolean
+  subsection: CaseStudySubsection
 }) {
   return (
     <div
       className={
         insight
-          ? 'flex w-full flex-col gap-2 rounded-xl'
-          : 'mt-8'
+          ? 'flex w-full flex-col gap-2'
+          : first
+            ? 'mt-0'
+            : 'mt-8'
       }
-      key={subsection.title}
     >
-      <div
-        className={
-          insight
-            ? 'flex w-full items-center gap-2'
-            : 'mx-auto max-w-[600px]'
-        }
-      >
+      <div className={insight ? 'flex w-full items-start gap-2' : 'mx-auto max-w-[600px]'}>
         {insight && subsection.icon ? (
           <div className="flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#f2f2f2]">
-            <img
-              alt=""
-              aria-hidden="true"
-              className="size-4"
-              src={subsection.icon}
-            />
+            <InsightIcon icon={subsection.icon} />
           </div>
         ) : null}
         <h3
@@ -165,7 +169,7 @@ function CaseStudySubsection({
 }
 
 function CaseStudyAside() {
-  const navigationItems = campaignBuilderCase.sections
+  const navigationItems = customPromptsCase.sections
   const [activeSection, setActiveSection] = useState(
     getSectionId(navigationItems[0].title),
   )
@@ -265,11 +269,15 @@ function CaseStudyAside() {
   )
 }
 
-export function CampaignBuilderCasePage() {
+export function CustomPromptsCasePage() {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [])
+
   useEffect(() => {
     const previousTitle = document.title
     document.title =
-      'Campaign Builder: One Workflow for Simple and Complex Campaigns — Darina Usanova'
+      'Custom Prompts: From Preset Tones to a Reusable AI Writing System — Darina Usanova'
 
     return () => {
       document.title = previousTitle
@@ -295,19 +303,20 @@ export function CampaignBuilderCasePage() {
                   viewBox="0 0 14 14"
                 >
                   <path
-                    d="M4.83752 12.0791C5.06533 12.307 5.43459 12.307 5.66239 12.0791C5.89015 11.8513 5.89018 11.4821 5.66239 11.2543L3.74149 9.33338H8.45829L8.64457 9.32882C9.07883 9.30742 9.50666 9.2113 9.90922 9.04456C10.3692 8.854 10.7876 8.57518 11.1397 8.22311C11.4918 7.87103 11.7706 7.45264 11.9611 6.99264C12.1517 6.53263 12.25 6.03962 12.25 5.54171C12.25 5.0438 12.1517 4.55079 11.9611 4.09078C11.7706 3.63076 11.4918 3.2124 11.1397 2.86031C10.7876 2.50823 10.3692 2.22941 9.90922 2.03886C9.44921 1.84832 8.9562 1.75005 8.45829 1.75004H6.41662C6.09447 1.75004 5.83331 2.01123 5.83329 2.33338C5.83329 2.65554 6.09446 2.91671 6.41662 2.91671H8.45829C8.80294 2.91672 9.14418 2.98479 9.4626 3.11666C9.78107 3.24832 10.0705 3.44197 10.3142 3.68575C10.558 3.9295 10.7514 4.21893 10.8833 4.5374C11.0152 4.85582 11.0833 5.19706 11.0833 5.54171C11.0833 5.88636 11.0152 6.2276 10.8833 6.54602C10.7511 6.86448 10.5579 7.15392 10.3142 7.39767C10.0705 7.64141 9.78106 7.83484 9.4626 7.96676C9.18389 8.08218 8.88768 8.14848 8.58703 8.16329L8.45829 8.16671H3.74149L5.66239 6.24581C5.89015 6.018 5.89018 5.64873 5.66239 5.42094C5.4346 5.19315 5.06533 5.19318 4.83752 5.42094L1.92085 8.33761C1.69305 8.56541 1.69305 8.93467 1.92085 9.16248L4.83752 12.0791Z"
+                    d="M4.83752 12.0791C5.06533 12.307 5.43459 12.307 5.66239 12.0791C5.89015 11.8513 5.89018 11.4821 5.66239 11.2543L3.74149 9.33338H8.45829L8.64457 9.32882C9.07883 9.30742 9.50666 9.2113 9.90922 9.04456C10.3692 8.85401 10.7876 8.57518 11.1397 8.22311C11.4918 7.87103 11.7706 7.45264 11.9611 6.99264C12.1517 6.53263 12.25 6.03962 12.25 5.54171C12.25 5.0438 12.1517 4.55079 11.9611 4.09078C11.7706 3.63076 11.4918 3.2124 11.1397 2.86031C10.7876 2.50823 10.3692 2.22941 9.90922 2.03886C9.44921 1.84832 8.9562 1.75005 8.45829 1.75004H6.41662C6.09447 1.75004 5.83331 2.01123 5.83329 2.33338C5.83329 2.65554 6.09446 2.91671 6.41662 2.91671H8.45829C8.80294 2.91672 9.14418 2.98479 9.4626 3.11666C9.78107 3.24858 10.0705 3.44201 10.3142 3.68575C10.558 3.9295 10.7514 4.21893 10.8833 4.5374C11.0152 4.85582 11.0833 5.19706 11.0833 5.54171C11.0833 5.88636 11.0152 6.2276 10.8833 6.54602C10.7517 6.86448 10.558 7.15392 10.3142 7.39767C10.0705 7.64141 9.78106 7.83484 9.4626 7.96676C9.18389 8.08218 8.88768 8.14848 8.58703 8.16329L8.45829 8.16671H3.74149L5.66239 6.24581C5.89015 6.018 5.89018 5.64873 5.66239 5.42094C5.4346 5.19315 5.06533 5.19318 4.83752 5.42094L1.92085 8.33761C1.69305 8.56541 1.69305 8.93467 1.92085 9.16248L4.83752 12.0791Z"
                     fill="currentColor"
                   />
                 </svg>
                 <span>Index</span>
               </Link>
             </div>
+
             <div className="flex flex-col gap-5">
               <h1 className="text-base font-medium" id="case-study-title">
-                {campaignBuilderCase.title}
+                {customPromptsCase.title}
               </h1>
               <div className="grid grid-cols-[auto_1fr] gap-x-8 gap-y-1 text-muted">
-                {campaignBuilderCase.metadata.map((item) => {
+                {customPromptsCase.metadata.map((item) => {
                   const separatorIndex = item.indexOf(':')
 
                   return (
@@ -321,18 +330,19 @@ export function CampaignBuilderCasePage() {
                 })}
               </div>
             </div>
+
             <div className="flex flex-col gap-2">
-              {campaignBuilderCase.introduction.map((paragraph) => (
+              {customPromptsCase.introduction.map((paragraph) => (
                 <p key={paragraph}>{renderMarkedText(paragraph)}</p>
               ))}
             </div>
           </header>
 
-          <section aria-label="Campaign overview" className="mt-10">
-            <CaseStudyFigure {...campaignBuilderCase.heroFigure} />
+          <section aria-label="Custom Prompts overview" className="mt-10">
+            <CaseStudyFigure {...customPromptsCase.heroFigure} />
           </section>
 
-          {campaignBuilderCase.sections.map((section) => (
+          {customPromptsCase.sections.map((section) => (
             <section
               className="mt-10 scroll-mt-20"
               id={getSectionId(section.title)}
@@ -354,11 +364,14 @@ export function CampaignBuilderCasePage() {
                   className={
                     section.title === 'Key insights'
                       ? 'mx-auto mt-2 flex max-w-[600px] flex-col items-start justify-center gap-5'
-                      : undefined
+                      : section.title === 'Solution'
+                        ? 'mt-2'
+                        : undefined
                   }
                 >
-                  {section.subsections.map((subsection) => (
+                  {section.subsections.map((subsection, index) => (
                     <CaseStudySubsection
+                      first={section.title === 'Solution' && index === 0}
                       insight={section.title === 'Key insights'}
                       key={subsection.title}
                       subsection={subsection}
@@ -369,6 +382,7 @@ export function CampaignBuilderCasePage() {
             </section>
           ))}
         </article>
+
         <div className="mx-auto mt-10 w-full max-w-[600px]">
           <PortfolioFooter />
         </div>

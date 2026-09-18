@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import { PortfolioLayout } from '@/components/PortfolioLayout'
 import { SiteLayout } from '@/components/SiteLayout'
 import { CampaignBuilderCasePage } from '@/pages/CampaignBuilderCasePage'
+import { CustomPromptsCasePage } from '@/pages/CustomPromptsCasePage'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { SandboxPage } from '@/pages/SandboxPage'
@@ -21,6 +22,10 @@ export default function App() {
           <Route
             path="projects/campaign-builder-discovery"
             element={<CampaignBuilderCasePage />}
+          />
+          <Route
+            path="projects/custom-prompts-ai-comments"
+            element={<CustomPromptsCasePage />}
           />
           <Route
             path="projects/voice-notes-for-outreach"

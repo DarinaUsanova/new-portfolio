@@ -44,6 +44,7 @@ npm run preview
 - `/` — portfolio home
 - `/sandbox` — isolated space for visual and interaction experiments
 - `/projects/campaign-builder-discovery` — Campaign Builder case study
+- `/projects/custom-prompts-ai-comments` — Custom Prompts case study
 - `/projects/voice-notes-for-outreach` — Voice Notes case study
 
 ## Source structure
