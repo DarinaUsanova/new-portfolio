@@ -1,5 +1,5 @@
 import campaignBuilderCover from '@/assets/campaign-builder-cover.png'
-import customPromptsCover from '@/assets/custom-prompts-case/post-ai-comment-step.png'
+import customPromptsCover from '@/assets/custom-prompts-cover.png'
 import voiceMessagingCover from '@/assets/voice-messaging-cover.png'
 
 export const siteConfig = {
@@ -17,16 +17,6 @@ export const siteConfig = {
 } as const
 
 export const projects = [
-  {
-    title: 'Custom Prompts: From Preset Tones to a Reusable AI Writing System',
-    description:
-      'I designed a reusable prompt system for Buzz.ai’s AI Comments, helping outreach teams control the style, language, and structure of generated LinkedIn comments.',
-    company: 'Buzz.ai',
-    role: 'Product Designer',
-    year: '2025',
-    cover: customPromptsCover,
-    href: '/projects/custom-prompts-ai-comments',
-  },
   {
     title: 'Campaign Builder: One Workflow for Simple and Complex Campaigns',
     description:
@@ -46,5 +36,15 @@ export const projects = [
     year: '2026',
     cover: voiceMessagingCover,
     href: '/projects/voice-notes-for-outreach',
+  },
+  {
+    title: 'Custom Prompts: From Preset Tones to a Reusable AI Writing System',
+    description:
+      'I designed a reusable prompt system for Buzz.ai’s AI Comments, helping outreach teams control the style, language, and structure of generated LinkedIn comments.',
+    company: 'Buzz.ai',
+    role: 'Product Designer',
+    year: '2025',
+    cover: customPromptsCover,
+    href: '/projects/custom-prompts-ai-comments',
   },
 ] as const
