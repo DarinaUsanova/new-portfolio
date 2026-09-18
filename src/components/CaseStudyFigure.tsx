@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom'
 export type CaseStudyFigureProps = {
   alt: string
   caption: string
+  lightboxSrc?: string
   priority?: boolean
   src: string
 }
@@ -12,6 +13,7 @@ function ImageLightbox({
   alt,
   caption,
   isClosing,
+  lightboxSrc,
   onClosed,
   onRequestClose,
   src,
@@ -87,7 +89,7 @@ function ImageLightbox({
         type="button"
       />
       <figure className="case-lightbox-figure">
-        <img alt={alt} className="case-lightbox-image" decoding="async" src={src} />
+        <img alt={alt} className="case-lightbox-image" decoding="async" src={lightboxSrc ?? src} />
         <figcaption className="case-lightbox-caption" id={captionId}>
           {caption}
         </figcaption>
@@ -100,6 +102,7 @@ function ImageLightbox({
 export function CaseStudyFigure({
   alt,
   caption,
+  lightboxSrc,
   priority = false,
   src,
 }: CaseStudyFigureProps) {
@@ -145,6 +148,7 @@ export function CaseStudyFigure({
           alt={alt}
           caption={caption}
           isClosing={isClosing}
+          lightboxSrc={lightboxSrc}
           onClosed={finishClose}
           onRequestClose={requestClose}
           src={src}
