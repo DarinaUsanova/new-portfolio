@@ -1,4 +1,4 @@
-import { useCallback, useId, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export type CaseStudyFigureProps = {
@@ -108,6 +108,7 @@ export function CaseStudyFigure({
 }: CaseStudyFigureProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const requestClose = useCallback(() => setIsClosing(true), [])
   const finishClose = useCallback(() => {
@@ -115,30 +116,55 @@ export function CaseStudyFigure({
     setIsClosing(false)
   }, [])
 
+  useLayoutEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 639px)')
+    const updateViewport = () => setIsMobileViewport(mediaQuery.matches)
+
+    updateViewport()
+    mediaQuery.addEventListener('change', updateViewport)
+
+    return () => mediaQuery.removeEventListener('change', updateViewport)
+  }, [])
+
+  useEffect(() => {
+    if (isMobileViewport && isOpen) {
+      setIsOpen(false)
+      setIsClosing(false)
+    }
+  }, [isMobileViewport, isOpen])
+
+  const image = (
+    <img
+      alt={alt}
+      className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
+      decoding="async"
+      fetchPriority={priority ? 'high' : 'auto'}
+      loading={priority ? 'eager' : 'lazy'}
+      src={src}
+    />
+  )
+
   return (
     <>
       <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
-        <button
-          aria-haspopup="dialog"
-          aria-label={`Enlarge image: ${alt}`}
-          className="block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-          onClick={() => {
-            triggerRef.current?.focus({ preventScroll: true })
-            setIsClosing(false)
-            setIsOpen(true)
-          }}
-          ref={triggerRef}
-          type="button"
-        >
-          <img
-            alt={alt}
-            className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
-            decoding="async"
-            fetchPriority={priority ? 'high' : 'auto'}
-            loading={priority ? 'eager' : 'lazy'}
-            src={src}
-          />
-        </button>
+        {isMobileViewport ? (
+          image
+        ) : (
+          <button
+            aria-haspopup="dialog"
+            aria-label={`Enlarge image: ${alt}`}
+            className="block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+            onClick={() => {
+              triggerRef.current?.focus({ preventScroll: true })
+              setIsClosing(false)
+              setIsOpen(true)
+            }}
+            ref={triggerRef}
+            type="button"
+          >
+            {image}
+          </button>
+        )}
         <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
           {caption}
         </figcaption>

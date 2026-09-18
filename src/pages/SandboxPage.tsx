@@ -1,5 +1,6 @@
 import flowImage from '@/assets/image-flow.png'
 import menuImage from '@/assets/image-menu.png'
+import promptBoxImage from '@/assets/prompt-box.png'
 
 export function SandboxPage() {
   return (
@@ -7,6 +8,16 @@ export function SandboxPage() {
       aria-label="Animated notification stack playground"
       className="flex flex-col items-center gap-10"
     >
+      <figure className="flex w-full max-w-[600px] flex-col gap-3">
+        <img
+          alt="Hero prompt box"
+          className="h-auto w-full"
+          src={promptBoxImage}
+        />
+        <figcaption className="text-center text-sm text-muted">
+          Hero prompt box
+        </figcaption>
+      </figure>
       <figure className="flex w-full max-w-[600px] flex-col gap-3">
         <div className="h-[400px] w-full overflow-hidden rounded-[12px] border border-surface bg-surface">
           <iframe
