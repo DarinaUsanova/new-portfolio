@@ -3,15 +3,9 @@ import { Link } from 'react-router-dom'
 
 import libraryIcon from '@/assets/voice-notes-case/icons/library.svg'
 import messageIcon from '@/assets/voice-notes-case/icons/message.svg'
+import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { voiceNotesCase } from '@/data/voiceNotesCase'
-
-type CaseStudyFigureProps = {
-  alt: string
-  caption: string
-  priority?: boolean
-  src: string
-}
 
 const markerPhrases = [
   'I led the design of Voice Notes',
@@ -71,29 +65,6 @@ function InsightIcon({ icon }: { icon: 'conversation' | 'library' }) {
       className="size-4"
       src={src}
     />
-  )
-}
-
-function CaseStudyFigure({
-  alt,
-  caption,
-  priority = false,
-  src,
-}: CaseStudyFigureProps) {
-  return (
-    <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
-      <img
-        alt={alt}
-        className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
-        decoding="async"
-        fetchPriority={priority ? 'high' : 'auto'}
-        loading={priority ? 'eager' : 'lazy'}
-        src={src}
-      />
-      <figcaption className="px-2 text-center text-xs leading-5 text-muted">
-        {caption}
-      </figcaption>
-    </figure>
   )
 }
 

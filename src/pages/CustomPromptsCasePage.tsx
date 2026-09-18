@@ -5,20 +5,14 @@ import libraryIcon from '@/assets/custom-prompts-case/library.svg'
 import shieldIcon from '@/assets/custom-prompts-case/shield.svg'
 import slidersIcon from '@/assets/custom-prompts-case/sliders.svg'
 import workflowIcon from '@/assets/custom-prompts-case/workflow.svg'
+import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { customPromptsCase } from '@/data/customPromptsCase'
-
-type CaseStudyFigure = {
-  alt: string
-  caption: string
-  priority?: boolean
-  src: string
-}
 
 type CaseStudySubsection = {
   title: string
   paragraphs: readonly string[]
-  figures: readonly CaseStudyFigure[]
+  figures: readonly CaseStudyFigureProps[]
   icon?: 'library' | 'shield' | 'sliders' | 'workflow'
 }
 
@@ -69,30 +63,7 @@ function getSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
-function CaseStudyFigure({
-  alt,
-  caption,
-  priority = false,
-  src,
-}: CaseStudyFigure) {
-  return (
-    <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
-      <img
-        alt={alt}
-        className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
-        decoding="async"
-        fetchPriority={priority ? 'high' : 'auto'}
-        loading={priority ? 'eager' : 'lazy'}
-        src={src}
-      />
-      <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
-        {caption}
-      </figcaption>
-    </figure>
-  )
-}
-
-function CaseStudyFigures({ figures }: { figures: readonly CaseStudyFigure[] }) {
+function CaseStudyFigures({ figures }: { figures: readonly CaseStudyFigureProps[] }) {
   if (figures.length === 0) return null
 
   return (
