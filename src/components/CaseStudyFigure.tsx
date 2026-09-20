@@ -463,7 +463,7 @@ export function CaseStudyFigure({
   const image = (
     <img
       alt={alt}
-      className="block aspect-[5/3] w-full max-w-[800px] rounded-xl object-cover"
+      className="block h-auto w-full max-w-[800px] rounded-xl object-contain"
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}
       loading={priority ? 'eager' : 'lazy'}

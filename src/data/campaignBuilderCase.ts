@@ -1,12 +1,12 @@
-import guidedStart from '@/assets/campaign-builder-case/guided-start.png'
+import guidedStart from '@/assets/campaign-builder-case/empty-state-choose-first-block.png'
 import campaignGuidanceIcon from '@/assets/campaign-builder-case/insights/campaign-guidance.svg'
-import launchChecklist from '@/assets/campaign-builder-case/launch-checklist.png'
-import legacyBuilder from '@/assets/campaign-builder-case/legacy-builder.png'
-import researchBoard from '@/assets/campaign-builder-case/research-board.png'
+import launchChecklist from '@/assets/campaign-builder-case/checklist-item-points.png'
+import legacyBuilder from '@/assets/campaign-builder-case/smart-campaign-case-v2.png'
+import researchBoard from '@/assets/campaign-builder-case/campaigns-research.png'
 import saveRecoveryIcon from '@/assets/campaign-builder-case/insights/save-recovery.svg'
-import sidePanelEditing from '@/assets/campaign-builder-case/side-panel-editing.png'
+import sidePanelEditing from '@/assets/campaign-builder-case/manual-task-configuration.png'
 import workflowOrderIcon from '@/assets/campaign-builder-case/insights/workflow-order.svg'
-import workflowBranching from '@/assets/campaign-builder-case/workflow-branching.png'
+import workflowBranching from '@/assets/campaign-builder-case/workflow-overview-with-visible-issues-and-checklist-guidance.png'
 
 type CaseStudyFigure = {
   src: string

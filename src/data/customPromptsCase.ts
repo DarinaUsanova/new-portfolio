@@ -1,17 +1,10 @@
 import newPrompt from '@/assets/custom-prompts-case/new-prompt.png'
-import newPromptLightbox from '@/assets/custom-prompts-case/lightbox/new-prompt.webp'
 import postAiCommentStep from '@/assets/custom-prompts-case/post-ai-comment-step.png'
-import postAiCommentStepLightbox from '@/assets/custom-prompts-case/lightbox/post-ai-comment-step.webp'
 import postAiCommentStepNewPrompt from '@/assets/custom-prompts-case/post-ai-comment-step-new-prompt.png'
-import postAiCommentStepNewPromptLightbox from '@/assets/custom-prompts-case/lightbox/post-ai-comment-step-new-prompt.webp'
 import postAiCommentStepSelectPrompts from '@/assets/custom-prompts-case/post-ai-comment-step-select-prompts.png'
-import postAiCommentStepSelectPromptsLightbox from '@/assets/custom-prompts-case/lightbox/post-ai-comment-step-select-prompts.webp'
 import postAiCommentStepValidation from '@/assets/custom-prompts-case/post-ai-comment-step-validation.png'
-import postAiCommentStepValidationLightbox from '@/assets/custom-prompts-case/lightbox/post-ai-comment-step-validation.webp'
 import promptsTable from '@/assets/custom-prompts-case/prompts-table.png'
-import promptsTableLightbox from '@/assets/custom-prompts-case/lightbox/prompts-table.webp'
 import promptsTableModal from '@/assets/custom-prompts-case/prompts-table-modal.png'
-import promptsTableModalLightbox from '@/assets/custom-prompts-case/lightbox/prompts-table-modal.webp'
 
 type CaseStudyFigure = {
   src: string
@@ -68,7 +61,7 @@ export const customPromptsCase: CustomPromptsCase = {
       newPrompt,
       'Buzz.ai New Prompt dialog with a filled prompt, dynamic placeholders, system prompt, and default setting',
       'Custom prompts give teams direct control over how AI-generated comments are written',
-      newPromptLightbox,
+      newPrompt,
     ),
     priority: true,
   },
@@ -160,7 +153,7 @@ export const customPromptsCase: CustomPromptsCase = {
               promptsTable,
               'Buzz.ai AI Comment Prompts library with saved prompts and management actions',
               'A shared library turns one-off AI instructions into reusable campaign assets.',
-              promptsTableLightbox,
+              promptsTable,
             ),
           ],
         },
@@ -176,7 +169,7 @@ export const customPromptsCase: CustomPromptsCase = {
               postAiCommentStepNewPrompt,
               'Buzz.ai Post AI Comment step with the New Prompt dialog open',
               'A new prompt can also be created directly from the campaign step.',
-              postAiCommentStepNewPromptLightbox,
+              postAiCommentStepNewPrompt,
             ),
           ],
         },
@@ -192,13 +185,13 @@ export const customPromptsCase: CustomPromptsCase = {
               postAiCommentStep,
               'Buzz.ai Post AI Comment step with multiple selected prompts and a tooltip explaining prompt rotation',
               'Multiple prompts can rotate during generation to make comments less repetitive.',
-              postAiCommentStepLightbox,
+              postAiCommentStep,
             ),
             figure(
               postAiCommentStepSelectPrompts,
               'Buzz.ai Select prompts dialog with searchable prompt cards and a New Prompt action',
               'The prompt library stays available where comment behaviour is configured.',
-              postAiCommentStepSelectPromptsLightbox,
+              postAiCommentStepSelectPrompts,
             ),
           ],
         },
@@ -213,13 +206,13 @@ export const customPromptsCase: CustomPromptsCase = {
               postAiCommentStepValidation,
               'Buzz.ai Post AI Comment step showing a validation message when no prompt is selected',
               'Validation keeps a campaign step from being saved without a prompt.',
-              postAiCommentStepValidationLightbox,
+              postAiCommentStepValidation,
             ),
             figure(
               promptsTableModal,
               'Buzz.ai delete prompt confirmation modal explaining where the prompt is currently used',
               'A warning explains the effect of deleting a prompt that is already used in campaigns.',
-              promptsTableModalLightbox,
+              promptsTableModal,
             ),
           ],
         },
