@@ -5,6 +5,7 @@ import { PortfolioLayout } from '@/components/PortfolioLayout'
 import { SiteLayout } from '@/components/SiteLayout'
 import { CampaignBuilderCasePage } from '@/pages/CampaignBuilderCasePage'
 import { CustomPromptsCasePage } from '@/pages/CustomPromptsCasePage'
+import { DataforceStudioCasePage } from '@/pages/DataforceStudioCasePage'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { SandboxPage } from '@/pages/SandboxPage'
@@ -26,6 +27,10 @@ export default function App() {
           <Route
             path="projects/custom-prompts-ai-comments"
             element={<CustomPromptsCasePage />}
+          />
+          <Route
+            path="projects/dataforce-studio"
+            element={<DataforceStudioCasePage />}
           />
           <Route
             path="projects/voice-notes-for-outreach"

@@ -27,7 +27,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const content = (
     <>
-      <div className="project-cover aspect-[5/3] w-full overflow-hidden rounded-xl bg-[#f1f1f1]">
+      <div className="project-cover h-[400px] w-full overflow-hidden rounded-xl bg-[#f1f1f1]">
         <img
           alt={`${title} project cover`}
           className="project-cover-image size-full object-cover"

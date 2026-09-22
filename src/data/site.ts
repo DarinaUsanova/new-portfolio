@@ -1,5 +1,6 @@
 import campaignBuilderCover from '@/assets/campaign-builder-cover.png'
 import customPromptsCover from '@/assets/custom-prompts-cover.png'
+import dataforceStudioCover from '@/assets/dataforce-studio-case/workflow.png'
 import voiceMessagingCover from '@/assets/voice-messaging-cover.png'
 
 export const siteConfig = {
@@ -46,5 +47,15 @@ export const projects = [
     year: '2025',
     cover: customPromptsCover,
     href: '/projects/custom-prompts-ai-comments',
+  },
+  {
+    title: 'DataForce Studio: One Workspace for Machine Learning Teams',
+    description:
+      'I helped take DataForce Studio from an early idea to a first release, bringing the main stages of machine-learning work into one workspace for enterprise teams.',
+    company: 'DataForce Solutions',
+    role: 'Founding Product Designer',
+    year: '2025',
+    cover: dataforceStudioCover,
+    href: '/projects/dataforce-studio',
   },
 ] as const
