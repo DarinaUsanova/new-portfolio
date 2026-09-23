@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { PortfolioLayout } from '@/components/PortfolioLayout'
 import { SiteLayout } from '@/components/SiteLayout'
+import { BuzzSelfServeActivationCasePage } from '@/pages/BuzzSelfServeActivationCasePage'
 import { CampaignBuilderCasePage } from '@/pages/CampaignBuilderCasePage'
 import { CustomPromptsCasePage } from '@/pages/CustomPromptsCasePage'
 import { DataforceStudioCasePage } from '@/pages/DataforceStudioCasePage'
@@ -23,6 +24,10 @@ export default function App() {
           <Route
             path="projects/campaign-builder-discovery"
             element={<CampaignBuilderCasePage />}
+          />
+          <Route
+            path="projects/buzz-self-serve-activation"
+            element={<BuzzSelfServeActivationCasePage />}
           />
           <Route
             path="projects/custom-prompts-ai-comments"

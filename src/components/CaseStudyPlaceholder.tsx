@@ -1,4 +1,4 @@
-type CaseStudyPlaceholderProps = {
+export type CaseStudyPlaceholderProps = {
   label: string
   caption: string
 }

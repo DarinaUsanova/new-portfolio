@@ -1,6 +1,8 @@
 import campaignBuilderCover from '@/assets/campaign-builder-cover.png'
 import customPromptsCover from '@/assets/custom-prompts-cover.png'
-import dataforceStudioCover from '@/assets/dataforce-studio-case/workflow.png'
+import dataforceStudioCover from '@/assets/dataforce-studio-cover.png'
+import buzzSelfServeActivationCover from '@/assets/buzz-self-serve-activation-cover.png'
+import buzzSelfServeActivationVideo from '@/assets/buzz-self-serve-activation.mp4'
 import voiceMessagingCover from '@/assets/voice-messaging-cover.png'
 
 export const siteConfig = {
@@ -18,6 +20,17 @@ export const siteConfig = {
 } as const
 
 export const projects = [
+  {
+    title: 'From Sales-Led Setup to Self-Serve Activation',
+    description:
+      'I designed Buzz’s signup and onboarding experience so potential customers could explore the product independently and paying customers could complete essential setup without relying on onboarding calls.',
+    company: 'Buzz.ai',
+    role: 'Product Designer',
+    year: '2026',
+    cover: buzzSelfServeActivationCover,
+    href: '/projects/buzz-self-serve-activation',
+    video: buzzSelfServeActivationVideo,
+  },
   {
     title: 'Campaign Builder: One Workflow for Simple and Complex Campaigns',
     description:
@@ -54,7 +67,7 @@ export const projects = [
       'I helped take DataForce Studio from an early idea to a first release, bringing the main stages of machine-learning work into one workspace for enterprise teams.',
     company: 'DataForce Solutions',
     role: 'Founding Product Designer',
-    year: '2025',
+    year: '2024–2025',
     cover: dataforceStudioCover,
     href: '/projects/dataforce-studio',
   },
