@@ -31,9 +31,27 @@ export function CaseStudySections({
           {/* Keep stage anchors and accessible names even when a group has no own content. */}
           {[section, ...(section.subsections ?? [])]
             .filter(hasCaseStudyContent)
-            .map((block) => (
-              <CaseStudyBlock block={block} key={block.title} renderText={renderText} />
-            ))}
+            .map((block) => {
+              const content = (
+                <CaseStudyBlock
+                  block={block}
+                  key={block.title}
+                  renderText={renderText}
+                />
+              )
+
+              if (block === section) return content
+
+              return (
+                <div
+                  className="scroll-mt-20"
+                  id={getSectionId(block.title)}
+                  key={block.title}
+                >
+                  {content}
+                </div>
+              )
+            })}
         </section>
       ))}
     </div>

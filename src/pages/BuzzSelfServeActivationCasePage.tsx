@@ -84,8 +84,29 @@ function getSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
+const navigationItems = [
+  { label: 'Overview', title: 'Overview' },
+  {
+    label: 'Signup & access',
+    title: 'Self-serve signup and account access',
+  },
+  {
+    label: 'Qualification',
+    title: 'Collect qualification information in stages',
+  },
+  { label: 'Post-purchase onboarding', title: 'Post-purchase onboarding' },
+  {
+    label: 'Onboarding checklist',
+    title: 'Turn onboarding calls into a flexible checklist',
+  },
+  {
+    label: 'First action & rewards',
+    title: 'Guide the first action and reward completion',
+  },
+  { label: 'Outcome & learnings', title: 'Outcome and learnings' },
+] as const
+
 function CaseStudyAside() {
-  const navigationItems = buzzSelfServeActivationCase.sections
   const [activeSection, setActiveSection] = useState(
     getSectionId(navigationItems[0].title),
   )
@@ -176,7 +197,7 @@ function CaseStudyAside() {
               key={item.title}
               onClick={() => setActiveSection(sectionId)}
             >
-              {item.navigationLabel}
+              {item.label}
             </a>
           )
         })}
