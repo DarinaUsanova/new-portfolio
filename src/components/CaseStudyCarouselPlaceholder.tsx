@@ -136,7 +136,7 @@ export function CaseStudyCarouselPlaceholder({
     ? { duration: 0 }
     : { type: 'spring' as const, duration: 0.5, bounce: 0 }
   const captionTransition = shouldReduceMotion
-    ? { duration: 0.14, ease: 'easeOut' as const }
+    ? { duration: 0 }
     : { duration: 0.18, ease: [0.23, 1, 0.32, 1] as const }
   const captionVariants = {
     enter: {

@@ -362,13 +362,13 @@ a {
   *::after {
     scroll-behavior: auto !important;
     animation: none !important;
+    transition: none !important;
   }
 
   .case-lightbox-backdrop {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     opacity: 0;
-    transition: opacity 140ms ease-out !important;
   }
 
   .case-lightbox--backdrop-visible .case-lightbox-backdrop,
@@ -378,13 +378,11 @@ a {
 
   .case-lightbox--closing .case-lightbox-backdrop {
     opacity: 0;
-    transition-duration: 140ms !important;
   }
 
   .case-lightbox-stage {
     opacity: 0;
     transform: none;
-    transition: opacity 140ms ease-out !important;
   }
 
   .case-lightbox--open .case-lightbox-stage,
@@ -398,18 +396,14 @@ a {
 
   .case-lightbox--closing .case-lightbox-stage {
     opacity: 0;
-    transition-duration: 140ms !important;
   }
 
   .case-lightbox-caption {
-    transition:
-      opacity 140ms ease-out,
-      filter 140ms ease-out,
-      transform 140ms ease-out !important;
+    filter: none;
   }
 
   .case-lightbox--closing .case-lightbox-caption {
-    transition-duration: 140ms !important;
+    opacity: 0;
   }
 
   .project-cover-image,

@@ -1,3 +1,4 @@
+import { useReducedMotion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -28,6 +29,20 @@ function LoopingVideo({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const replayTimeoutRef = useRef<number | undefined>(undefined)
+  const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !shouldReduceMotion) return
+
+    if (replayTimeoutRef.current !== undefined) {
+      window.clearTimeout(replayTimeoutRef.current)
+      replayTimeoutRef.current = undefined
+    }
+
+    video.pause()
+    video.currentTime = 0
+  }, [shouldReduceMotion])
 
   useEffect(() => {
     return () => {
@@ -38,6 +53,8 @@ function LoopingVideo({
   }, [])
 
   const handleEnded = () => {
+    if (shouldReduceMotion) return
+
     replayTimeoutRef.current = window.setTimeout(() => {
       const video = videoRef.current
       if (!video) return
@@ -50,7 +67,7 @@ function LoopingVideo({
   return (
     <video
       aria-label={label}
-      autoPlay
+      autoPlay={!shouldReduceMotion}
       className="project-cover-video block h-auto w-full max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
       onEnded={handleEnded}
       muted

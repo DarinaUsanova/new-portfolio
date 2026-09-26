@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useReducedMotion } from 'motion/react'
+import { useEffect, useRef } from 'react'
 
 import { CaseStudyFigure } from '@/components/CaseStudyFigure'
 
@@ -16,10 +17,19 @@ export function CaseStudyPlaceholder({
   video,
 }: CaseStudyPlaceholderProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !shouldReduceMotion) return
+
+    video.pause()
+    video.currentTime = 0
+  }, [shouldReduceMotion])
 
   const handleEnded = () => {
     const currentVideo = videoRef.current
-    if (!currentVideo) return
+    if (!currentVideo || shouldReduceMotion) return
 
     currentVideo.currentTime = 0
     void currentVideo.play().catch(() => undefined)
@@ -49,7 +59,7 @@ export function CaseStudyPlaceholder({
         >
           <video
             aria-label={label}
-            autoPlay
+            autoPlay={!shouldReduceMotion}
             className="block h-auto w-full max-w-[800px] rounded-[12px] object-contain"
             muted
             onEnded={handleEnded}

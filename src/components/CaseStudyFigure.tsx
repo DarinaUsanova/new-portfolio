@@ -280,10 +280,8 @@ function ImageLightbox({
     if (!isClosing) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const closeTimer = window.setTimeout(
-      notifyClosed,
-      isPrepared ? (prefersReducedMotion ? 180 : 460) : 220,
-    )
+    const closeDelay = prefersReducedMotion ? 0 : isPrepared ? 460 : 220
+    const closeTimer = window.setTimeout(notifyClosed, closeDelay)
 
     return () => window.clearTimeout(closeTimer)
   }, [isClosing, isPrepared, notifyClosed])
