@@ -1,6 +1,8 @@
 import { useReducedMotion } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+
+import { useViewportVideo } from '@/hooks/useViewportVideo'
 
 type ProjectCardProps = {
   title: string
@@ -21,59 +23,32 @@ function Dot() {
 function LoopingVideo({
   label,
   poster,
+  priority,
   src,
 }: {
   label: string
   poster: string
+  priority: boolean
   src: string
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const replayTimeoutRef = useRef<number | undefined>(undefined)
   const shouldReduceMotion = useReducedMotion()
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video || !shouldReduceMotion) return
-
-    if (replayTimeoutRef.current !== undefined) {
-      window.clearTimeout(replayTimeoutRef.current)
-      replayTimeoutRef.current = undefined
-    }
-
-    video.pause()
-    video.currentTime = 0
-  }, [shouldReduceMotion])
-
-  useEffect(() => {
-    return () => {
-      if (replayTimeoutRef.current !== undefined) {
-        window.clearTimeout(replayTimeoutRef.current)
-      }
-    }
-  }, [])
-
-  const handleEnded = () => {
-    if (shouldReduceMotion) return
-
-    replayTimeoutRef.current = window.setTimeout(() => {
-      const video = videoRef.current
-      if (!video) return
-
-      video.currentTime = 0
-      void video.play().catch(() => undefined)
-    }, 1000)
-  }
+  useViewportVideo({
+    replayDelay: 1000,
+    shouldReduceMotion,
+    videoRef,
+  })
 
   return (
     <video
       aria-label={label}
-      autoPlay={!shouldReduceMotion}
       className="project-cover-video block h-auto w-full max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
       height={1080}
-      onEnded={handleEnded}
       muted
       playsInline
       poster={poster}
+      preload={priority ? 'metadata' : 'none'}
       ref={videoRef}
       src={src}
       width={1796}
@@ -104,6 +79,7 @@ export function ProjectCard({
           <LoopingVideo
             label={`${title} project cover animation`}
             poster={cover}
+            priority={priority}
             src={video}
           />
         ) : (

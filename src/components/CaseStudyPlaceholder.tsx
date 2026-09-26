@@ -1,13 +1,15 @@
 import { useReducedMotion } from 'motion/react'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 import { CaseStudyFigure } from '@/components/CaseStudyFigure'
+import { useViewportVideo } from '@/hooks/useViewportVideo'
 
 export type CaseStudyPlaceholderProps = {
   label: string
   caption: string
   height?: number
   image?: string
+  priority?: boolean
   video?: string
   width?: number
 }
@@ -16,6 +18,7 @@ export function CaseStudyPlaceholder({
   caption,
   image,
   label,
+  priority = false,
   video,
   width = 2400,
   height = 1590,
@@ -23,21 +26,10 @@ export function CaseStudyPlaceholder({
   const videoRef = useRef<HTMLVideoElement>(null)
   const shouldReduceMotion = useReducedMotion()
 
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video || !shouldReduceMotion) return
-
-    video.pause()
-    video.currentTime = 0
-  }, [shouldReduceMotion])
-
-  const handleEnded = () => {
-    const currentVideo = videoRef.current
-    if (!currentVideo || shouldReduceMotion) return
-
-    currentVideo.currentTime = 0
-    void currentVideo.play().catch(() => undefined)
-  }
+  useViewportVideo({
+    shouldReduceMotion,
+    videoRef,
+  })
 
   if (image && !video) {
     return (
@@ -45,6 +37,7 @@ export function CaseStudyPlaceholder({
         alt={label}
         caption={caption}
         height={height}
+        priority={priority}
         src={image}
         width={width}
       />
@@ -67,13 +60,12 @@ export function CaseStudyPlaceholder({
         >
           <video
             aria-label={label}
-            autoPlay={!shouldReduceMotion}
             className="block size-full max-w-[800px] rounded-[12px] object-contain"
             height={height}
             muted
-            onEnded={handleEnded}
             playsInline
             poster={image}
+            preload="none"
             ref={videoRef}
             src={video}
             width={width}
@@ -84,7 +76,9 @@ export function CaseStudyPlaceholder({
           alt={label}
           className="block h-auto w-full rounded-xl object-contain"
           decoding="async"
+          fetchPriority={priority ? 'high' : 'auto'}
           height={height}
+          loading={priority ? 'eager' : 'lazy'}
           src={image}
           width={width}
         />

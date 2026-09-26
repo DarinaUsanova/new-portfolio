@@ -20,8 +20,8 @@ const markerDefinitions = [
     context: 'I chose a flexible checklist',
   },
   {
-    phrase: 'implementation complexity',
-    context: 'because of implementation complexity',
+    phrase: 'research through implementation',
+    context: 'I led the design from research through implementation',
   },
   {
     phrase: 'Both launched',

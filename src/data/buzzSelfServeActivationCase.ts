@@ -15,6 +15,7 @@ export type CaseStudyPlaceholder = {
   caption: string
   height?: number
   image?: string
+  priority?: boolean
   video?: string
   width?: number
 }
@@ -64,6 +65,7 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
     label: 'Buzz signup screen with Google, Microsoft, and email options',
     caption: 'Self-serve signup gives potential customers a direct way into Buzz.',
     image: signupScreen,
+    priority: true,
   },
   sections: [
     {
@@ -235,13 +237,6 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
               width: 1728,
             },
           ],
-        },
-        {
-          title: 'Keep the first release focused',
-          paragraphs: [
-            'An earlier concept used AskBuzz to collect the initial customer details through a conversation. We deferred this AI-led questionnaire because of implementation complexity and launched a structured questionnaire. The first-conversation task in AskBuzz remained part of the onboarding checklist.',
-          ],
-          figures: [],
         },
       ],
     },
