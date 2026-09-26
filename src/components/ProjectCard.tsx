@@ -69,12 +69,14 @@ function LoopingVideo({
       aria-label={label}
       autoPlay={!shouldReduceMotion}
       className="project-cover-video block h-auto w-full max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
+      height={1080}
       onEnded={handleEnded}
       muted
       playsInline
       poster={poster}
       ref={videoRef}
       src={src}
+      width={1796}
     />
   )
 }
@@ -110,8 +112,10 @@ export function ProjectCard({
             className="project-cover-image size-full object-cover"
             decoding="async"
             fetchPriority={priority ? 'high' : 'auto'}
+            height={1200}
             loading={priority ? 'eager' : 'lazy'}
             src={cover}
+            width={1800}
           />
         )}
       </div>

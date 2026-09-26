@@ -6,8 +6,10 @@ import { CaseStudyFigure } from '@/components/CaseStudyFigure'
 export type CaseStudyPlaceholderProps = {
   label: string
   caption: string
+  height?: number
   image?: string
   video?: string
+  width?: number
 }
 
 export function CaseStudyPlaceholder({
@@ -15,6 +17,8 @@ export function CaseStudyPlaceholder({
   image,
   label,
   video,
+  width = 2400,
+  height = 1590,
 }: CaseStudyPlaceholderProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const shouldReduceMotion = useReducedMotion()
@@ -36,7 +40,15 @@ export function CaseStudyPlaceholder({
   }
 
   if (image && !video) {
-    return <CaseStudyFigure alt={label} caption={caption} src={image} />
+    return (
+      <CaseStudyFigure
+        alt={label}
+        caption={caption}
+        height={height}
+        src={image}
+        width={width}
+      />
+    )
   }
 
   return (
@@ -48,25 +60,23 @@ export function CaseStudyPlaceholder({
               ? 'case-placeholder bg-cover bg-center'
               : 'flex w-full items-center justify-center overflow-hidden rounded-[12px]'
           }
-          style={
-            image
-              ? {
-                  aspectRatio: '2400 / 1590',
-                  backgroundImage: `url(${image})`,
-                }
-              : undefined
-          }
+          style={{
+            aspectRatio: `${width} / ${height}`,
+            ...(image ? { backgroundImage: `url(${image})` } : {}),
+          }}
         >
           <video
             aria-label={label}
             autoPlay={!shouldReduceMotion}
-            className="block h-auto w-full max-w-[800px] rounded-[12px] object-contain"
+            className="block size-full max-w-[800px] rounded-[12px] object-contain"
+            height={height}
             muted
             onEnded={handleEnded}
             playsInline
             poster={image}
             ref={videoRef}
             src={video}
+            width={width}
           />
         </div>
       ) : image ? (
@@ -74,7 +84,9 @@ export function CaseStudyPlaceholder({
           alt={label}
           className="block h-auto w-full rounded-xl object-contain"
           decoding="async"
+          height={height}
           src={image}
+          width={width}
         />
       ) : (
         <div

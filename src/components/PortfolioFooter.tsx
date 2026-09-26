@@ -27,7 +27,9 @@ export function PortfolioFooter() {
       <div className="flex items-center gap-1.5">
         <span>Currently in Belgrade</span>
         <span aria-hidden="true" className="size-0.5 rounded-full bg-muted" />
-        <time dateTime={currentTime.toISOString()}>{belgradeTime}</time>
+        <time className="tabular-nums" dateTime={currentTime.toISOString()}>
+          {belgradeTime}
+        </time>
       </div>
       <span>Last updated Sep 2026</span>
     </div>

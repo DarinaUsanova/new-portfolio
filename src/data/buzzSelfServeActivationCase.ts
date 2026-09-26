@@ -13,8 +13,10 @@ import emailVerification from '@/assets/buzz-self-serve-activation-email-verific
 export type CaseStudyPlaceholder = {
   label: string
   caption: string
+  height?: number
   image?: string
   video?: string
+  width?: number
 }
 
 type CaseStudySubsection = {
@@ -103,6 +105,8 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
               label: 'Competitive research board comparing signup flows',
               caption: 'Signup flows reviewed to inform account creation and qualification in Buzz.',
               image: signupResearch,
+              height: 1560,
+              width: 2400,
             },
           ],
         },
@@ -139,21 +143,29 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
               label: 'Personal details, step 1 of 4',
               caption: 'Personal details come first, with progress showing the four-step questionnaire.',
               image: stepOneOnboarding,
+              height: 1518,
+              width: 2400,
             },
             {
               label: 'Workspace details with an option to join an existing workspace, step 2 of 4',
               caption: 'The workspace step separates new workspaces from the shorter path for invited users.',
               image: stepTwoOnboarding,
+              height: 1518,
+              width: 2400,
             },
             {
               label: 'Company name and team size, step 3 of 4',
               caption: 'Company name and team size give Sales context for qualifying the new workspace.',
               image: stepThreeOnboarding,
+              height: 1518,
+              width: 2400,
             },
             {
               label: 'Discovery source and current tools, step 4 of 4',
               caption: 'The final questions capture how users found Buzz and which tools they already use.',
               image: stepFourOnboarding,
+              height: 1518,
+              width: 2400,
             },
           ],
         },
@@ -198,6 +210,8 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
               label: 'Getting started checklist interaction',
               caption: 'Customers can collapse the onboarding checklist and continue exploring Buzz, then return to setup later.',
               video: onboardingVideo,
+              height: 1080,
+              width: 1728,
             },
           ],
         },
@@ -217,6 +231,8 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
               label: 'Buzz setup checklist with every onboarding task completed',
               caption: 'When all onboarding tasks are complete, the checklist confirms the finished setup and earned credits.',
               video: onboardingCompleteVideo,
+              height: 1080,
+              width: 1728,
             },
           ],
         },

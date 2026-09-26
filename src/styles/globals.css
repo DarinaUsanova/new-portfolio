@@ -10,6 +10,10 @@
 }
 
 :root {
+  --z-dropdown: 100;
+  --z-modal: 200;
+  --z-tooltip: 300;
+  --z-toast: 400;
   font-family: var(--font-sans);
   color: var(--color-ink);
   background: var(--color-canvas);
@@ -33,9 +37,36 @@ body {
   margin: 0;
 }
 
+h1,
+h2 {
+  text-wrap: balance;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+
+.portfolio-hit-area,
+.portfolio-hit-area--standalone {
+  position: relative;
+}
+
+.portfolio-hit-area::before,
+.portfolio-hit-area--standalone::before,
+.carousel-control-hit-area::before {
+  position: absolute;
+  background: transparent;
+  content: '';
+}
+
+.portfolio-hit-area::before {
+  inset: -6px -2px;
+}
+
+.portfolio-hit-area--standalone::before,
+.carousel-control-hit-area::before {
+  inset: -6px;
 }
 
 ::selection {
@@ -176,8 +207,9 @@ a {
 
 .case-lightbox {
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-modal);
   inset: 0;
+  isolation: isolate;
   width: 100%;
   max-width: none;
   height: 100dvh;

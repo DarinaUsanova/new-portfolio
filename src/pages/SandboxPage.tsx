@@ -12,7 +12,9 @@ export function SandboxPage() {
         <img
           alt="Hero prompt box"
           className="h-auto w-full"
+          height={800}
           src={promptBoxImage}
+          width={1200}
         />
         <figcaption className="text-center text-sm text-muted">
           Hero prompt box
@@ -36,7 +38,9 @@ export function SandboxPage() {
         <img
           alt="Playground menu"
           className="h-auto w-full"
+          height={1008}
           src={menuImage}
+          width={1200}
         />
         <figcaption className="text-center text-sm text-muted">
           Action menu
@@ -46,7 +50,9 @@ export function SandboxPage() {
         <img
           alt="Workflow flow"
           className="h-auto w-full"
+          height={1080}
           src={flowImage}
+          width={1200}
         />
         <figcaption className="text-center text-sm text-muted">
           Workflow automation

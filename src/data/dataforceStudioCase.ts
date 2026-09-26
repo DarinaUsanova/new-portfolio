@@ -7,7 +7,9 @@ type CaseStudyFigure = {
   src: string
   alt: string
   caption: string
+  height?: number
   priority?: boolean
+  width?: number
 }
 
 type CaseStudySection = {
@@ -39,7 +41,9 @@ export const dataforceStudioCase: DataforceStudioCase = {
     src: workflowImage,
     alt: 'DataForce Studio workflow showing connected input, gate, processor, and output nodes',
     caption: 'Prompt Optimization workflow',
+    height: 1548,
     priority: true,
+    width: 2400,
   },
   sections: [
     {
@@ -105,6 +109,8 @@ export const dataforceStudioCase: DataforceStudioCase = {
           alt: 'DataForce Studio prompt optimization workspace with task settings, model comparison, workflow progress, and charts',
           caption:
             'Prompt settings, model comparisons, workflow progress, and charts used across the product.',
+          height: 2261,
+          width: 2400,
         },
         {
           src: tracesImage,

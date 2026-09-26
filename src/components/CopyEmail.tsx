@@ -26,7 +26,7 @@ export function CopyEmail() {
   return (
     <button
       aria-label={copied ? 'Email copied' : `Copy ${siteConfig.email}`}
-      className="inline-flex cursor-pointer items-center gap-1 text-muted transition-colors duration-150 [transition-timing-function:ease] enabled:hover:text-ink disabled:cursor-default disabled:text-muted focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+      className="portfolio-hit-area inline-flex cursor-pointer items-center gap-1 text-muted transition-colors duration-150 [transition-timing-function:ease] enabled:hover:text-ink disabled:cursor-default disabled:text-muted focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
       disabled={copied}
       onClick={copyEmail}
       type="button"

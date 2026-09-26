@@ -45,7 +45,7 @@ export function ProfileSection() {
 
               <div className="flex flex-wrap items-center gap-1.5 text-muted">
                 <a
-                  className="cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  className="portfolio-hit-area inline-flex items-center cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   href={siteConfig.links.linkedin}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -54,7 +54,7 @@ export function ProfileSection() {
                 </a>
                 <Divider />
                 <a
-                  className="cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  className="portfolio-hit-area inline-flex items-center cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   href={siteConfig.links.telegram}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -63,7 +63,7 @@ export function ProfileSection() {
                 </a>
                 <Divider />
                 <a
-                  className="cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  className="portfolio-hit-area inline-flex items-center cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   href={siteConfig.links.resume}
                   rel="noopener noreferrer"
                   target="_blank"

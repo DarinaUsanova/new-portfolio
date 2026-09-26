@@ -2,16 +2,21 @@ import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from
 import type { CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 
+const DEFAULT_MEDIA_WIDTH = 2400
+const DEFAULT_MEDIA_HEIGHT = 1590
+
 export type CaseStudyFigureProps = {
   alt: string
   caption: string
   figureClassName?: string
+  height?: number
   imageClassName?: string
   lightboxSrc?: string
   priority?: boolean
   src: string
   showCaption?: boolean
   triggerClassName?: string
+  width?: number
 }
 
 type ImageRect = {
@@ -128,6 +133,8 @@ function ImageLightbox({
   onRequestClose,
   source,
   src,
+  width,
+  height,
 }: CaseStudyFigureProps & {
   isClosing: boolean
   onClosed: () => void
@@ -362,8 +369,10 @@ function ImageLightbox({
             alt={alt}
             className="case-lightbox-image"
             decoding="async"
+            height={height}
             ref={viewerImageRef}
             src={lightboxSrc ?? src}
+            width={width}
           />
         </div>
       </div>
@@ -390,6 +399,8 @@ export function CaseStudyFigure({
   src,
   showCaption = true,
   triggerClassName,
+  width = DEFAULT_MEDIA_WIDTH,
+  height = DEFAULT_MEDIA_HEIGHT,
 }: CaseStudyFigureProps) {
   const [isMounted, setIsMounted] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
@@ -469,14 +480,18 @@ export function CaseStudyFigure({
   const image = (
     <img
       alt={alt}
-      className={`block h-auto w-full max-w-[800px] rounded-xl object-contain${imageClassName ? ` ${imageClassName}` : ''}`}
+      className={`block size-full max-w-[800px] rounded-xl object-contain${imageClassName ? ` ${imageClassName}` : ''}`}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}
+      height={height}
       loading={priority ? 'eager' : 'lazy'}
       ref={sourceImageRef}
       src={src}
+      width={width}
     />
   )
+
+  const mediaStyle = { aspectRatio: `${width} / ${height}` }
 
   return (
     <>
@@ -486,7 +501,9 @@ export function CaseStudyFigure({
         }
       >
         {isMobileViewport ? (
-          image
+          <div className="w-full" style={mediaStyle}>
+            {image}
+          </div>
         ) : (
           <button
             aria-haspopup="dialog"
@@ -495,7 +512,11 @@ export function CaseStudyFigure({
             className={`case-lightbox-trigger block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink${triggerClassName ? ` ${triggerClassName}` : ''}${isSourceHidden ? ' case-lightbox-trigger--hidden' : ''}`}
             onClick={handleOpen}
             ref={triggerRef}
-            style={sourceSnapshot ? { height: `${sourceSnapshot.containerHeight}px` } : undefined}
+            style={
+              sourceSnapshot
+                ? { ...mediaStyle, height: `${sourceSnapshot.containerHeight}px` }
+                : mediaStyle
+            }
             type="button"
           >
             {image}
@@ -518,6 +539,8 @@ export function CaseStudyFigure({
           onVisualReady={hideSource}
           source={sourceSnapshot}
           src={src}
+          width={width}
+          height={height}
         />
       )}
     </>

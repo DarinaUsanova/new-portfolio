@@ -12,7 +12,9 @@ type CaseStudyFigure = {
   src: string
   alt: string
   caption: string
+  height?: number
   priority?: boolean
+  width?: number
 }
 
 type CaseStudySubsection = {
@@ -52,7 +54,9 @@ export const campaignBuilderCase: CampaignBuilderCase = {
     alt: 'Proposed campaign builder with a branching workflow and launch checklist open',
     caption:
       'The proposed builder keeps every campaign in one vertical sequence, with branches and launch issues visible in context',
+    height: 1500,
     priority: true,
+    width: 2400,
   },
   sections: [
     {
@@ -69,6 +73,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           alt: 'Legacy Smart Campaign Builder with a manually arranged branching workflow',
           caption:
             'In the old editor, users had to arrange the canvas as well as build the campaign.',
+          height: 1560,
+          width: 2400,
         },
       ],
     },
@@ -93,6 +99,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           alt: 'Research board connecting customer feedback to workflow and editing decisions',
           caption:
             'Customer feedback connected research evidence to decisions about workflow structure, starting a campaign, and editing',
+          height: 1560,
+          width: 2400,
         },
       ],
     },
@@ -182,6 +190,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
               alt: 'Campaign builder workflow with readable branching paths and launch issues in context',
               caption:
                 'The workflow keeps branch paths and connection issues visible while users prepare the campaign for launch',
+              height: 1500,
+              width: 2400,
             },
           ],
         },

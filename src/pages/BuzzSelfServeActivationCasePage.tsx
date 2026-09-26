@@ -162,7 +162,7 @@ function CaseStudyAside() {
   return (
     <aside className="hidden min-[1346px]:sticky min-[1346px]:top-20 min-[1346px]:mx-auto min-[1346px]:mb-0 min-[1346px]:mt-20 min-[1346px]:block min-[1346px]:w-[220px] min-[1346px]:self-start">
       <Link
-        className="group inline-flex items-center gap-2 text-sm leading-5 text-muted transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+        className="portfolio-hit-area--standalone group inline-flex items-center gap-2 text-sm leading-5 text-muted transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
         to="/"
       >
         <svg
@@ -230,7 +230,7 @@ export function BuzzSelfServeActivationCasePage() {
           <header className="mx-auto flex max-w-[600px] flex-col gap-5 text-sm leading-5">
             <div className="min-[1346px]:hidden">
               <Link
-                className="group inline-flex items-center gap-2 text-sm leading-5 text-muted transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+                className="portfolio-hit-area--standalone group inline-flex items-center gap-2 text-sm leading-5 text-muted transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
                 to="/"
               >
                 <svg

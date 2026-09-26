@@ -8,7 +8,9 @@ import { useEffect, useRef, useState } from 'react'
 type CarouselSlide = {
   label: string
   caption: string
+  height?: number
   image?: string
+  width?: number
 }
 
 function ChevronIcon({ direction }: { direction: 'left' | 'right' }) {
@@ -57,11 +59,15 @@ function PlaceholderVisual({
 }
 
 function CarouselVisual({
+  height = 1518,
   image,
   label,
+  width = 2400,
 }: {
+  height?: number
   image?: string
   label: string
+  width?: number
 }) {
   if (image) {
     return (
@@ -69,7 +75,9 @@ function CarouselVisual({
         alt={label}
         className="block h-full w-full select-none object-cover"
         draggable={false}
+        height={height}
         src={image}
+        width={width}
       />
     )
   }
@@ -190,7 +198,12 @@ export function CaseStudyCarouselPlaceholder({
               className="h-full w-full shrink-0 cursor-grab touch-pan-y active:cursor-grabbing"
               key={slide.label}
             >
-              <CarouselVisual image={slide.image} label={slide.label} />
+              <CarouselVisual
+                height={slide.height}
+                image={slide.image}
+                label={slide.label}
+                width={slide.width}
+              />
             </div>
           ))}
         </motion.div>
@@ -198,7 +211,7 @@ export function CaseStudyCarouselPlaceholder({
         {activeIndex > 0 ? (
           <button
             aria-label="Previous image"
-            className="absolute left-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            className="carousel-control-hit-area absolute left-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             onClick={() => move(-1)}
             type="button"
           >
@@ -208,7 +221,7 @@ export function CaseStudyCarouselPlaceholder({
         {activeIndex < slides.length - 1 ? (
           <button
             aria-label="Next image"
-            className="absolute right-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            className="carousel-control-hit-area absolute right-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             onClick={() => move(1)}
             type="button"
           >
