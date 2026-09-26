@@ -7,10 +7,10 @@ import { dataforceStudioCase } from '@/data/dataforceStudioCase'
 
 const markerPhrases = [
   'I led product design for DataForce Studio',
-  'sole designer',
-  'one workspace',
-  'workflow that supported iteration',
+  'first and only designer on the project',
+  'flexible workflow',
   'reusable components and interaction patterns',
+  'ready for its first users',
   'used it in production workflows',
 ] as const
 
@@ -178,7 +178,7 @@ export function DataforceStudioCasePage() {
   useEffect(() => {
     const previousTitle = document.title
     document.title =
-      'DataForce Studio: One Workspace for Machine Learning Teams — Darina Usanova'
+      'DataForce Studio: One workspace for machine learning teams | Darina Usanova'
 
     return () => {
       document.title = previousTitle

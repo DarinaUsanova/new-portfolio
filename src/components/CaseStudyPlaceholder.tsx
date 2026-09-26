@@ -1,31 +1,86 @@
+import { useRef } from 'react'
+
 export type CaseStudyPlaceholderProps = {
   label: string
   caption: string
+  image?: string
+  video?: string
 }
 
 export function CaseStudyPlaceholder({
   caption,
+  image,
   label,
+  video,
 }: CaseStudyPlaceholderProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const handleEnded = () => {
+    const currentVideo = videoRef.current
+    if (!currentVideo) return
+
+    currentVideo.currentTime = 0
+    void currentVideo.play().catch(() => undefined)
+  }
+
   return (
     <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
-      <div
-        aria-label={`Image placeholder: ${label}`}
-        className="case-placeholder"
-        role="img"
-      >
-        <div className="case-placeholder__wireframe" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
+      {video ? (
+        <div
+          className={
+            image
+              ? 'case-placeholder bg-cover bg-center'
+              : 'flex w-full items-center justify-center overflow-hidden rounded-[12px]'
+          }
+          style={
+            image
+              ? {
+                  aspectRatio: '2400 / 1590',
+                  backgroundImage: `url(${image})`,
+                }
+              : undefined
+          }
+        >
+          <video
+            aria-label={label}
+            autoPlay
+            className="block h-auto w-full max-w-[800px] rounded-[12px] object-contain"
+            muted
+            onEnded={handleEnded}
+            playsInline
+            poster={image}
+            ref={videoRef}
+            src={video}
+          />
         </div>
-        <div className="case-placeholder__content">
-          <span className="case-placeholder__eyebrow">Image placeholder</span>
-          <span className="case-placeholder__label">{label}</span>
+      ) : image ? (
+        <img
+          alt={label}
+          className="block h-auto w-full rounded-xl object-contain"
+          decoding="async"
+          src={image}
+        />
+      ) : (
+        <div
+          aria-label={`Image placeholder: ${label}`}
+          className="case-placeholder"
+          role="img"
+        >
+          <div className="case-placeholder__wireframe" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="case-placeholder__content">
+            <span className="case-placeholder__eyebrow">
+              Image placeholder
+            </span>
+            <span className="case-placeholder__label">{label}</span>
+          </div>
         </div>
-      </div>
+      )}
       <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
         {caption}
       </figcaption>

@@ -46,21 +46,21 @@ const figure = (src: string, alt: string, caption: string, lightboxSrc?: string)
 })
 
 export const customPromptsCase: CustomPromptsCase = {
-  title: 'Custom Prompts: From Preset Tones to a Reusable AI Writing System',
+  title: 'Custom Prompts: A reusable writing system for AI comments',
   metadata: [
     'Role: Product Designer; sole designer on the project',
-    'Scope: Product analysis, competitive review, prompt library, prompt creation and editing, campaign integration, validation, and edge cases',
+    'Scope: Product analysis, prompt management, campaign integration, validation, and edge cases',
     'Team: Product Manager and engineers',
     'Status: Launched',
   ],
   introduction: [
-    'I led the product design for Custom Prompts in Buzz.ai’s AI Comments workflow, giving outreach teams more control over the style, language, and structure of comments generated for LinkedIn campaigns.',
+    'I led the design of Custom Prompts, a shared prompt library and campaign-step flow that let outreach teams set the tone, language, and structure of LinkedIn comments.',
   ],
   heroFigure: {
     ...figure(
       newPrompt,
       'Buzz.ai New Prompt dialog with a filled prompt, dynamic placeholders, system prompt, and default setting',
-      'Custom prompts give teams direct control over how AI-generated comments are written',
+      'Custom prompts let teams define how AI-generated comments should be written',
       newPrompt,
     ),
     priority: true,
@@ -69,29 +69,29 @@ export const customPromptsCase: CustomPromptsCase = {
     {
       title: 'Why AI Comments needed more control',
       paragraphs: [
-        'Buzz.ai helps sales teams automate outreach on LinkedIn. AI Comments lets them respond to prospects’ posts during a campaign, but the quality of the generated comment depends on how clearly the AI is guided.',
-        'Before Custom Prompts, users could choose only from a small set of preset tones, such as Positive, Question, Joke, or Formal. That made the feature quick to configure, but it did not let teams control the message structure, angle, language, or level of personalization.',
-        'The limitation became especially visible in multilingual outreach. Without an explicit language instruction, the AI could respond in the language of the post instead of the language the campaign was meant to use. The new system also had to fit existing campaign workflows without disrupting active setups.',
+        "Buzz.ai helps sales teams automate outreach on LinkedIn. AI Comments lets them respond to prospects' posts during a campaign, but the quality of each comment depends on the instructions behind it.",
+        'Before Custom Prompts, users could choose only from a small set of preset tones, such as Positive, Question, Joke, or Formal. That made the feature quick to configure, but teams could not control the message structure, angle, language, or level of personalization.',
+        'The limitation became especially visible in multilingual outreach. Without an explicit language instruction, the AI could respond in the language of the post instead of the language the campaign was meant to use. The new system also had to fit into existing campaign workflows without forcing teams to rebuild active campaigns.',
       ],
       figures: [],
     },
     {
       title: 'What I owned',
       paragraphs: [
-        'I led the product design from problem framing through implementation. I analyzed the existing AI Comments workflow, reviewed comparable AI writing controls, defined the prompt management model, designed the creation and editing flows, integrated prompts into the Post AI Comment step, and specified validation and edge cases with product and engineering.',
+        'I led the product design from problem framing through implementation. I analyzed the existing AI Comments workflow, reviewed comparable AI writing controls, and defined the prompt management model. I designed the creation and editing flows, integrated prompts into the Post AI Comment step, and specified validation and edge cases with product and engineering.',
       ],
       figures: [],
     },
     {
       title: 'Research and evidence',
       paragraphs: [
-        'I reviewed customer feedback about the existing AI Comments workflow and where preset tones fell short. I also compared how other AI writing tools let people guide generated text. The feedback and review showed that tone alone was not enough: teams needed reusable instructions for style, structure, language, and messaging intent.',
-        'I used internal validation with the product team to review the proposed flow and interaction model before implementation. This was directional validation rather than end-user usability testing, so it helped the team assess the concept but could not establish how customers would use it at scale.',
+        'I reviewed customer feedback about the existing AI Comments workflow and where preset tones fell short. I also compared how other AI writing tools let people guide generated text. Together, they pointed to a gap between choosing a tone and explaining what a team wanted a comment to do. Teams needed reusable instructions for style, structure, language, and messaging intent.',
+        'I reviewed the proposed flow and interaction model with the product team before implementation. This was directional validation, not end-user usability testing. It helped us assess the concept, but it could not tell us how easily customers would learn or use it.',
       ],
       figures: [],
     },
     {
-      title: 'Key insights',
+      title: 'What the research showed',
       paragraphs: [],
       figures: [],
       subsections: [
@@ -99,7 +99,7 @@ export const customPromptsCase: CustomPromptsCase = {
           title: 'Tone presets were too narrow for real outreach strategies',
           icon: 'sliders',
           paragraphs: [
-            'The existing options described a general mood, but not what the comment should say or how it should be written. Therefore, the new model needed to support freeform instructions rather than simply add more tone labels.',
+            'Tone presets described a general mood, not what a comment should say or how it should be written. The new model needed freeform instructions rather than a longer list of tone labels.',
           ],
           figures: [],
         },
@@ -107,7 +107,7 @@ export const customPromptsCase: CustomPromptsCase = {
           title: 'Prompts needed to be reusable across campaigns',
           icon: 'library',
           paragraphs: [
-            'Writing the same instructions inside every campaign step would make teams repeat work and make consistent messaging harder to maintain. Therefore, prompts needed a shared home where teams could create, review, and reuse them.',
+            'If users had to write the same instructions inside every campaign step, they would repeat work and have a harder time keeping messaging consistent. Prompts needed a shared home for creation, review, and reuse.',
           ],
           figures: [],
         },
@@ -115,7 +115,7 @@ export const customPromptsCase: CustomPromptsCase = {
           title: 'Control had to stay close to campaign setup',
           icon: 'workflow',
           paragraphs: [
-            'A separate prompt library could make reuse easier, but it could also add another place to configure a campaign. Therefore, users needed both a central library and a way to create or select a prompt directly from the Post AI Comment step.',
+            'A separate prompt library would make reuse easier, but it could also add another place to configure a campaign. Users needed to create or select a prompt directly from the Post AI Comment step as well as from the library.',
           ],
           figures: [],
         },
@@ -123,17 +123,17 @@ export const customPromptsCase: CustomPromptsCase = {
           title: 'More control also required clearer safeguards',
           icon: 'shield',
           paragraphs: [
-            'Custom instructions introduced new failure cases: a step without a prompt, a prompt deleted while still in use, or a library with no available prompts. Therefore, validation, warnings, and empty states had to be part of the feature rather than an afterthought.',
+            'Custom instructions introduced new failure cases: a step without a prompt, a prompt deleted while still in use, or a library with no available prompts. Validation, warnings, and empty states had to cover those cases from the start.',
           ],
           figures: [],
         },
       ],
     },
     {
-      title: 'The decision: build a prompt system, not a longer tone menu',
+      title: 'Why I chose a prompt system',
       paragraphs: [
-        'I considered expanding the list of tone presets or putting a freeform prompt field only inside the campaign step. More presets would still limit the messaging strategy, while step-only prompts would make reuse difficult. I chose a connected system: a centralized prompt library for management and a lightweight prompt selector inside campaign setup.',
-        'The trade-off was a larger product surface with more states to design. In return, teams could create instructions once, reuse them across campaigns, and still configure a comment at the moment they were building the workflow.',
+        'I considered expanding the list of tone presets or putting a freeform prompt field only inside the campaign step. More presets would still limit the messaging strategy, while step-only prompts would make reuse difficult. I chose a connected system: a shared prompt library for management and a lightweight prompt selector inside campaign setup.',
+        'That added more states to design, but it let teams create instructions once, reuse them across campaigns, and still configure a comment while building the workflow.',
       ],
       figures: [],
     },
@@ -145,24 +145,24 @@ export const customPromptsCase: CustomPromptsCase = {
         {
           title: 'Give prompts a shared home',
           paragraphs: [
-            'I designed a centralized prompt library where teams could create, edit, preview, and delete custom prompts. Each prompt had a name, an icon, and instructions for how the AI should respond. The library made prompts reusable and gave teams a place to maintain a consistent messaging system.',
-            'A shared library turns one-off AI instructions into reusable campaign assets.',
+            'I designed a shared prompt library where teams could create, edit, preview, and delete prompts. Each prompt had a name, an icon, and instructions for how the AI should respond. The library gave those instructions a place to live and made them easier to reuse across campaigns.',
+            'Teams no longer had to rewrite the same instructions in every campaign.',
           ],
           figures: [
             figure(
               promptsTable,
               'Buzz.ai AI Comment Prompts library with saved prompts and management actions',
-              'A shared library turns one-off AI instructions into reusable campaign assets.',
+              'A shared library for prompts teams use across campaigns.',
               promptsTable,
             ),
           ],
         },
         {
-          title: 'Let users define the behaviour of a comment',
+          title: 'Let users define comment behavior',
           paragraphs: [
-            'The creation flow let users write their own instructions, choose whether a prompt should be used by default for new campaign steps, and add dynamic placeholders for prospect information. This gave teams control over tone, language, structure, and personalization in one place.',
-            'I also made the system prompt expandable. Users could inspect the base instructions already applied by Buzz.ai without having to see them during every configuration task. Length validation for prompt names and content helped keep the inputs usable inside the AI workflow.',
-            'Users can define the instructions that shape a generated comment and understand which base rules the product adds.',
+            'The creation flow let users write their own instructions, choose whether to use a prompt by default for new campaign steps, and add dynamic placeholders for prospect information. This let teams set tone, language, structure, and personalization in one place.',
+            'I made the system prompt expandable. Users could inspect the base instructions that Buzz.ai already applied when they needed them, while the main form stayed focused on their own prompt. Length validation for prompt names and content kept the inputs usable in the AI workflow.',
+            'Users could define the instructions behind a generated comment and see which base rules the product added.',
           ],
           figures: [
             figure(
@@ -177,8 +177,7 @@ export const customPromptsCase: CustomPromptsCase = {
           title: 'Connect the library to the campaign step',
           paragraphs: [
             'Custom prompts were integrated directly into the Post AI Comment step. Users could select one or more saved prompts, preview them before choosing, or create a new prompt without leaving campaign setup.',
-            'When multiple prompts were attached to one step, the system rotated between them during generation. This reduced repetitive comments while keeping the output within the intended messaging strategy.',
-            'The prompt library stays available where comment behaviour is configured.',
+            'When multiple prompts were attached to one step, the system rotated between them during generation. This reduced repeated comments without changing the instructions the team had chosen.',
           ],
           figures: [
             figure(
@@ -190,16 +189,16 @@ export const customPromptsCase: CustomPromptsCase = {
             figure(
               postAiCommentStepSelectPrompts,
               'Buzz.ai Select prompts dialog with searchable prompt cards and a New Prompt action',
-              'The prompt library stays available where comment behaviour is configured.',
+              'Saved prompts can be selected without leaving campaign setup.',
               postAiCommentStepSelectPrompts,
             ),
           ],
         },
         {
-          title: 'Keep unusual states from breaking the workflow',
+          title: 'Handle missing and in-use prompts',
           paragraphs: [
-            'I designed safeguards for the boundaries of the system. A campaign step could not be left without at least one prompt. Deleting a prompt already used in campaigns triggered a warning, and empty and disabled states explained what users could do next.',
-            'Validation and warnings make prompt behaviour predictable when users reach an edge case.',
+            'I designed states for the cases where a prompt was missing or already in use. A campaign step could not be left without at least one prompt. Deleting a prompt already used in campaigns triggered a warning, and empty and disabled states explained what users could do next.',
+            'Together, these states blocked an incomplete step and made deletion consequences clear.',
           ],
           figures: [
             figure(
@@ -221,10 +220,10 @@ export const customPromptsCase: CustomPromptsCase = {
     {
       title: 'Validation and outcome',
       paragraphs: [
-        'I reviewed the proposed workflow with the product team before implementation. The internal validation helped us check whether the library, prompt creation flow, campaign integration, and safeguards formed a coherent system. It did not replace customer usability testing, so the post-launch feedback was important for understanding whether the feature worked in practice.',
-        'Custom Prompts changed AI Comments from a small set of tone shortcuts into a reusable writing system. Teams could define the style, structure, language, and personalization of generated comments, then apply those instructions across campaign steps.',
-        'Roughly four months after launch, the team received substantially fewer complaints about incorrect AI responses and language mismatches. Users also described the feature as much easier to use. These were qualitative product signals rather than a measured production metric, but they indicated that the new system made AI Comments more useful and dependable in everyday outreach.',
-        'The next meaningful step would be to measure how often teams create and reuse prompts, whether prompt reuse improves campaign setup time, and whether language-related issues continue to decline across different outreach segments.',
+        'I reviewed the proposed workflow with the product team before implementation. The review covered the library, prompt creation, campaign integration, and safeguards as one flow. It did not replace customer usability testing, so post-launch feedback was important for learning how customers used the feature.',
+        'Custom Prompts changed AI Comments from a small set of tone shortcuts into a reusable set of instructions. Teams could define the tone, structure, language, and personalization of generated comments, then apply those instructions across campaign steps.',
+        'Roughly four months after launch, the team reported fewer complaints about incorrect AI responses and language mismatches. Some users also described the feature as easier to use. This feedback was encouraging, but it was not a measured production metric, so I cannot say how large the improvement was.',
+        'I would next measure how often teams create and reuse prompts, whether reuse shortens campaign setup, and whether language-related issues continue to decline across different outreach segments.',
       ],
       figures: [],
     },

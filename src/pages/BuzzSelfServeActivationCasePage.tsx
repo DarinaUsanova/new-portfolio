@@ -147,7 +147,7 @@ function CaseStudyAside() {
               key={item.title}
               onClick={() => setActiveSection(sectionId)}
             >
-              {item.title}
+              {item.navigationLabel}
             </a>
           )
         })}
@@ -245,6 +245,41 @@ export function BuzzSelfServeActivationCasePage() {
                   </div>
                 )}
               </div>
+
+              {section.journeys && (
+                <table className="mx-auto mt-5 w-full max-w-[600px] table-fixed text-left text-sm leading-5">
+                  <caption className="sr-only">
+                    How Free Signup and Buy Now changed the customer journey
+                  </caption>
+                  <thead className="border-b border-ink/10">
+                    <tr>
+                      <th className="w-[24%] pb-3 pr-3 font-medium" scope="col">
+                        Entry point
+                      </th>
+                      <th className="w-[38%] px-2 pb-3 font-medium" scope="col">
+                        Before
+                      </th>
+                      <th className="w-[38%] pb-3 pl-2 font-medium" scope="col">
+                        Self-serve path
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.journeys.map((journey) => (
+                      <tr
+                        className="border-b border-ink/10 align-top last:border-0"
+                        key={journey.audience}
+                      >
+                        <th className="py-3 pr-3 font-medium" scope="row">
+                          {journey.audience}
+                        </th>
+                        <td className="px-2 py-3">{journey.before}</td>
+                        <td className="py-3 pl-2">{journey.after}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
 
               <CaseStudyFigures figures={section.figures} />
 
