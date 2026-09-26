@@ -1,5 +1,7 @@
 import { useRef } from 'react'
 
+import { CaseStudyFigure } from '@/components/CaseStudyFigure'
+
 export type CaseStudyPlaceholderProps = {
   label: string
   caption: string
@@ -21,6 +23,10 @@ export function CaseStudyPlaceholder({
 
     currentVideo.currentTime = 0
     void currentVideo.play().catch(() => undefined)
+  }
+
+  if (image && !video) {
+    return <CaseStudyFigure alt={label} caption={caption} src={image} />
   }
 
   return (

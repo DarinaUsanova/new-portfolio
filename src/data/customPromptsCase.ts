@@ -46,10 +46,9 @@ const figure = (src: string, alt: string, caption: string, lightboxSrc?: string)
 })
 
 export const customPromptsCase: CustomPromptsCase = {
-  title: 'Custom Prompts: A reusable writing system for AI comments',
+  title: 'Custom prompts for AI comments',
   metadata: [
-    'Role: Product Designer; sole designer on the project',
-    'Scope: Product analysis, prompt management, campaign integration, validation, and edge cases',
+    'Scope: Prompt library and AI comment workflow',
     'Team: Product Manager and engineers',
     'Status: Launched',
   ],

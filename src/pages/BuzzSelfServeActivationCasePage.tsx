@@ -1,58 +1,87 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  CaseStudyPlaceholder,
-  type CaseStudyPlaceholderProps,
-} from '@/components/CaseStudyPlaceholder'
-import { CaseStudyCarouselPlaceholder } from '@/components/CaseStudyCarouselPlaceholder'
+import { CaseStudyPlaceholder } from '@/components/CaseStudyPlaceholder'
+import { CaseStudySections } from '@/components/CaseStudySections'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { buzzSelfServeActivationCase } from '@/data/buzzSelfServeActivationCase'
 
-type PlaceholderFigure = CaseStudyPlaceholderProps
+const markerDefinitions = [
+  {
+    phrase: 'self-serve',
+    context: 'I designed two self-serve experiences',
+  },
+  {
+    phrase: 'qualification',
+    context: 'keeping qualification in the path to product access',
+  },
+  {
+    phrase: 'flexible checklist',
+    context: 'I chose a flexible checklist',
+  },
+  {
+    phrase: 'implementation complexity',
+    context: 'because of implementation complexity',
+  },
+  {
+    phrase: 'Both launched',
+    context: 'Both launched.',
+  },
+] as const
 
-function CaseStudyFigures({ figures }: { figures: readonly PlaceholderFigure[] }) {
-  if (figures.length === 0) return null
+const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
 
-  return (
-    <div className="mt-5 flex flex-col gap-5">
-      {figures.map((figure) => (
-        <CaseStudyPlaceholder key={figure.caption} {...figure} />
-      ))}
-    </div>
+function getMarkerVariant(phrase: string) {
+  let hash = 0
+
+  for (const character of phrase) {
+    hash = (hash * 31 + character.charCodeAt(0)) >>> 0
+  }
+
+  const gradientVariant = markerGradientVariants[hash % markerGradientVariants.length]
+  const spacingVariant = Math.floor(hash / markerGradientVariants.length) % 2 === 0
+    ? 'case-marker--closed'
+    : 'case-marker--open'
+
+  return `case-marker--${gradientVariant} ${spacingVariant}`
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function renderMarkedText(text: string) {
+  const activeMarkers = markerDefinitions.filter(({ context }) =>
+    text.includes(context),
+  )
+
+  if (activeMarkers.length === 0) return text
+
+  const markerPhraseSet = new Set<string>(
+    activeMarkers.map(({ phrase }) => phrase),
+  )
+  const markerPattern = new RegExp(
+    `(?<!\\w)(${activeMarkers.map(({ phrase }) => escapeRegExp(phrase)).join('|')})(?!\\w)`,
+    'g',
+  )
+
+  return text.split(markerPattern).map((part, index) =>
+    markerPhraseSet.has(part) ? (
+      <mark
+        className={`case-marker ${getMarkerVariant(part)}`}
+        data-marker="true"
+        key={`${part}-${index}`}
+      >
+        {part}
+      </mark>
+    ) : (
+      part
+    ),
   )
 }
 
 function getSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function CaseStudySubsection({
-  subsection,
-}: {
-  subsection: {
-    title: string
-    paragraphs: readonly string[]
-    figures: readonly PlaceholderFigure[]
-    carousel?: readonly PlaceholderFigure[]
-  }
-}) {
-  return (
-    <div className="mt-8">
-      <div className="mx-auto max-w-[600px]">
-        <h3 className="text-sm font-medium leading-5">{subsection.title}</h3>
-      </div>
-      <div className="mx-auto mt-2 flex w-full max-w-[600px] flex-col gap-2 text-sm leading-5">
-        {subsection.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-      </div>
-      <CaseStudyFigures figures={subsection.figures} />
-      {subsection.carousel ? (
-        <CaseStudyCarouselPlaceholder slides={subsection.carousel} />
-      ) : null}
-    </div>
-  )
 }
 
 function CaseStudyAside() {
@@ -208,9 +237,9 @@ export function BuzzSelfServeActivationCasePage() {
 
                   return (
                     <Fragment key={item}>
-                      <span>{item.slice(0, separatorIndex + 1)}</span>
+                      <span>{item.slice(0, separatorIndex)}</span>
                       <span className="text-ink">
-                        {item.slice(separatorIndex + 1)}
+                        {renderMarkedText(item.slice(separatorIndex + 1).trim())}
                       </span>
                     </Fragment>
                   )
@@ -220,7 +249,7 @@ export function BuzzSelfServeActivationCasePage() {
 
             <div className="flex flex-col gap-2">
               {buzzSelfServeActivationCase.introduction.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+                <p key={paragraph}>{renderMarkedText(paragraph)}</p>
               ))}
             </div>
           </header>
@@ -229,68 +258,11 @@ export function BuzzSelfServeActivationCasePage() {
             <CaseStudyPlaceholder {...buzzSelfServeActivationCase.heroFigure} />
           </section>
 
-          {buzzSelfServeActivationCase.sections.map((section) => (
-            <section
-              className="mt-10 scroll-mt-20"
-              id={getSectionId(section.title)}
-              key={section.title}
-            >
-              <div className="mx-auto max-w-[600px] text-sm leading-5">
-                <h2 className="text-base font-medium">{section.title}</h2>
-                {section.paragraphs.length > 0 && (
-                  <div className="mt-2 flex flex-col gap-2">
-                    {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {section.journeys && (
-                <table className="mx-auto mt-5 w-full max-w-[600px] table-fixed text-left text-sm leading-5">
-                  <caption className="sr-only">
-                    How Free Signup and Buy Now changed the customer journey
-                  </caption>
-                  <thead className="border-b border-ink/10">
-                    <tr>
-                      <th className="w-[24%] pb-3 pr-3 font-medium" scope="col">
-                        Entry point
-                      </th>
-                      <th className="w-[38%] px-2 pb-3 font-medium" scope="col">
-                        Before
-                      </th>
-                      <th className="w-[38%] pb-3 pl-2 font-medium" scope="col">
-                        Self-serve path
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {section.journeys.map((journey) => (
-                      <tr
-                        className="border-b border-ink/10 align-top last:border-0"
-                        key={journey.audience}
-                      >
-                        <th className="py-3 pr-3 font-medium" scope="row">
-                          {journey.audience}
-                        </th>
-                        <td className="px-2 py-3">{journey.before}</td>
-                        <td className="py-3 pl-2">{journey.after}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              )}
-
-              <CaseStudyFigures figures={section.figures} />
-
-              {section.subsections?.map((subsection) => (
-                <CaseStudySubsection
-                  key={subsection.title}
-                  subsection={subsection}
-                />
-              ))}
-            </section>
-          ))}
+          <CaseStudySections
+            getSectionId={getSectionId}
+            renderText={renderMarkedText}
+            sections={buzzSelfServeActivationCase.sections}
+          />
         </article>
 
         <div className="mx-auto mt-10 w-full max-w-[600px]">

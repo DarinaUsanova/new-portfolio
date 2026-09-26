@@ -36,12 +36,10 @@ type VoiceNotesCase = {
 }
 
 export const voiceNotesCase: VoiceNotesCase = {
-  title: 'Voice Notes: Adding voice messages to conversations and campaigns',
+  title: 'Voice notes for outreach',
   metadata: [
-    'Role: Product Designer; sole designer on the project',
-    'Scope: Customer research, campaign and Inbox workflows, a recording library, interaction states, and development support',
-    'Timeline: Approximately three weeks',
-    'Team: Product Manager, engineers, and QA',
+    'Scope: Voice messaging in Inbox and campaigns',
+    'Team: Product Manager, engineers and QA',
     'Status: Launched',
   ],
   introduction: [

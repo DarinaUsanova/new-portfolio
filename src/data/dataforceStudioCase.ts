@@ -26,13 +26,11 @@ type DataforceStudioCase = {
 }
 
 export const dataforceStudioCase: DataforceStudioCase = {
-  title: 'DataForce Studio: One workspace for machine learning teams',
+  title: 'Machine learning workspace',
   metadata: [
-    'Role: Founding and sole product designer',
-    'Scope: Product structure, navigation, key workflows, prototyping, and design system',
-    'Timeline: 2024–2025; one year from idea to MVP',
-    'Team: Company founders, CEO, one frontend engineer, and two backend engineers',
-    'Status: Launched; customers use it in production',
+    'Scope: Product structure and machine-learning workflows',
+    'Team: Founders, CEO, frontend engineer and backend engineers',
+    'Status: Launched; used in production',
   ],
   introduction: [
     'I led product design for DataForce Studio and took it from an early idea to its first release. I was the first and only designer on the project.',

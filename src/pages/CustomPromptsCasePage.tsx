@@ -1,31 +1,34 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import libraryIcon from '@/assets/custom-prompts-case/library.svg'
-import shieldIcon from '@/assets/custom-prompts-case/shield.svg'
-import slidersIcon from '@/assets/custom-prompts-case/sliders.svg'
-import workflowIcon from '@/assets/custom-prompts-case/workflow.svg'
-import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
+import { CaseStudyFigure } from '@/components/CaseStudyFigure'
+import { CaseStudySections } from '@/components/CaseStudySections'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { customPromptsCase } from '@/data/customPromptsCase'
 
-type CaseStudySubsection = {
-  title: string
-  paragraphs: readonly string[]
-  figures: readonly CaseStudyFigureProps[]
-  icon?: 'library' | 'shield' | 'sliders' | 'workflow'
-}
-
-const markerPhrases = [
-  'I led the product design for Custom Prompts',
-  'customer feedback',
-  'internal validation',
-  'a centralized prompt library',
-  'substantially fewer complaints',
+const markerDefinitions = [
+  {
+    phrase: 'problem framing',
+    context: 'problem framing through implementation',
+  },
+  {
+    phrase: 'freeform instructions',
+    context: 'needed freeform instructions',
+  },
+  {
+    phrase: 'prompt library',
+    context: 'I designed a shared prompt library',
+  },
+  {
+    phrase: 'deletion consequences',
+    context: 'made deletion consequences clear',
+  },
+  {
+    phrase: 'fewer complaints',
+    context: 'team reported fewer complaints',
+  },
 ] as const
 
-const markerPhraseSet = new Set<string>(markerPhrases)
-const markerPattern = new RegExp(`(${markerPhrases.join('|')})`, 'g')
 const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
 
 function getMarkerVariant(phrase: string) {
@@ -43,7 +46,25 @@ function getMarkerVariant(phrase: string) {
   return `case-marker--${gradientVariant} ${spacingVariant}`
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function renderMarkedText(text: string) {
+  const activeMarkers = markerDefinitions.filter(({ context }) =>
+    text.includes(context),
+  )
+
+  if (activeMarkers.length === 0) return text
+
+  const markerPhraseSet = new Set<string>(
+    activeMarkers.map(({ phrase }) => phrase),
+  )
+  const markerPattern = new RegExp(
+    `(?<!\\w)(${activeMarkers.map(({ phrase }) => escapeRegExp(phrase)).join('|')})(?!\\w)`,
+    'g',
+  )
+
   return text.split(markerPattern).map((part, index) =>
     markerPhraseSet.has(part) ? (
       <mark
@@ -61,82 +82,6 @@ function renderMarkedText(text: string) {
 
 function getSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function CaseStudyFigures({ figures }: { figures: readonly CaseStudyFigureProps[] }) {
-  if (figures.length === 0) return null
-
-  return (
-    <div className="mt-5 flex flex-col gap-5">
-      {figures.map((figure) => (
-        <CaseStudyFigure key={figure.caption} {...figure} />
-      ))}
-    </div>
-  )
-}
-
-const insightIcons: Record<NonNullable<CaseStudySubsection['icon']>, string> = {
-  library: libraryIcon,
-  shield: shieldIcon,
-  sliders: slidersIcon,
-  workflow: workflowIcon,
-}
-
-function InsightIcon({ icon }: { icon: NonNullable<CaseStudySubsection['icon']> }) {
-  const src = insightIcons[icon]
-
-  return <img alt="" aria-hidden="true" className="size-4" src={src} />
-}
-
-function CaseStudySubsection({
-  first = false,
-  insight = false,
-  subsection,
-}: {
-  first?: boolean
-  insight?: boolean
-  subsection: CaseStudySubsection
-}) {
-  return (
-    <div
-      className={
-        insight
-          ? 'flex w-full flex-col gap-2'
-          : first
-            ? 'mt-0'
-            : 'mt-8'
-      }
-    >
-      <div className={insight ? 'flex w-full items-start gap-2' : 'mx-auto max-w-[600px]'}>
-        {insight && subsection.icon ? (
-          <div className="flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#f2f2f2]">
-            <InsightIcon icon={subsection.icon} />
-          </div>
-        ) : null}
-        <h3
-          className={
-            insight
-              ? 'min-w-0 flex-1 break-words text-sm font-medium leading-normal text-muted'
-              : 'text-sm font-medium leading-5'
-          }
-        >
-          {subsection.title}
-        </h3>
-      </div>
-      <div
-        className={
-          insight
-            ? 'flex flex-col gap-2 text-sm font-normal leading-normal text-ink'
-            : 'mx-auto mt-2 flex w-full max-w-[600px] flex-col gap-2 text-sm leading-5'
-        }
-      >
-        {subsection.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{renderMarkedText(paragraph)}</p>
-        ))}
-      </div>
-      <CaseStudyFigures figures={subsection.figures} />
-    </div>
-  )
 }
 
 function CaseStudyAside() {
@@ -292,9 +237,9 @@ export function CustomPromptsCasePage() {
 
                   return (
                     <Fragment key={item}>
-                      <span>{item.slice(0, separatorIndex + 1)}</span>
+                      <span>{item.slice(0, separatorIndex)}</span>
                       <span className="text-ink">
-                        {renderMarkedText(item.slice(separatorIndex + 1))}
+                        {renderMarkedText(item.slice(separatorIndex + 1).trim())}
                       </span>
                     </Fragment>
                   )
@@ -313,45 +258,11 @@ export function CustomPromptsCasePage() {
             <CaseStudyFigure {...customPromptsCase.heroFigure} />
           </section>
 
-          {customPromptsCase.sections.map((section) => (
-            <section
-              className="mt-10 scroll-mt-20"
-              id={getSectionId(section.title)}
-              key={section.title}
-            >
-              <div className="mx-auto max-w-[600px] text-sm leading-5">
-                <h2 className="text-base font-medium">{section.title}</h2>
-                <div className="mt-2 flex flex-col gap-2">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{renderMarkedText(paragraph)}</p>
-                  ))}
-                </div>
-              </div>
-
-              <CaseStudyFigures figures={section.figures} />
-
-              {section.subsections ? (
-                <div
-                  className={
-                    section.title === 'Key insights'
-                      ? 'mx-auto mt-2 flex max-w-[600px] flex-col items-start justify-center gap-5'
-                      : section.title === 'Solution'
-                        ? 'mt-2'
-                        : undefined
-                  }
-                >
-                  {section.subsections.map((subsection, index) => (
-                    <CaseStudySubsection
-                      first={section.title === 'Solution' && index === 0}
-                      insight={section.title === 'Key insights'}
-                      key={subsection.title}
-                      subsection={subsection}
-                    />
-                  ))}
-                </div>
-              ) : null}
-            </section>
-          ))}
+          <CaseStudySections
+            getSectionId={getSectionId}
+            renderText={renderMarkedText}
+            sections={customPromptsCase.sections}
+          />
         </article>
 
         <div className="mx-auto mt-10 w-full max-w-[600px]">

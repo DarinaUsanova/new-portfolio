@@ -38,20 +38,20 @@ type CampaignBuilderCase = {
 }
 
 export const campaignBuilderCase: CampaignBuilderCase = {
-  title: 'Campaign Builder: One Workflow for Simple and Complex Campaigns',
+  title: 'Unified campaign builder',
   metadata: [
-    'Role: Lead Product Designer; sole designer on the project',
-    'Scope: Customer research, workflow structure, UI, prototyping, and an MVP design system',
-    'Status: MVP concept; development did not begin because product priorities changed',
+    'Scope: Campaign structure, editor and launch checklist',
+    'Team: Product Manager and Lead Engineer',
+    'Status: MVP concept',
   ],
   introduction: [
-    'I led discovery and MVP design for Buzz.ai’s campaign builder, exploring one workflow for sales managers, marketing teams, and others responsible for automating outreach and sales.',
+    "I researched and designed an MVP concept for Buzz.ai's campaign builder. The proposal brought sequential and branching campaigns into one workflow.",
   ],
   heroFigure: {
     src: workflowBranching,
     alt: 'Proposed campaign builder with a branching workflow and launch checklist open',
     caption:
-      'The proposed builder combines a predictable workflow with branching logic and a launch checklist',
+      'The proposed builder keeps every campaign in one vertical sequence, with branches and launch issues visible in context',
     priority: true,
   },
   sections: [
@@ -60,8 +60,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       paragraphs: [
         'Buzz.ai helps sales and marketing teams automate outreach. Its campaign builder is where they set up the steps of a campaign and decide what should happen next.',
         'The product had two campaign modes. Simple Campaigns let users arrange steps in a single sequence. Smart Campaigns added conditions and branches in a canvas editor, where users arranged steps manually.',
-        'As campaigns grew, the canvas became harder to follow. Users had to make sense of long sequences and their branches while editing individual steps. New users also had to choose between Simple and Smart Campaigns before they understood which one they needed.',
-        'One customer interview also highlighted a saving problem. A customer could rename a campaign and continue working, assuming the new name had been saved. The interface still required a separate confirmation.',
+        'Long campaigns were hard to scan in the canvas. Users had to follow long sequences and branches while editing individual steps. New users also had to choose between Simple and Smart Campaigns before they understood which one they needed.',
+        'One customer interview exposed a saving problem. A customer could rename a campaign and keep working, believing the change was saved. The interface still required a separate confirmation.',
       ],
       figures: [
         {
@@ -76,16 +76,16 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       title: 'What I owned',
       paragraphs: [
         'I was the sole product designer, working closely with the Product Manager. A Lead Engineer helped validate the product matrix.',
-        'I interviewed customers, reviewed feedback, and turned the findings into questions to test and priorities for the MVP. I then designed the workflow structure and interface, built prototypes, and presented the proposal to the team. My work also included the design system for the MVP.',
+        'I interviewed customers, reviewed feedback, and turned the findings into questions and MVP priorities. I then designed the workflow structure and interface, built prototypes, and presented the proposal to the team. I also defined the MVP design system.',
       ],
       figures: [],
     },
     {
       title: 'Research and evidence',
       paragraphs: [
-        'I spoke with three Buzz.ai customers about how they built campaigns and showed them early prototypes. Their feedback pointed to three needs: less visual clutter, campaign logic that was easier to follow, and a starting point that did not require choosing a campaign type upfront.',
-        'I also reviewed around 15–20 campaign editor suggestions in Canny, the product’s feedback board. These raised concerns about campaign structure, editing, and setup. The same question came up repeatedly in support tickets and feedback from the team: how could users tell whether a campaign was ready to launch?',
-        'This feedback suggested that updating the canvas alone would not solve all of these problems.',
+        'I spoke with three Buzz.ai customers about how they built campaigns and showed them early prototypes. Their feedback pointed to three needs: less visual clutter, easier-to-follow campaign logic, and a starting point that did not require choosing a campaign type upfront.',
+        "I also reviewed 15 to 20 campaign editor suggestions in Canny, the product's feedback board. They raised concerns about campaign structure, editing, and setup. Support tickets and team feedback kept raising the same question. When is a campaign ready to launch?",
+        'The issues went beyond the canvas.',
       ],
       figures: [
         {
@@ -105,7 +105,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Long workflows needed a predictable reading order',
           icon: workflowOrderIcon,
           paragraphs: [
-            'The existing canvas made complex sequences difficult to scan as they grew. This led to a vertical workflow where each step had a clear place in the sequence.',
+            'The existing canvas made complex sequences difficult to scan as they grew. I translated that finding into a vertical workflow where each step had a clear place in the sequence.',
           ],
           figures: [],
         },
@@ -113,7 +113,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Users needed guidance before choosing a campaign type',
           icon: campaignGuidanceIcon,
           paragraphs: [
-            'Users had to choose between Simple and Smart Campaigns before they understood what building a campaign involved. I designed one starting flow that guided users and showed conditions and branches when they were relevant.',
+            'Users had to choose between Simple and Smart Campaigns before they understood what building a campaign involved. I designed one starting flow. Users could add steps first, then add conditions or branches when needed.',
           ],
           figures: [],
         },
@@ -121,17 +121,17 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Users needed to see what was saved and be able to recover their work',
           icon: saveRecoveryIcon,
           paragraphs: [
-            'A customer interview showed that it was not always clear whether changes had been saved. Six of seven colleagues in the internal test also said warnings and ways to recover work were especially important. This made drafts, warnings, and the ability to recover work priorities for the MVP concept.',
+            'A customer interview showed that it was not always clear whether changes had been saved. Six of seven colleagues in the internal test also prioritised warnings and ways to recover work. Together, these findings set three MVP priorities: drafts, warnings, and recovery options.',
           ],
           figures: [],
         },
       ],
     },
     {
-      title: 'The decision: one vertical workflow',
+      title: 'The proposal: one vertical workflow',
       paragraphs: [
         'I considered improving the Smart Campaign canvas, but keeping it would still require users to arrange steps manually and choose between two campaign modes.',
-        'I proposed a single builder with a vertical workflow. Steps would have a predictable place in the sequence, and users could add conditions and branches as the campaign needed them. The trade-off was less freedom to arrange steps, but a consistent order to read them in. The design still needed to make branching paths clear; a vertical layout alone would not solve that.',
+        'I proposed a single builder with a vertical workflow. Each step had a predictable place in the sequence, and users could add conditions and branches when the campaign needed them. The trade-off was less freedom to arrange steps, but a consistent reading order. Branches still needed to be easy to follow. A vertical layout alone would not solve that.',
       ],
       figures: [],
       subsections: [
@@ -139,7 +139,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
           title: 'Give people a clear first step',
           paragraphs: [
             'I removed the choice between Simple and Smart Campaigns from the proposed starting flow. The side panel showed the available steps so users could begin building the campaign straight away.',
-            'Conditions and branches appeared when relevant. This let the concept support more complex campaigns without asking everyone to understand those options at the start.',
+            'Conditions and branches appeared when relevant. The same flow still supported branches when a campaign needed them.',
           ],
           figures: [
             {
@@ -153,7 +153,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
         {
           title: 'Keep the campaign in view while editing a step',
           paragraphs: [
-            'Selecting a step opened its settings in a side panel, with the workflow still visible alongside it. I used this layout so people could focus on the details of a task and still see where it belonged in the sequence.',
+            'Selecting a step opened its settings in a side panel, with the workflow still visible alongside it. Users could focus on the details of a task and still see where it belonged in the sequence.',
           ],
           figures: [
             {
@@ -167,7 +167,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
         {
           title: 'Let people build a draft, then check it before launch',
           paragraphs: [
-            'I designed the flow so users could work on an incomplete campaign. When they were ready to launch, a checklist showed what was missing and pointed to the step that needed attention.',
+            'The flow let users work on an incomplete campaign. When they were ready to launch, a checklist showed what was missing and pointed to the step that needed attention.',
             'Missing information and connection issues appeared alongside the workflow, so users could see where each problem occurred without leaving the campaign.',
           ],
           figures: [
@@ -181,7 +181,7 @@ export const campaignBuilderCase: CampaignBuilderCase = {
               src: workflowBranching,
               alt: 'Campaign builder workflow with readable branching paths and launch issues in context',
               caption:
-                'Branching paths and connection issues stay visible in the workflow while the campaign is prepared for launch',
+                'The workflow keeps branch paths and connection issues visible while users prepare the campaign for launch',
             },
           ],
         },
@@ -190,9 +190,9 @@ export const campaignBuilderCase: CampaignBuilderCase = {
     {
       title: 'What the internal test told me',
       paragraphs: [
-        'I created a concept test in Windy for seven colleagues from Sales, Customer Success, Support, and Product. It combined prototypes with multiple-choice and open-ended questions about the main tasks involved in building a campaign.',
-        'Six of the seven participants prioritised warnings about unsaved changes and the ability to undo a deletion or recover a step. Along with the saving problem raised in the customer interview, this helped set priorities for the MVP: showing whether changes were saved and letting users recover their work. I explored how drafts, warnings, and options to recover work could help users while editing.',
-        'The test helped identify what the team considered most important. It did not show whether customers could build or edit campaigns more easily; that still needed to be tested with campaign creators.',
+        'I ran a concept test in Windy with seven colleagues from Sales, Customer Success, Support, and Product. It showed prototypes and asked multiple-choice and open-ended questions about building a campaign.',
+        'Six of the seven participants prioritised warnings about unsaved changes and the ability to undo a deletion or recover a step. Together with the customer interview, these findings set two MVP priorities: showing whether changes were saved and letting users recover their work. I explored drafts, warnings, and recovery options in the editing flow.',
+        'The test showed what the team considered most important. It did not show whether customers could build or edit campaigns more easily; that still needed to be tested with campaign creators.',
       ],
       figures: [],
     },
@@ -200,8 +200,8 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       title: 'Where the project ended',
       paragraphs: [
         'Product priorities changed, and the project stopped before development.',
-        'I delivered a proposal for how one campaign builder could support both simple and branching campaigns, with MVP priorities and prototypes covering setup, step editing, and launch checks. This gave the team a design to review that went beyond the original request to update Smart Campaign Builder.',
-        'The next step would have been to test the full flow with customers: could they build a campaign, follow its branches, change a step, and resolve an issue before launch? The results would help me and the engineering team decide what to include in the MVP.',
+        'I delivered a proposal for one builder that could support simple and branching campaigns. It included MVP priorities and prototypes for setup, step editing, and launch checks. The proposal went beyond the original request to update Smart Campaign Builder.',
+        'The next step would have been to test the full flow with customers. Could they build a campaign, follow its branches, change a step, and resolve an issue before launch? Those results would have helped the team decide what to include in the MVP.',
       ],
       figures: [],
     },

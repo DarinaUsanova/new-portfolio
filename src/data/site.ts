@@ -21,7 +21,7 @@ export const siteConfig = {
 
 export const projects = [
   {
-    title: 'From Sales-Led Setup to Self-Serve Activation',
+    title: 'Self-serve signup and onboarding',
     description:
       'I designed Buzz’s signup and onboarding experience so potential customers could explore the product independently and paying customers could complete essential setup without relying on onboarding calls.',
     company: 'Buzz.ai',
@@ -32,9 +32,9 @@ export const projects = [
     video: buzzSelfServeActivationVideo,
   },
   {
-    title: 'Campaign Builder: One Workflow for Simple and Complex Campaigns',
+    title: 'Unified campaign builder',
     description:
-      'I explored how teams create complex campaigns and used those insights to design a single builder. It helps teams see how everything fits together, make changes, and catch issues before launch.',
+      "I researched and designed an MVP concept for Buzz.ai's campaign builder, bringing sequential and branching campaigns into one workflow.",
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',
@@ -42,7 +42,7 @@ export const projects = [
     href: '/projects/campaign-builder-discovery',
   },
   {
-    title: 'Voice Notes for Outreach',
+    title: 'Voice notes for outreach',
     description:
       'Designed a voice messaging feature for the Buzz.ai sales outreach platform. Users can send quick voice messages in conversations or add pre-recorded voice notes to campaigns.',
     company: 'Buzz.ai',
@@ -52,7 +52,7 @@ export const projects = [
     href: '/projects/voice-notes-for-outreach',
   },
   {
-    title: 'Custom Prompts: From Preset Tones to a Reusable AI Writing System',
+    title: 'Custom prompts for AI comments',
     description:
       'I designed a reusable prompt system for Buzz.ai’s AI Comments, helping outreach teams control the style, language, and structure of generated LinkedIn comments.',
     company: 'Buzz.ai',
@@ -62,7 +62,7 @@ export const projects = [
     href: '/projects/custom-prompts-ai-comments',
   },
   {
-    title: 'DataForce Studio: One Workspace for Machine Learning Teams',
+    title: 'Machine learning workspace',
     description:
       'I helped take DataForce Studio from an early idea to a first release, bringing the main stages of machine-learning work into one workspace for enterprise teams.',
     company: 'DataForce Solutions',

@@ -154,7 +154,7 @@ export function CaseStudyCarouselPlaceholder({
   }
 
   return (
-    <figure className="mx-auto mt-5 flex w-full max-w-[800px] flex-col gap-3">
+    <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-3">
       <div
         className="relative aspect-[2400/1518] w-full overflow-hidden rounded-xl"
         ref={viewportRef}

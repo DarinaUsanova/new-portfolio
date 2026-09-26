@@ -1,23 +1,34 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
+import { CaseStudyFigure } from '@/components/CaseStudyFigure'
+import { CaseStudySections } from '@/components/CaseStudySections'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { campaignBuilderCase } from '@/data/campaignBuilderCase'
 
-const markerPhrases = [
-  'I led discovery and MVP design',
-  'sole product designer',
-  'users arranged steps manually',
-  'a single builder with a vertical workflow',
-  'workflow still visible',
-  'pointed to the step that needed attention',
-  'six of seven internal participants',
-  'MVP priorities and prototypes',
+const markerDefinitions = [
+  {
+    phrase: 'interviewed customers',
+    context: 'I interviewed customers, reviewed feedback',
+  },
+  {
+    phrase: 'MVP priorities',
+    context: 'turned the findings into questions and MVP priorities',
+  },
+  {
+    phrase: 'vertical workflow',
+    context: 'I proposed a single builder with a vertical workflow',
+  },
+  {
+    phrase: 'recover',
+    context: 'warnings and ways to recover work',
+  },
+  {
+    phrase: 'launch checks',
+    context: 'step editing, and launch checks',
+  },
 ] as const
 
-const markerPhraseSet = new Set<string>(markerPhrases)
-const markerPattern = new RegExp(`(${markerPhrases.join('|')})`, 'g')
 const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
 
 function getMarkerVariant(phrase: string) {
@@ -35,7 +46,25 @@ function getMarkerVariant(phrase: string) {
   return `case-marker--${gradientVariant} ${spacingVariant}`
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function renderMarkedText(text: string) {
+  const activeMarkers = markerDefinitions.filter(({ context }) =>
+    text.includes(context),
+  )
+
+  if (activeMarkers.length === 0) return text
+
+  const markerPhraseSet = new Set<string>(
+    activeMarkers.map(({ phrase }) => phrase),
+  )
+  const markerPattern = new RegExp(
+    `(?<!\\w)(${activeMarkers.map(({ phrase }) => escapeRegExp(phrase)).join('|')})(?!\\w)`,
+    'g',
+  )
+
   return text.split(markerPattern).map((part, index) =>
     markerPhraseSet.has(part) ? (
       <mark
@@ -53,86 +82,6 @@ function renderMarkedText(text: string) {
 
 function getSectionId(title: string) {
   return title.toLowerCase().replace(/\s+/g, '-')
-}
-
-function CaseStudyFigures({
-  figures,
-}: {
-  figures: readonly CaseStudyFigureProps[]
-}) {
-  if (figures.length === 0) return null
-
-  return (
-    <div className="mt-5 flex flex-col gap-5">
-      {figures.map((figure) => (
-        <CaseStudyFigure key={figure.caption} {...figure} />
-      ))}
-    </div>
-  )
-}
-
-function CaseStudySubsection({
-  subsection,
-  insight = false,
-}: {
-  subsection: {
-    title: string
-    paragraphs: readonly string[]
-    figures: readonly CaseStudyFigureProps[]
-    icon?: string
-  }
-  insight?: boolean
-}) {
-  return (
-    <div
-      className={
-        insight
-          ? 'flex w-full flex-col gap-2 rounded-xl'
-          : 'mt-8'
-      }
-      key={subsection.title}
-    >
-      <div
-        className={
-          insight
-            ? 'flex w-full items-center gap-2'
-            : 'mx-auto max-w-[600px]'
-        }
-      >
-        {insight && subsection.icon ? (
-          <div className="flex size-6 shrink-0 items-center justify-center rounded-[4px] bg-[#f2f2f2]">
-            <img
-              alt=""
-              aria-hidden="true"
-              className="size-4"
-              src={subsection.icon}
-            />
-          </div>
-        ) : null}
-        <h3
-          className={
-            insight
-              ? 'min-w-0 flex-1 break-words text-sm font-medium leading-normal text-muted'
-              : 'text-sm font-medium leading-5'
-          }
-        >
-          {subsection.title}
-        </h3>
-      </div>
-      <div
-        className={
-          insight
-            ? 'flex flex-col gap-2 text-sm font-normal leading-normal text-ink'
-            : 'mx-auto mt-2 flex w-full max-w-[600px] flex-col gap-2 text-sm leading-5'
-        }
-      >
-        {subsection.paragraphs.map((paragraph) => (
-          <p key={paragraph}>{renderMarkedText(paragraph)}</p>
-        ))}
-      </div>
-      <CaseStudyFigures figures={subsection.figures} />
-    </div>
-  )
 }
 
 function CaseStudyAside() {
@@ -237,10 +186,14 @@ function CaseStudyAside() {
 }
 
 export function CampaignBuilderCasePage() {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [])
+
   useEffect(() => {
     const previousTitle = document.title
     document.title =
-      'Campaign Builder: One Workflow for Simple and Complex Campaigns — Darina Usanova'
+      'Campaign builder: one workflow for sequential and branching campaigns | Darina Usanova'
 
     return () => {
       document.title = previousTitle
@@ -283,9 +236,9 @@ export function CampaignBuilderCasePage() {
 
                   return (
                     <Fragment key={item}>
-                      <span>{item.slice(0, separatorIndex + 1)}</span>
+                      <span>{item.slice(0, separatorIndex)}</span>
                       <span className="text-ink">
-                        {renderMarkedText(item.slice(separatorIndex + 1))}
+                        {renderMarkedText(item.slice(separatorIndex + 1).trim())}
                       </span>
                     </Fragment>
                   )
@@ -303,42 +256,11 @@ export function CampaignBuilderCasePage() {
             <CaseStudyFigure {...campaignBuilderCase.heroFigure} />
           </section>
 
-          {campaignBuilderCase.sections.map((section) => (
-            <section
-              className="mt-10 scroll-mt-20"
-              id={getSectionId(section.title)}
-              key={section.title}
-            >
-              <div className="mx-auto max-w-[600px] text-sm leading-5">
-                <h2 className="text-base font-medium">{section.title}</h2>
-                <div className="mt-2 flex flex-col gap-2">
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{renderMarkedText(paragraph)}</p>
-                  ))}
-                </div>
-              </div>
-
-              <CaseStudyFigures figures={section.figures} />
-
-              {section.subsections ? (
-                <div
-                  className={
-                    section.title === 'Key insights'
-                      ? 'mx-auto mt-2 flex max-w-[600px] flex-col items-start justify-center gap-5'
-                      : undefined
-                  }
-                >
-                  {section.subsections.map((subsection) => (
-                    <CaseStudySubsection
-                      insight={section.title === 'Key insights'}
-                      key={subsection.title}
-                      subsection={subsection}
-                    />
-                  ))}
-                </div>
-              ) : null}
-            </section>
-          ))}
+          <CaseStudySections
+            getSectionId={getSectionId}
+            renderText={renderMarkedText}
+            sections={campaignBuilderCase.sections}
+          />
         </article>
         <div className="mx-auto mt-10 w-full max-w-[600px]">
           <PortfolioFooter />

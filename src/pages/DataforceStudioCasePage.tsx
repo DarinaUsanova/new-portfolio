@@ -1,21 +1,34 @@
 import { Fragment, useEffect, useLayoutEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
+import { CaseStudyFigure } from '@/components/CaseStudyFigure'
+import { CaseStudySections } from '@/components/CaseStudySections'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { dataforceStudioCase } from '@/data/dataforceStudioCase'
 
-const markerPhrases = [
-  'I led product design for DataForce Studio',
-  'first and only designer on the project',
-  'flexible workflow',
-  'reusable components and interaction patterns',
-  'ready for its first users',
-  'used it in production workflows',
+const markerDefinitions = [
+  {
+    phrase: 'only designer',
+    context: 'first and only designer on the project',
+  },
+  {
+    phrase: 'product structure',
+    context: 'I owned the product structure',
+  },
+  {
+    phrase: 'iteration',
+    context: 'workflow for iteration',
+  },
+  {
+    phrase: 'reusable components',
+    context: 'I built reusable components and interaction patterns',
+  },
+  {
+    phrase: 'production workflows',
+    context: 'used it in production workflows',
+  },
 ] as const
 
-const markerPhraseSet = new Set<string>(markerPhrases)
-const markerPattern = new RegExp(`(${markerPhrases.join('|')})`, 'g')
 const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
 
 function getMarkerVariant(phrase: string) {
@@ -33,7 +46,25 @@ function getMarkerVariant(phrase: string) {
   return `case-marker--${gradientVariant} ${spacingVariant}`
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
 function renderMarkedText(text: string) {
+  const activeMarkers = markerDefinitions.filter(({ context }) =>
+    text.includes(context),
+  )
+
+  if (activeMarkers.length === 0) return text
+
+  const markerPhraseSet = new Set<string>(
+    activeMarkers.map(({ phrase }) => phrase),
+  )
+  const markerPattern = new RegExp(
+    `(?<!\\w)(${activeMarkers.map(({ phrase }) => escapeRegExp(phrase)).join('|')})(?!\\w)`,
+    'g',
+  )
+
   return text.split(markerPattern).map((part, index) =>
     markerPhraseSet.has(part) ? (
       <mark
@@ -51,22 +82,6 @@ function renderMarkedText(text: string) {
 
 function getSectionId(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
-}
-
-function CaseStudyFigures({
-  figures,
-}: {
-  figures: readonly CaseStudyFigureProps[]
-}) {
-  if (figures.length === 0) return null
-
-  return (
-    <div className="mt-5 flex flex-col gap-5">
-      {figures.map((figure) => (
-        <CaseStudyFigure key={figure.caption} {...figure} />
-      ))}
-    </div>
-  )
 }
 
 function CaseStudyAside() {
@@ -222,9 +237,9 @@ export function DataforceStudioCasePage() {
 
                   return (
                     <Fragment key={item}>
-                      <span>{item.slice(0, separatorIndex + 1)}</span>
+                      <span>{item.slice(0, separatorIndex)}</span>
                       <span className="text-ink">
-                        {renderMarkedText(item.slice(separatorIndex + 1))}
+                        {renderMarkedText(item.slice(separatorIndex + 1).trim())}
                       </span>
                     </Fragment>
                   )
@@ -243,30 +258,11 @@ export function DataforceStudioCasePage() {
             <CaseStudyFigure {...dataforceStudioCase.heroFigure} />
           </section>
 
-          {dataforceStudioCase.sections.map((section) => (
-            <section
-              className="mt-10 scroll-mt-20"
-              id={getSectionId(section.title)}
-              key={section.title}
-            >
-              {section.showHeading !== false || section.paragraphs.length > 0 ? (
-                <div className="mx-auto max-w-[600px] text-sm leading-5">
-                  {section.showHeading !== false && (
-                    <h2 className="text-base font-medium">{section.title}</h2>
-                  )}
-                  {section.paragraphs.length > 0 && (
-                    <div className="mt-2 flex flex-col gap-2">
-                      {section.paragraphs.map((paragraph) => (
-                        <p key={paragraph}>{renderMarkedText(paragraph)}</p>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ) : null}
-
-              <CaseStudyFigures figures={section.figures} />
-            </section>
-          ))}
+          <CaseStudySections
+            getSectionId={getSectionId}
+            renderText={renderMarkedText}
+            sections={dataforceStudioCase.sections}
+          />
         </article>
 
         <div className="mx-auto mt-10 w-full max-w-[600px]">

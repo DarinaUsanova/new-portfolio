@@ -5,9 +5,13 @@ import { createPortal } from 'react-dom'
 export type CaseStudyFigureProps = {
   alt: string
   caption: string
+  figureClassName?: string
+  imageClassName?: string
   lightboxSrc?: string
   priority?: boolean
   src: string
+  showCaption?: boolean
+  triggerClassName?: string
 }
 
 type ImageRect = {
@@ -381,9 +385,13 @@ function ImageLightbox({
 export function CaseStudyFigure({
   alt,
   caption,
+  figureClassName,
+  imageClassName,
   lightboxSrc,
   priority = false,
   src,
+  showCaption = true,
+  triggerClassName,
 }: CaseStudyFigureProps) {
   const [isMounted, setIsMounted] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
@@ -463,7 +471,7 @@ export function CaseStudyFigure({
   const image = (
     <img
       alt={alt}
-      className="block h-auto w-full max-w-[800px] rounded-xl object-contain"
+      className={`block h-auto w-full max-w-[800px] rounded-xl object-contain${imageClassName ? ` ${imageClassName}` : ''}`}
       decoding="async"
       fetchPriority={priority ? 'high' : 'auto'}
       loading={priority ? 'eager' : 'lazy'}
@@ -474,7 +482,11 @@ export function CaseStudyFigure({
 
   return (
     <>
-      <figure className="mx-auto flex w-full max-w-[800px] flex-col gap-1">
+      <figure
+        className={
+          figureClassName ?? 'mx-auto flex w-full max-w-[800px] flex-col gap-1'
+        }
+      >
         {isMobileViewport ? (
           image
         ) : (
@@ -482,7 +494,7 @@ export function CaseStudyFigure({
             aria-haspopup="dialog"
             aria-label={`Enlarge image: ${alt}`}
             aria-hidden={isSourceHidden || undefined}
-            className={`case-lightbox-trigger block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink${isSourceHidden ? ' case-lightbox-trigger--hidden' : ''}`}
+            className={`case-lightbox-trigger block w-full cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink${triggerClassName ? ` ${triggerClassName}` : ''}${isSourceHidden ? ' case-lightbox-trigger--hidden' : ''}`}
             onClick={handleOpen}
             ref={triggerRef}
             style={sourceSnapshot ? { height: `${sourceSnapshot.containerHeight}px` } : undefined}
@@ -491,9 +503,11 @@ export function CaseStudyFigure({
             {image}
           </button>
         )}
-        <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
-          {caption}
-        </figcaption>
+        {showCaption ? (
+          <figcaption className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]">
+            {caption}
+          </figcaption>
+        ) : null}
       </figure>
       {isMounted && sourceSnapshot && (
         <ImageLightbox

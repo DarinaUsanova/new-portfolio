@@ -48,11 +48,10 @@ type BuzzSelfServeActivationCase = {
 }
 
 export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
-  title: 'From Sales-Led Setup to Self-Serve Activation',
+  title: 'Self-serve signup and onboarding',
   metadata: [
-    'Role: Product Designer; sole designer on the initiative',
-    'Scope: Research, signup and sign-in, qualification, post-purchase onboarding, and implementation support',
-    'Team: Product Manager, Sales, Chief Revenue Officer, company leadership, and engineers',
+    'Scope: Signup, qualification and in-product onboarding',
+    'Team: Product, Sales, leadership and engineering',
     'Status: Launched',
   ],
   introduction: [
