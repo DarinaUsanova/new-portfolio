@@ -211,7 +211,7 @@ export function CaseStudyCarouselPlaceholder({
         {activeIndex > 0 ? (
           <button
             aria-label="Previous image"
-            className="carousel-control-hit-area absolute left-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            className="carousel-control-hit-area absolute left-2 top-1/2 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             onClick={() => move(-1)}
             type="button"
           >
@@ -221,7 +221,7 @@ export function CaseStudyCarouselPlaceholder({
         {activeIndex < slides.length - 1 ? (
           <button
             aria-label="Next image"
-            className="carousel-control-hit-area absolute right-2 top-1/2 flex size-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-[16px] bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            className="carousel-control-hit-area absolute right-2 top-1/2 flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-white shadow-[0_4px_18px_rgba(21,21,21,0.12)] transition-transform duration-150 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             onClick={() => move(1)}
             type="button"
           >
@@ -230,38 +230,43 @@ export function CaseStudyCarouselPlaceholder({
         ) : null}
       </div>
 
-      <AnimatePresence initial={false} mode="wait">
-        <motion.figcaption
-          animate="center"
-          aria-live="polite"
-          className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]"
-          exit="exit"
-          initial="enter"
-          key={activeIndex}
-          transition={captionTransition}
-          variants={captionVariants}
-        >
-          {activeSlide.caption}
-        </motion.figcaption>
-      </AnimatePresence>
+      <div aria-live="polite">
+        <AnimatePresence initial={false} mode="wait">
+          <motion.figcaption
+            animate="center"
+            className="px-2 text-center text-xs leading-5 text-muted [text-wrap:pretty]"
+            exit="exit"
+            initial="enter"
+            key={activeIndex}
+            transition={captionTransition}
+            variants={captionVariants}
+          >
+            {activeSlide.caption}
+          </motion.figcaption>
+        </AnimatePresence>
+      </div>
 
       <div
         aria-label="Choose image"
         className="flex items-center justify-center gap-2"
-        role="tablist"
+        role="group"
       >
         {slides.map((slide, index) => (
           <button
             aria-label={`Show image ${index + 1}: ${slide.label}`}
-            aria-selected={activeIndex === index}
-            className={`size-[6px] rounded-full transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink ${
-              activeIndex === index ? 'bg-ink' : 'bg-muted'
-            }`}
+            aria-current={activeIndex === index ? 'step' : undefined}
+            className="grid size-[7px] cursor-pointer place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             key={slide.label}
             onClick={() => goTo(index)}
-            role="tab"
             type="button"
-          />
+          >
+            <span
+              aria-hidden="true"
+              className={`size-[6px] rounded-full transition-colors duration-150 ${
+                activeIndex === index ? 'bg-ink' : 'bg-muted'
+              }`}
+            />
+          </button>
         ))}
       </div>
     </figure>

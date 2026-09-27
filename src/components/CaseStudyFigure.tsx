@@ -251,7 +251,7 @@ function ImageLightbox({
     if (appRoot) appRoot.inert = true
 
     if (!dialog.open) dialog.showModal()
-    dialog.focus({ preventScroll: true })
+    closeButtonRef.current?.focus({ preventScroll: true })
     if (image?.complete) void prepareImage()
 
     return () => {
@@ -361,7 +361,6 @@ function ImageLightbox({
       <div
         aria-label={alt}
         className="case-lightbox-stage"
-        onClick={onRequestClose}
         style={stageStyle}
       >
         <div className="case-lightbox-media" ref={mediaRef}>
@@ -379,7 +378,6 @@ function ImageLightbox({
       <p
         className="case-lightbox-caption"
         id={captionId}
-        onClick={(event) => event.stopPropagation()}
         style={captionStyle}
       >
         {caption}

@@ -1,4 +1,3 @@
-import { Agentation } from 'agentation'
 import { lazy, Suspense, type ReactNode } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
@@ -38,6 +37,11 @@ const NotFoundPage = lazy(() =>
 const SandboxPage = lazy(() =>
   import('@/pages/SandboxPage').then(({ SandboxPage }) => ({ default: SandboxPage })),
 )
+const Agentation = import.meta.env.DEV
+  ? lazy(() =>
+      import('agentation').then(({ Agentation }) => ({ default: Agentation })),
+    )
+  : () => null
 const VoiceNotesCasePage = lazy(() =>
   import('@/pages/VoiceNotesCasePage').then(({ VoiceNotesCasePage }) => ({
     default: VoiceNotesCasePage,
@@ -46,7 +50,17 @@ const VoiceNotesCasePage = lazy(() =>
 
 function LazyRoute({ children }: { children: ReactNode }) {
   return (
-    <Suspense fallback={<div aria-hidden="true" className="min-h-[240px]" />}>
+    <Suspense
+      fallback={(
+        <div
+          aria-live="polite"
+          className="flex min-h-[240px] items-center justify-center text-sm text-muted"
+          role="status"
+        >
+          Loading page…
+        </div>
+      )}
+    >
       {children}
     </Suspense>
   )
@@ -125,7 +139,11 @@ export default function App() {
           />
         </Route>
       </Routes>
-      {import.meta.env.DEV && <Agentation />}
+      {import.meta.env.DEV && (
+        <Suspense fallback={null}>
+          <Agentation />
+        </Suspense>
+      )}
     </>
   )
 }

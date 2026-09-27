@@ -1,9 +1,20 @@
+import { useEffect } from 'react'
+
 import flowImage from '@/assets/image-flow.png'
 import menuImage from '@/assets/image-menu.png'
 import promptBoxImage from '@/assets/prompt-box.png'
 import aiAssistantImage from '@/assets/ai-assistant.png'
 
 export function SandboxPage() {
+  useEffect(() => {
+    const previousTitle = document.title
+    document.title = 'Playground — Darina Usanova'
+
+    return () => {
+      document.title = previousTitle
+    }
+  }, [])
+
   return (
     <section
       aria-label="Animated notification stack playground"

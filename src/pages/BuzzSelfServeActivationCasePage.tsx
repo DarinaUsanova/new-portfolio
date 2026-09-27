@@ -213,19 +213,26 @@ export function BuzzSelfServeActivationCasePage() {
 
   useEffect(() => {
     const previousTitle = document.title
+    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+    const previousDescription = description?.content
     document.title =
       'From Sales-Led Setup to Self-Serve Activation — Darina Usanova'
+    if (description) description.content = buzzSelfServeActivationCase.introduction[0]
 
     return () => {
       document.title = previousTitle
+      if (description && previousDescription !== undefined) {
+        description.content = previousDescription
+      }
     }
   }, [])
 
   return (
     <div className="grid grid-cols-1 min-[1346px]:grid-cols-[minmax(0,1fr)_minmax(0,800px)_minmax(0,1fr)]">
+      <a className="skip-link" href="#case-study-main">Skip to content</a>
       <CaseStudyAside />
 
-      <main className="mx-auto w-[calc(100%-40px)] max-w-[800px] pb-10 pt-10 sm:pb-10 min-[1346px]:mt-20 min-[1346px]:w-full min-[1346px]:pt-0">
+      <main id="case-study-main" className="mx-auto w-[calc(100%-40px)] max-w-[800px] pb-10 pt-10 sm:pb-10 min-[1346px]:mt-20 min-[1346px]:w-full min-[1346px]:pt-0">
         <article aria-labelledby="case-study-title">
           <header className="mx-auto flex max-w-[600px] flex-col gap-5 text-sm leading-5">
             <div className="min-[1346px]:hidden">

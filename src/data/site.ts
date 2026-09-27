@@ -15,7 +15,7 @@ export const siteConfig = {
   links: {
     linkedin: 'https://www.linkedin.com/in/darina-usanova',
     telegram: 'https://t.me/darinushkaaa',
-    resume: 'https://example.com/resume-placeholder',
+    resume: 'https://drive.google.com/file/d/1c-3yjYYKsorsCeHhUxXSbJmPpriwFujW/view?usp=sharing',
   },
 } as const
 

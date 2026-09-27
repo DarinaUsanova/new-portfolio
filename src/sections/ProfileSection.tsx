@@ -22,18 +22,7 @@ function tabClassName(isActive: boolean) {
 
 export function ProfileSection() {
   const [isFlipped, setIsFlipped] = useState(false)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const resetFlipTimeout = useRef<number | null>(null)
-
-  useEffect(() => {
-    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const updateMotionPreference = () => setPrefersReducedMotion(motionPreference.matches)
-
-    updateMotionPreference()
-    motionPreference.addEventListener('change', updateMotionPreference)
-
-    return () => motionPreference.removeEventListener('change', updateMotionPreference)
-  }, [])
 
   useEffect(
     () => () => {
@@ -45,8 +34,6 @@ export function ProfileSection() {
   )
 
   function toggleTimedFlip() {
-    if (prefersReducedMotion) return
-
     if (resetFlipTimeout.current !== null) {
       window.clearTimeout(resetFlipTimeout.current)
       resetFlipTimeout.current = null
@@ -70,14 +57,11 @@ export function ProfileSection() {
         <div className="flex flex-col gap-5">
           <button
             aria-label={
-              prefersReducedMotion
-                ? 'Фото Дарины Усановой'
-                : isFlipped
-                  ? 'Вернуть основное фото Дарины Усановой'
-                  : 'Показать второе фото Дарины Усановой'
+              isFlipped
+                ? 'Вернуть основное фото Дарины Усановой'
+                : 'Показать второе фото Дарины Усановой'
             }
             className="profile-avatar-flip relative size-16 shrink-0 rounded-full"
-            disabled={prefersReducedMotion}
             onClick={(event) => {
               if (event.detail === 0) toggleTimedFlip()
             }}

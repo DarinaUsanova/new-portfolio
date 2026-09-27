@@ -4,7 +4,7 @@
   --color-canvas: #ffffff;
   --color-surface: #f5f5f5;
   --color-ink: #151515;
-  --color-muted: #949494;
+  --color-muted: #878787;
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
 }
@@ -27,8 +27,17 @@
   box-sizing: border-box;
 }
 
+button,
+a,
+input,
+select,
+textarea,
+[role='button'] {
+  touch-action: manipulation;
+}
+
 html {
-  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -42,9 +51,35 @@ h2 {
   text-wrap: balance;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  top: 8px;
+  left: 8px;
+  padding: 8px 12px;
+  transform: translateY(-150%);
+  border-radius: 8px;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 .portfolio-hit-area,
@@ -187,6 +222,23 @@ a {
     transition: none !important;
     transform: none !important;
   }
+
+  .profile-avatar-flip__face {
+    transition: opacity 150ms ease-out;
+  }
+
+  .profile-avatar-flip__face--back {
+    transform: none;
+    opacity: 0;
+  }
+
+  .profile-avatar-flip__inner[data-flipped='true'] .profile-avatar-flip__face--front {
+    opacity: 0;
+  }
+
+  .profile-avatar-flip__inner[data-flipped='true'] .profile-avatar-flip__face--back {
+    opacity: 1;
+  }
 }
 
 .case-placeholder {
@@ -236,7 +288,7 @@ a {
 }
 
 .case-placeholder__eyebrow {
-  color: #969696;
+  color: #707070;
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.08em;
@@ -443,12 +495,9 @@ a {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation: none !important;
-    transition: none !important;
+  html,
+  body {
+    scroll-behavior: auto;
   }
 
   .case-lightbox-backdrop {
