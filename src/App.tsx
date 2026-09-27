@@ -2,6 +2,7 @@ import { lazy, Suspense, type ReactNode } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { PortfolioLayout } from '@/components/PortfolioLayout'
+import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { SiteLayout } from '@/components/SiteLayout'
 
 const BuzzSelfServeActivationCasePage = lazy(() =>
@@ -69,6 +70,7 @@ function LazyRoute({ children }: { children: ReactNode }) {
 export default function App() {
   return (
     <>
+      <GoogleAnalytics />
       <Routes>
         <Route element={<SiteLayout />}>
           <Route element={<PortfolioLayout />}>
