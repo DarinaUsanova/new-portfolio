@@ -43,7 +43,7 @@ function LoopingVideo({
   return (
     <video
       aria-label={label}
-      className="project-cover-video block h-auto w-full max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
+      className="project-cover-video block h-auto w-4/5 max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
       height={1080}
       muted
       playsInline
@@ -70,7 +70,7 @@ export function ProjectCard({
   const content = (
     <>
       <div
-        className={`project-cover relative flex h-[400px] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f1f1f1] ${
+        className={`project-cover relative flex h-auto aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f1f1f1] sm:h-[400px] sm:aspect-auto ${
           video ? 'bg-cover bg-center' : ''
         }`}
         style={video ? { backgroundImage: `url(${cover})` } : undefined}
@@ -85,7 +85,7 @@ export function ProjectCard({
         ) : (
           <img
             alt={`${title} project cover`}
-            className="project-cover-image size-full object-cover"
+            className="project-cover-image size-full object-contain sm:object-cover"
             decoding="async"
             fetchPriority={priority ? 'high' : 'auto'}
             height={1200}
