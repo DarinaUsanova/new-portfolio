@@ -4,29 +4,12 @@ import { Route, Routes } from 'react-router-dom'
 import { PortfolioLayout } from '@/components/PortfolioLayout'
 import { GoogleAnalytics } from '@/components/GoogleAnalytics'
 import { SiteLayout } from '@/components/SiteLayout'
+import { BuzzSelfServeActivationCasePage } from '@/pages/BuzzSelfServeActivationCasePage'
+import { CampaignBuilderCasePage } from '@/pages/CampaignBuilderCasePage'
+import { CustomPromptsCasePage } from '@/pages/CustomPromptsCasePage'
+import { DataforceStudioCasePage } from '@/pages/DataforceStudioCasePage'
+import { VoiceNotesCasePage } from '@/pages/VoiceNotesCasePage'
 
-const BuzzSelfServeActivationCasePage = lazy(() =>
-  import('@/pages/BuzzSelfServeActivationCasePage').then(
-    ({ BuzzSelfServeActivationCasePage }) => ({
-      default: BuzzSelfServeActivationCasePage,
-    }),
-  ),
-)
-const CampaignBuilderCasePage = lazy(() =>
-  import('@/pages/CampaignBuilderCasePage').then(({ CampaignBuilderCasePage }) => ({
-    default: CampaignBuilderCasePage,
-  })),
-)
-const CustomPromptsCasePage = lazy(() =>
-  import('@/pages/CustomPromptsCasePage').then(({ CustomPromptsCasePage }) => ({
-    default: CustomPromptsCasePage,
-  })),
-)
-const DataforceStudioCasePage = lazy(() =>
-  import('@/pages/DataforceStudioCasePage').then(({ DataforceStudioCasePage }) => ({
-    default: DataforceStudioCasePage,
-  })),
-)
 const HomePage = lazy(() =>
   import('@/pages/HomePage').then(({ HomePage }) => ({ default: HomePage })),
 )
@@ -43,12 +26,6 @@ const Agentation = import.meta.env.DEV
       import('agentation').then(({ Agentation }) => ({ default: Agentation })),
     )
   : () => null
-const VoiceNotesCasePage = lazy(() =>
-  import('@/pages/VoiceNotesCasePage').then(({ VoiceNotesCasePage }) => ({
-    default: VoiceNotesCasePage,
-  })),
-)
-
 function LazyRoute({ children }: { children: ReactNode }) {
   return (
     <Suspense
@@ -93,43 +70,23 @@ export default function App() {
           </Route>
           <Route
             path="projects/campaign-builder-discovery"
-            element={
-              <LazyRoute>
-                <CampaignBuilderCasePage />
-              </LazyRoute>
-            }
+            element={<CampaignBuilderCasePage />}
           />
           <Route
             path="projects/buzz-self-serve-activation"
-            element={
-              <LazyRoute>
-                <BuzzSelfServeActivationCasePage />
-              </LazyRoute>
-            }
+            element={<BuzzSelfServeActivationCasePage />}
           />
           <Route
             path="projects/custom-prompts-ai-comments"
-            element={
-              <LazyRoute>
-                <CustomPromptsCasePage />
-              </LazyRoute>
-            }
+            element={<CustomPromptsCasePage />}
           />
           <Route
             path="projects/dataforce-studio"
-            element={
-              <LazyRoute>
-                <DataforceStudioCasePage />
-              </LazyRoute>
-            }
+            element={<DataforceStudioCasePage />}
           />
           <Route
             path="projects/voice-notes-for-outreach"
-            element={
-              <LazyRoute>
-                <VoiceNotesCasePage />
-              </LazyRoute>
-            }
+            element={<VoiceNotesCasePage />}
           />
           <Route
             path="*"
