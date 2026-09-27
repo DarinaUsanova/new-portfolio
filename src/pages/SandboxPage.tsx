@@ -1,6 +1,7 @@
 import flowImage from '@/assets/image-flow.png'
 import menuImage from '@/assets/image-menu.png'
 import promptBoxImage from '@/assets/prompt-box.png'
+import aiAssistantImage from '@/assets/ai-assistant.png'
 
 export function SandboxPage() {
   return (
@@ -18,6 +19,18 @@ export function SandboxPage() {
         />
         <figcaption className="text-center text-sm text-muted">
           Hero prompt box
+        </figcaption>
+      </figure>
+      <figure className="flex w-full max-w-[600px] flex-col gap-3">
+        <img
+          alt="AI Assistant"
+          className="h-auto w-full"
+          height={1200}
+          src={aiAssistantImage}
+          width={1800}
+        />
+        <figcaption className="text-center text-sm text-muted">
+          AI Assistant
         </figcaption>
       </figure>
       <figure className="flex w-full max-w-[600px] flex-col gap-3">

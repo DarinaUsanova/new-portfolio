@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import avatar from '@/assets/darina-avatar.jpg'
+import avatar from '@/assets/darina-avatar-figma.png'
+import alternateAvatar from '@/assets/back.png'
 import { CopyEmail } from '@/components/CopyEmail'
 import { siteConfig } from '@/data/site'
 import { cn } from '@/lib/cn'
@@ -19,17 +21,84 @@ function tabClassName(isActive: boolean) {
 }
 
 export function ProfileSection() {
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const resetFlipTimeout = useRef<number | null>(null)
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const updateMotionPreference = () => setPrefersReducedMotion(motionPreference.matches)
+
+    updateMotionPreference()
+    motionPreference.addEventListener('change', updateMotionPreference)
+
+    return () => motionPreference.removeEventListener('change', updateMotionPreference)
+  }, [])
+
+  useEffect(
+    () => () => {
+      if (resetFlipTimeout.current !== null) {
+        window.clearTimeout(resetFlipTimeout.current)
+      }
+    },
+    [],
+  )
+
+  function toggleTimedFlip() {
+    if (prefersReducedMotion) return
+
+    if (resetFlipTimeout.current !== null) {
+      window.clearTimeout(resetFlipTimeout.current)
+      resetFlipTimeout.current = null
+    }
+
+    if (isFlipped) {
+      setIsFlipped(false)
+      return
+    }
+
+    setIsFlipped(true)
+    resetFlipTimeout.current = window.setTimeout(() => {
+      setIsFlipped(false)
+      resetFlipTimeout.current = null
+    }, 5000)
+  }
+
   return (
     <section aria-labelledby="about-heading" className="bg-canvas">
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-[60px]">
         <div className="flex flex-col gap-5">
-          <img
-            alt="Darina Usanova"
-            className="size-16 rounded-full object-cover"
-            height="64"
-            src={avatar}
-            width="64"
-          />
+          <button
+            aria-label={
+              prefersReducedMotion
+                ? 'Фото Дарины Усановой'
+                : isFlipped
+                  ? 'Вернуть основное фото Дарины Усановой'
+                  : 'Показать второе фото Дарины Усановой'
+            }
+            className="profile-avatar-flip relative size-16 shrink-0 rounded-full"
+            disabled={prefersReducedMotion}
+            onClick={(event) => {
+              if (event.detail === 0) toggleTimedFlip()
+            }}
+            onPointerUp={(event) => {
+              if (event.pointerType === 'touch') toggleTimedFlip()
+            }}
+            type="button"
+          >
+            <span className="profile-avatar-flip__inner" data-flipped={isFlipped}>
+              <span className="profile-avatar-flip__face profile-avatar-flip__face--front">
+                <img
+                  alt=""
+                  className="absolute left-[-14.22%] top-[-10.86%] h-[185.21%] w-[138.91%] max-w-none"
+                  src={avatar}
+                />
+              </span>
+              <span className="profile-avatar-flip__face profile-avatar-flip__face--back">
+                <img alt="" className="size-full object-cover" src={alternateAvatar} />
+              </span>
+            </span>
+          </button>
 
           <div className="flex flex-col gap-5">
             <div className="leading-5">

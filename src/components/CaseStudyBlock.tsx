@@ -41,7 +41,7 @@ export function CaseStudyBlock({
   const hasMedia = figures.length > 0 || carousel.length > 0
 
   return (
-    <div className="case-study-block flex flex-col gap-5">
+    <div className="case-study-block flex flex-col gap-10">
       {showHeading || paragraphs.length > 0 || journeys.length > 0 ? (
         <div className="mx-auto flex w-full max-w-[600px] flex-col gap-2 text-sm leading-5">
           {showHeading ? (
@@ -90,7 +90,7 @@ export function CaseStudyBlock({
         </div>
       ) : null}
       {hasMedia ? (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-10">
           {figures.map((figure) => (
             'src' in figure ? (
               <CaseStudyFigure key={figure.caption} {...figure} />
