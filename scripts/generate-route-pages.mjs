@@ -87,6 +87,7 @@ for (const page of pages) {
   const html = template
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
     .replace(/<meta\s+name="description"[^>]*\/>/, '')
+    .replace(/<meta\s+(?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*\/>\s*/g, '')
     .replace('</head>', `    ${metadata}\n  </head>`)
   const pageDirectory = join(outputRoot, page.path)
 
