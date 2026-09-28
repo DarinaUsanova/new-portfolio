@@ -1,0 +1,12 @@
+<svg width="1800" height="1200" viewBox="0 0 1800 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1800" height="1200" rx="32" fill="#F3F3F3"/>
+  <rect x="180" y="190" width="1440" height="820" rx="26" fill="#E8E8E8"/>
+  <rect x="250" y="260" width="330" height="750" rx="18" fill="#DCDCDC"/>
+  <rect x="630" y="260" width="920" height="64" rx="14" fill="#D8D8D8"/>
+  <rect x="630" y="370" width="420" height="280" rx="18" fill="#F8F8F8"/>
+  <rect x="1090" y="370" width="460" height="280" rx="18" fill="#F8F8F8"/>
+  <rect x="630" y="700" width="920" height="42" rx="12" fill="#D8D8D8"/>
+  <rect x="630" y="770" width="650" height="34" rx="12" fill="#D8D8D8"/>
+  <rect x="630" y="830" width="780" height="34" rx="12" fill="#E0E0E0"/>
+  <text x="900" y="1110" text-anchor="middle" fill="#979797" font-family="Arial, sans-serif" font-size="32" font-weight="600">IMAGE PLACEHOLDER</text>
+</svg>

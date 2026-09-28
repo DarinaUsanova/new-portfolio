@@ -1,67 +1,50 @@
 # Design QA
 
-## Latest comparison — My Role block
-
-- Source visual truth: `/var/folders/rv/0nzm479j7737cs9qn074fy000000gp/T/codex-clipboard-f6638251-9b4d-4a91-b4e8-57f36dc82bc1.png` (1228 × 244 px)
-- Implementation: `http://127.0.0.1:5175/projects/campaign-builder-discovery`
-- Implementation screenshot: Codex in-app Browser capture (1265 × 710 px, 1×; the browser surface does not expose a persistent filesystem path)
-- State: light theme, page top
-- Full-view evidence: the new section sits between Context and Problem and preserves the established page grid.
-- Focused-region evidence: the rendered heading and paragraph match the reference structure within the existing 600 px text column.
-- Fonts and typography: existing Geist hierarchy is preserved.
-- Spacing and layout rhythm: the block reuses the established case-section spacing.
-- Colors and visual tokens: text uses `ink` on `canvas`.
-- Image quality and asset fidelity: the reference contains no image assets.
-- Copy and content: heading and paragraph match the supplied reference.
-- Interaction and technical checks: `My Role` appears in the side navigation and its section anchor is present.
-- Findings: no actionable P0, P1, or P2 differences.
-
 ## Comparison target
 
-- Source visual truth: `/var/folders/rv/0nzm479j7737cs9qn074fy000000gp/T/codex-clipboard-394615a3-6955-4e1f-9f89-3bd6136bbc5a.png` plus the user's instruction that the main content container be centered in the viewport
-- Implementation: `http://127.0.0.1:5173/projects/campaign-builder-discovery`
-- Implementation screenshot path: Codex in-app Browser capture for the local URL (the browser surface does not expose a persistent filesystem path)
-- Desktop viewport: 1280 × 720 CSS px, 1× density
+- Source visual truth: `/Users/darina/Desktop/портфолио новое/Inbox.png`, `/Users/darina/Desktop/портфолио новое/Add step.png`, `/Users/darina/Desktop/портфолио новое/Resources.png`, `/Users/darina/Desktop/портфолио новое/Resources New.png`, `/Users/darina/Desktop/портфолио новое/Add recording.png`, `/Users/darina/Desktop/портфолио новое/Voice Note Step.png`, and `/Users/darina/Desktop/портфолио новое/Campaigns Editor/Send Voice Note.png` (each 2400 × 1440 px; 5:3)
+- Implementation: `http://127.0.0.1:4173/projects/voice-notes-for-outreach`
+- Implementation screenshot path: Codex in-app Browser capture for the local URL; the browser surface does not expose a persistent filesystem path
+- Desktop viewport: 1440 × 900 CSS px, 1× density
 - Mobile viewport: 390 × 844 CSS px, 1× density
-- State: page top, light theme
+- State: light theme, page top and scrolled campaign/library states
 
 ## Findings
 
-- No remaining P0, P1, or P2 issues in the requested layout behavior.
-- Fonts and typography: the existing Geist type system, weights, sizes, line heights, wrapping, and hierarchy remain unchanged.
-- Spacing and layout rhythm: the 800 px `<main>` container is centered against the usable viewport, while the aside remains independently fixed at `left: 80px` and `top: 80px`.
-- Colors and visual tokens: existing portfolio tokens (`canvas`, `ink`, and hover opacity) are preserved.
-- Image quality and asset fidelity: the user-provided 14 × 14 SVG remains the unchanged Index icon; no replacement or code-drawn icon is used.
-- Copy and content: Index, Context, Problem, and Process are unchanged and link to the correct destinations.
-- Responsiveness: at 390 px the aside returns to normal document flow, its section list is hidden, and Index remains visible. Horizontal overflow was not introduced.
-- Accessibility: the aside remains a semantic `aside` with a labelled `nav`; links retain visible keyboard focus styles.
-- Document structure: `aside` and `main` are sibling landmarks; `main.contains(aside)` is false.
+- No remaining P0, P1, or P2 issues.
+- Fonts and typography: the existing Geist type system, weights, sizes, line heights, wrapping, and hierarchy are preserved from the existing case-study page.
+- Spacing and layout rhythm: the new page uses the established 800 px case-study column, 600 px reading column, 40 px section rhythm, and desktop side navigation.
+- Colors and visual tokens: existing `canvas`, `ink`, `muted`, and blue marker treatments are preserved.
+- Image quality and asset fidelity: all seven user-provided screens are copied into `src/assets/voice-notes-case/` and rendered as separate raster figures. Every screen keeps the source 5:3 ratio; related campaign/library states are shown sequentially so no screenshot is nested inside another.
+- Copy and content: the page follows the updated `cases/voice-notes-for-outreach.md`, including the post-launch adoption evidence and the future AI-assisted Voice Notes opportunity.
+- Responsiveness: at 390 × 844 the desktop aside is hidden, Index remains available, all related screens stay in normal document flow, and DOM evidence reported `scrollWidth === clientWidth === 375` with no broken images.
+- Accessibility: the page has one labelled article heading, semantic `aside` and labelled section navigation, descriptive alt text for each visible screen, captions for figures, and visible keyboard focus styles.
+- Key insights: each insight heading uses the supplied 16 × 16 px `Message.svg` or `Library.svg` asset in the same 24 × 24 px container treatment as the first case study.
 
 ## Full-view comparison evidence
 
-- The annotated before-state and the implementation were captured together at 1280 × 720.
-- The pre-fix screenshot showed the content wrapper offset to the right by `xl:ml-[396px]` inside a 1336 px main container.
-- Post-fix DOM evidence measured the main at x=232.5, width=800, and center=632.5; the usable viewport center was also 632.5.
-- The aside remained outside `<main>` and measured x=80, y=80 with `position: fixed`.
+- At 1440 × 900, the page top shows the title, metadata, highlighted lead, hero Inbox screen, and the desktop section navigation; the 800 px image column is centered in the usable viewport.
+- At 390 × 844, the page top shows the mobile Index link, wrapped metadata, lead copy, and hero screen without horizontal overflow.
 
 ## Focused-region evidence
 
-A separate crop was not needed because the full-width comparison clearly showed both the main container edges and fixed aside. DOM measurements provided exact center coordinates.
+- The campaign figures were checked in the scrolled desktop state: `Send Voice Note.png` and `Add recording.png` appear as separate full-width figures with their own captions.
+- The recording-library figures were checked in the scrolled desktop state: `Resources.png` and `Resources New.png` appear as separate full-width figures with their own captions.
 
 ## Comparison history
 
-- Earlier P2: the implementation used `position: sticky`, so the menu was tied to the layout container rather than the viewport.
-- Fix: changed the desktop aside to `position: fixed; left: 80px; top: 80px` and matched the reference's mobile fallback.
-- Post-fix evidence: at scrollY=1440 the aside remained at x=80, y=80; at 390 × 844 it measured `position: static` and the section navigation was hidden.
-- Later P2: the 800 px content wrapper was shifted right with `xl:ml-[396px]`, so its center did not match the viewport center.
-- Fix: made `<main>` the 800 px container and removed the offset wrapper.
-- Post-fix evidence: `<main>` center and viewport center both measured 632.5 px at the 1280 × 720 QA viewport.
+- Initial implementation: added the new Voice Notes case as a route, home-page card, and markdown-backed data model using the supplied screens.
+- Verification pass: confirmed separate figure presentation, desktop side navigation, mobile layout, and exact 5:3 image presentation.
+- Feedback fix: removed the nested screenshot overlays from the campaign and recording-library figures.
+- Post-fix evidence: all related screens render independently; no screenshot is used as a child visual inside another screenshot.
 
 ## Interaction and technical checks
 
-- Index returns to the portfolio home page.
-- Section anchors continue to update the URL hash and scroll to the selected section.
+- The Voice Notes card opens `/projects/voice-notes-for-outreach`.
+- Index returns to `/`.
+- Desktop section navigation updates the hash and scrolls `#key-insights` to the top focus line.
 - Browser console errors and warnings: none.
+- Broken images: none; all rendered images reported a loaded natural width.
 - `npm run build`: passed.
 
 final result: passed

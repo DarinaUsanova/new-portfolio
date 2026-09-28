@@ -9,7 +9,7 @@ export function NotFoundPage() {
         Page not found
       </h1>
       <Link
-        className="mt-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity duration-150 [transition-timing-function:ease] hover:opacity-60 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        className="portfolio-hit-area--standalone mt-8 inline-flex items-center gap-2 text-sm font-medium transition-opacity duration-150 [transition-timing-function:ease] hover:opacity-60 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
         to="/"
       >
         <ArrowLeft aria-hidden="true" size={16} />
