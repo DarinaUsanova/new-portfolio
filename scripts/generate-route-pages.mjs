@@ -60,6 +60,13 @@ function escapeHtml(value) {
 const template = await readFile(join(outputRoot, 'index.html'), 'utf8')
 const assets = await readdir(join(outputRoot, 'assets'))
 
+const playgroundDirectory = join(outputRoot, 'sandbox')
+await mkdir(playgroundDirectory, { recursive: true })
+await writeFile(
+  join(playgroundDirectory, 'index.html'),
+  template.replace(/<title>[^<]*<\/title>/, '<title>Playground — Darina Usanova</title>'),
+)
+
 for (const page of pages) {
   const imageFile = assets.find((file) => file.startsWith(`${page.image}-`) && file.endsWith('.png'))
   if (!imageFile) throw new Error(`Could not find the built cover image for ${page.path}`)
