@@ -4,6 +4,7 @@ import flowImage from '@/assets/image-flow.png'
 import menuImage from '@/assets/image-menu.png'
 import promptBoxImage from '@/assets/prompt-box.png'
 import aiAssistantImage from '@/assets/ai-assistant.png'
+import statusesImage from '@/assets/statuses.png'
 
 export function SandboxPage() {
   useEffect(() => {
@@ -80,6 +81,18 @@ export function SandboxPage() {
         />
         <figcaption className="text-center text-sm text-muted">
           Workflow automation
+        </figcaption>
+      </figure>
+      <figure className="flex w-full max-w-[600px] flex-col gap-3">
+        <img
+          alt="Status indicator designs"
+          className="h-auto w-full"
+          height={1260}
+          src={statusesImage}
+          width={1800}
+        />
+        <figcaption className="text-center text-sm text-muted">
+          Status indicator
         </figcaption>
       </figure>
     </section>
