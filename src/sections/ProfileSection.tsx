@@ -123,11 +123,12 @@ export function ProfileSection() {
                 <img
                   alt=""
                   className="absolute left-[-14.22%] top-[-10.86%] h-[185.21%] w-[138.91%] max-w-none"
+                  draggable={false}
                   src={avatar}
                 />
               </span>
               <span className="profile-avatar-flip__face profile-avatar-flip__face--back">
-                <img alt="" className="size-full object-cover" src={alternateAvatar} />
+                <img alt="" className="size-full object-cover" draggable={false} src={alternateAvatar} />
               </span>
             </span>
           </button>

@@ -412,6 +412,12 @@ p {
   transition: transform 600ms ease-in-out;
 }
 
+.profile-avatar-flip img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 .profile-avatar-flip[data-intro='true'] .profile-avatar-flip__inner {
   transform-origin: top left;
   animation: profile-avatar-photo-intro 1200ms linear backwards;
