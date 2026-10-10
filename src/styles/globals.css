@@ -172,6 +172,12 @@ p {
 }
 
 .project-cover-video-frame {
+  box-shadow:
+    0 199px 56px 0 rgba(134, 137, 152, 0),
+    0 127px 51px 0 rgba(134, 137, 152, 0),
+    0 72px 43px 0 rgba(134, 137, 152, 0.01),
+    0 32px 32px 0 rgba(134, 137, 152, 0.02),
+    0 8px 18px 0 rgba(134, 137, 152, 0.02);
   transform: scale(1);
   transition: transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
@@ -196,6 +202,10 @@ p {
 
 .preview-ghost[data-ready='true'] {
   opacity: 0;
+}
+
+.project-cover .preview-ghost {
+  background: inherit;
 }
 
 .playground-preview-media {

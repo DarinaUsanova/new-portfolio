@@ -1,9 +1,13 @@
-import campaignBuilderCover from '@/assets/campaign-builder-cover.png'
-import customPromptsCover from '@/assets/custom-prompts-cover.png'
-import dataforceStudioCover from '@/assets/dataforce-studio-cover.png'
+import campaignBuilderCover800 from '@/assets/campaign-builder-cover-800.webp'
+import campaignBuilderCover1800 from '@/assets/campaign-builder-cover-1800.webp'
+import customPromptsCover800 from '@/assets/custom-prompts-cover-800.webp'
+import customPromptsCover1800 from '@/assets/custom-prompts-cover-1800.webp'
+import dataforceStudioCover800 from '@/assets/dataforce-studio-cover-800.webp'
+import dataforceStudioCover1800 from '@/assets/dataforce-studio-cover-1800.webp'
 import buzzSelfServeActivationPoster from '@/assets/buzz-self-serve-activation-poster.jpg'
 import buzzSelfServeActivationVideo from '@/assets/buzz-self-serve-activation-preview.mp4'
-import voiceMessagingCover from '@/assets/voice-messaging-cover.png'
+import voiceMessagingCover800 from '@/assets/voice-messaging-cover-800.webp'
+import voiceMessagingCover1800 from '@/assets/voice-messaging-cover-1800.webp'
 
 export const siteConfig = {
   name: 'Darina Usanova',
@@ -38,7 +42,8 @@ export const projects = [
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',
-    cover: campaignBuilderCover,
+    cover: campaignBuilderCover1800,
+    coverSrcSet: `${campaignBuilderCover800} 800w, ${campaignBuilderCover1800} 1800w`,
     href: '/projects/campaign-builder-discovery',
   },
   {
@@ -48,7 +53,8 @@ export const projects = [
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',
-    cover: voiceMessagingCover,
+    cover: voiceMessagingCover1800,
+    coverSrcSet: `${voiceMessagingCover800} 800w, ${voiceMessagingCover1800} 1800w`,
     href: '/projects/voice-notes-for-outreach',
   },
   {
@@ -58,7 +64,8 @@ export const projects = [
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2025',
-    cover: customPromptsCover,
+    cover: customPromptsCover1800,
+    coverSrcSet: `${customPromptsCover800} 800w, ${customPromptsCover1800} 1800w`,
     href: '/projects/custom-prompts-ai-comments',
   },
   {
@@ -68,7 +75,8 @@ export const projects = [
     company: 'DataForce Solutions',
     role: 'Founding Product Designer',
     year: '2024–2025',
-    cover: dataforceStudioCover,
+    cover: dataforceStudioCover1800,
+    coverSrcSet: `${dataforceStudioCover800} 800w, ${dataforceStudioCover1800} 1800w`,
     href: '/projects/dataforce-studio',
   },
 ] as const

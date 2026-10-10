@@ -23,6 +23,7 @@ const pages = [
     description:
       "I researched and designed an MVP concept for Buzz.ai's campaign builder, bringing sequential and branching campaigns into one workflow.",
     image: 'campaign-builder-cover',
+    socialImage: 'campaign-builder-cover.jpg',
     imageAlt: 'Unified campaign builder project cover',
   },
   {
@@ -31,6 +32,7 @@ const pages = [
     description:
       'Designed a voice messaging feature for the Buzz.ai sales outreach platform. Users can send quick voice messages in conversations or add pre-recorded voice notes to campaigns.',
     image: 'voice-messaging-cover',
+    socialImage: 'voice-messaging-cover.jpg',
     imageAlt: 'Voice notes for outreach project cover',
   },
   {
@@ -39,6 +41,7 @@ const pages = [
     description:
       'I designed a reusable prompt system for Buzz.ai’s AI Comments, helping outreach teams control the style, language, and structure of generated LinkedIn comments.',
     image: 'custom-prompts-cover',
+    socialImage: 'custom-prompts-cover.jpg',
     imageAlt: 'Custom prompts for AI comments project cover',
   },
   {
@@ -47,6 +50,7 @@ const pages = [
     description:
       'I helped take DataForce Studio from an early idea to a first release, bringing the main stages of machine-learning work into one workspace for enterprise teams.',
     image: 'dataforce-studio-cover',
+    socialImage: 'dataforce-studio-cover.jpg',
     imageAlt: 'Machine learning workspace project cover',
   },
 ]
@@ -70,11 +74,11 @@ await writeFile(
 )
 
 for (const page of pages) {
-  const imageFile = assets.find((file) => file.startsWith(`${page.image}-`) && /\.(png|jpg)$/.test(file))
+  const imageFile = page.socialImage ?? assets.find((file) => file.startsWith(`${page.image}-`) && /\.(png|jpg)$/.test(file))
   if (!imageFile) throw new Error(`Could not find the built cover image for ${page.path}`)
 
   const pageUrl = `${siteOrigin}/${page.path}`
-  const imageUrl = `${siteOrigin}/assets/${imageFile}`
+  const imageUrl = `${siteOrigin}/${page.socialImage ? 'og' : 'assets'}/${imageFile}`
   const title = escapeHtml(page.title)
   const description = escapeHtml(page.description)
   const metadata = [

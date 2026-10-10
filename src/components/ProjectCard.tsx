@@ -16,6 +16,7 @@ type ProjectCardProps = {
   role: string
   year: string
   cover: string
+  coverSrcSet?: string
   href?: string
   priority?: boolean
   video?: string
@@ -57,7 +58,7 @@ function LoopingVideo({
   })
 
   return (
-    <div className="project-cover-video-frame relative aspect-[1796/1080] w-4/5 max-w-[480px] overflow-hidden rounded-[4px] [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]">
+    <div className="project-cover-video-frame relative aspect-[1796/1080] w-4/5 max-w-[480px] overflow-hidden rounded-[4px]">
       <img
         alt=""
         className="absolute inset-0 size-full object-contain"
@@ -95,6 +96,7 @@ export function ProjectCard({
   role,
   year,
   cover,
+  coverSrcSet,
   href,
   priority = false,
   video,
@@ -111,7 +113,7 @@ export function ProjectCard({
   const content = (
     <>
       <div
-        className="project-cover relative flex h-auto aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f1f1f1] sm:h-[400px] sm:aspect-auto"
+        className="project-cover relative flex h-auto aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-xl bg-[#fafafa] sm:h-[400px] sm:aspect-auto"
       >
         <PreviewGhost ready={isCoverReady} />
         {video ? (
@@ -132,7 +134,9 @@ export function ProjectCard({
             loading={priority ? 'eager' : 'lazy'}
             data-ready={isCoverReady}
             onLoad={markCoverReady}
+            sizes={coverSrcSet ? '(min-width: 640px) 600px, calc(100vw - 40px)' : undefined}
             src={cover}
+            srcSet={coverSrcSet}
             width={1800}
           />
         )}
