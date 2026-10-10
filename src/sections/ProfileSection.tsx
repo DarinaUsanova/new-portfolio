@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import avatar from '@/assets/darina-avatar-figma.png'
-import alternateAvatar from '@/assets/back.png'
 import { CopyEmail } from '@/components/CopyEmail'
 import { siteConfig } from '@/data/site'
 import { cn } from '@/lib/cn'
+
+let hasPlayedAvatarIntro = false
 
 function Divider() {
   return <span aria-hidden="true" className="size-0.5 rounded-full bg-muted" />
@@ -21,34 +22,47 @@ function tabClassName(isActive: boolean) {
 }
 
 export function ProfileSection() {
-  const [isFlipped, setIsFlipped] = useState(false)
-  const resetFlipTimeout = useRef<number | null>(null)
+  const [isFrameActive, setIsFrameActive] = useState(false)
+  const [isHoverSuppressed, setIsHoverSuppressed] = useState(false)
+  const [isIntroPlaying, setIsIntroPlaying] = useState(
+    () => !hasPlayedAvatarIntro && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const resetFrameTimeout = useRef<number | null>(null)
+
+  useEffect(() => {
+    if (!isIntroPlaying) return
+
+    hasPlayedAvatarIntro = true
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const stopIntro = () => {
+      if (motionPreference.matches) setIsIntroPlaying(false)
+    }
+
+    motionPreference.addEventListener('change', stopIntro)
+    return () => motionPreference.removeEventListener('change', stopIntro)
+  }, [isIntroPlaying])
 
   useEffect(
     () => () => {
-      if (resetFlipTimeout.current !== null) {
-        window.clearTimeout(resetFlipTimeout.current)
+      if (resetFrameTimeout.current !== null) {
+        window.clearTimeout(resetFrameTimeout.current)
       }
     },
     [],
   )
 
-  function toggleTimedFlip() {
-    if (resetFlipTimeout.current !== null) {
-      window.clearTimeout(resetFlipTimeout.current)
-      resetFlipTimeout.current = null
+  function showFrame() {
+    if (resetFrameTimeout.current !== null) {
+      window.clearTimeout(resetFrameTimeout.current)
     }
 
-    if (isFlipped) {
-      setIsFlipped(false)
-      return
-    }
-
-    setIsFlipped(true)
-    resetFlipTimeout.current = window.setTimeout(() => {
-      setIsFlipped(false)
-      resetFlipTimeout.current = null
-    }, 5000)
+    setIsHoverSuppressed(false)
+    setIsFrameActive(true)
+    resetFrameTimeout.current = window.setTimeout(() => {
+      setIsFrameActive(false)
+      setIsHoverSuppressed(true)
+      resetFrameTimeout.current = null
+    }, 2000)
   }
 
   return (
@@ -56,36 +70,61 @@ export function ProfileSection() {
       <div className="flex flex-col gap-[60px]">
         <div className="flex flex-col gap-5">
           <button
-            aria-label={
-              isFlipped
-                ? 'Вернуть основное фото Дарины Усановой'
-                : 'Показать второе фото Дарины Усановой'
-            }
-            className="profile-avatar-flip relative size-16 shrink-0 rounded-full"
+            aria-label="Выделить фото Дарины Усановой"
+            className="profile-avatar relative size-[76px] shrink-0"
+            data-frame-active={isFrameActive}
+            data-hover-suppressed={isHoverSuppressed}
+            data-intro={isIntroPlaying}
             onClick={(event) => {
-              if (event.detail === 0) toggleTimedFlip()
+              showFrame()
+              if (event.detail > 0) event.currentTarget.blur()
             }}
-            onPointerUp={(event) => {
-              if (event.pointerType === 'touch') toggleTimedFlip()
-            }}
+            onPointerLeave={() => setIsHoverSuppressed(false)}
             type="button"
           >
-            <span className="profile-avatar-flip__inner" data-flipped={isFlipped}>
-              <span className="profile-avatar-flip__face profile-avatar-flip__face--front">
+            <span aria-hidden="true" className="profile-avatar-hover-label">img</span>
+            <span aria-hidden="true" className="profile-avatar-size-pill">
+              <span>76</span>
+              <span>×</span>
+              <span>76</span>
+            </span>
+            <span
+              aria-hidden="true"
+              className="profile-avatar-frame"
+              onAnimationEnd={(event) => {
+                if (
+                  event.target === event.currentTarget &&
+                  event.animationName === 'profile-avatar-frame-intro'
+                ) {
+                  setIsIntroPlaying(false)
+                }
+              }}
+            >
+              <span className="profile-avatar-frame__drawing">
+                <span className="profile-avatar-frame__line profile-avatar-frame__line--top" />
+                <span className="profile-avatar-frame__line profile-avatar-frame__line--right" />
+                <span className="profile-avatar-frame__line profile-avatar-frame__line--bottom" />
+                <span className="profile-avatar-frame__line profile-avatar-frame__line--left" />
+                <span className="profile-avatar-frame__corner profile-avatar-frame__corner--top-left" />
+                <span className="profile-avatar-frame__corner profile-avatar-frame__corner--top-right" />
+                <span className="profile-avatar-frame__corner profile-avatar-frame__corner--bottom-left" />
+                <span className="profile-avatar-frame__corner profile-avatar-frame__corner--bottom-right" />
+              </span>
+            </span>
+            <span className="profile-avatar__inner">
+              <span className="profile-avatar__photo">
                 <img
                   alt=""
                   className="absolute left-[-14.22%] top-[-10.86%] h-[185.21%] w-[138.91%] max-w-none"
+                  draggable={false}
                   src={avatar}
                 />
-              </span>
-              <span className="profile-avatar-flip__face profile-avatar-flip__face--back">
-                <img alt="" className="size-full object-cover" src={alternateAvatar} />
               </span>
             </span>
           </button>
 
           <div className="flex flex-col gap-5">
-            <div className="leading-5">
+            <div className="portfolio-intro-item portfolio-intro-item--name leading-5">
               <h1 className="text-base font-medium" id="about-heading">
                 {siteConfig.name}
               </h1>
@@ -93,10 +132,10 @@ export function ProfileSection() {
             </div>
 
             <div className="flex max-w-[600px] flex-col gap-4 text-sm leading-5">
-              <p>{siteConfig.bio}</p>
-              <p>{siteConfig.previous}</p>
+              <p className="portfolio-intro-item portfolio-intro-item--bio">{siteConfig.bio}</p>
+              <p className="portfolio-intro-item portfolio-intro-item--previous">{siteConfig.previous}</p>
 
-              <div className="flex flex-wrap items-center gap-1.5 text-muted">
+              <div className="portfolio-intro-item portfolio-intro-item--links flex flex-wrap items-center gap-1.5 text-muted">
                 <a
                   className="portfolio-hit-area inline-flex items-center cursor-pointer transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   href={siteConfig.links.linkedin}
@@ -130,7 +169,7 @@ export function ProfileSection() {
           </div>
         </div>
 
-        <nav aria-label="Portfolio sections" className="flex gap-1">
+        <nav aria-label="Portfolio sections" className="portfolio-intro-item portfolio-intro-item--nav flex gap-1">
           <NavLink
             className={({ isActive }) => tabClassName(isActive)}
             end

@@ -6,6 +6,7 @@ import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStu
 import { CaseStudySections } from '@/components/CaseStudySections'
 import type { CaseStudyBlockContent } from '@/components/CaseStudyBlock'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
+import { scrollToCaseSection } from '@/components/scrollToCaseSection'
 
 type CaseStudy = {
   title: string
@@ -18,23 +19,6 @@ type CaseStudy = {
 type MarkerDefinition = {
   phrase: string
   context: string
-}
-
-const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
-
-function getMarkerVariant(phrase: string) {
-  let hash = 0
-
-  for (const character of phrase) {
-    hash = (hash * 31 + character.charCodeAt(0)) >>> 0
-  }
-
-  const gradientVariant = markerGradientVariants[hash % markerGradientVariants.length]
-  const spacingVariant = Math.floor(hash / markerGradientVariants.length) % 2 === 0
-    ? 'case-marker--closed'
-    : 'case-marker--open'
-
-  return `case-marker--${gradientVariant} ${spacingVariant}`
 }
 
 function escapeRegExp(value: string) {
@@ -54,7 +38,7 @@ function renderMarkedText(text: string, markers: readonly MarkerDefinition[]): R
   return text.split(pattern).map((part, index) =>
     phrases.has(part) ? (
       <mark
-        className={`case-marker ${getMarkerVariant(part)}`}
+        className="case-marker"
         data-marker="true"
         key={`${part}-${index}`}
       >
@@ -144,7 +128,7 @@ function CaseStudyAside({ sections }: { sections: CaseStudy['sections'] }) {
               className={`transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink ${isActive ? 'text-ink' : 'text-muted'}`}
               href={`#${sectionId}`}
               key={section.title}
-              onClick={() => setActiveSection(sectionId)}
+              onClick={(event) => scrollToCaseSection(event, sectionId)}
             >
               {section.title}
             </a>
