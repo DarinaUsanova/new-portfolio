@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import avatar from '@/assets/darina-avatar-figma.png'
-import alternateAvatar from '@/assets/back.png'
 import { CopyEmail } from '@/components/CopyEmail'
 import { siteConfig } from '@/data/site'
 import { cn } from '@/lib/cn'
@@ -23,11 +22,12 @@ function tabClassName(isActive: boolean) {
 }
 
 export function ProfileSection() {
-  const [isFlipped, setIsFlipped] = useState(false)
+  const [isFrameActive, setIsFrameActive] = useState(false)
+  const [isHoverSuppressed, setIsHoverSuppressed] = useState(false)
   const [isIntroPlaying, setIsIntroPlaying] = useState(
     () => !hasPlayedAvatarIntro && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
-  const resetFlipTimeout = useRef<number | null>(null)
+  const resetFrameTimeout = useRef<number | null>(null)
 
   useEffect(() => {
     if (!isIntroPlaying) return
@@ -44,29 +44,25 @@ export function ProfileSection() {
 
   useEffect(
     () => () => {
-      if (resetFlipTimeout.current !== null) {
-        window.clearTimeout(resetFlipTimeout.current)
+      if (resetFrameTimeout.current !== null) {
+        window.clearTimeout(resetFrameTimeout.current)
       }
     },
     [],
   )
 
-  function toggleTimedFlip() {
-    if (resetFlipTimeout.current !== null) {
-      window.clearTimeout(resetFlipTimeout.current)
-      resetFlipTimeout.current = null
+  function showFrame() {
+    if (resetFrameTimeout.current !== null) {
+      window.clearTimeout(resetFrameTimeout.current)
     }
 
-    if (isFlipped) {
-      setIsFlipped(false)
-      return
-    }
-
-    setIsFlipped(true)
-    resetFlipTimeout.current = window.setTimeout(() => {
-      setIsFlipped(false)
-      resetFlipTimeout.current = null
-    }, 5000)
+    setIsHoverSuppressed(false)
+    setIsFrameActive(true)
+    resetFrameTimeout.current = window.setTimeout(() => {
+      setIsFrameActive(false)
+      setIsHoverSuppressed(true)
+      resetFrameTimeout.current = null
+    }, 2000)
   }
 
   return (
@@ -74,19 +70,16 @@ export function ProfileSection() {
       <div className="flex flex-col gap-[60px]">
         <div className="flex flex-col gap-5">
           <button
-            aria-label={
-              isFlipped
-                ? 'Вернуть основное фото Дарины Усановой'
-                : 'Показать второе фото Дарины Усановой'
-            }
-            className="profile-avatar-flip relative size-[76px] shrink-0"
+            aria-label="Выделить фото Дарины Усановой"
+            className="profile-avatar relative size-[76px] shrink-0"
+            data-frame-active={isFrameActive}
+            data-hover-suppressed={isHoverSuppressed}
             data-intro={isIntroPlaying}
             onClick={(event) => {
-              if (event.detail === 0) toggleTimedFlip()
+              showFrame()
+              if (event.detail > 0) event.currentTarget.blur()
             }}
-            onPointerUp={(event) => {
-              if (event.pointerType === 'touch') toggleTimedFlip()
-            }}
+            onPointerLeave={() => setIsHoverSuppressed(false)}
             type="button"
           >
             <span aria-hidden="true" className="profile-avatar-hover-label">img</span>
@@ -118,17 +111,14 @@ export function ProfileSection() {
                 <span className="profile-avatar-frame__corner profile-avatar-frame__corner--bottom-right" />
               </span>
             </span>
-            <span className="profile-avatar-flip__inner" data-flipped={isFlipped}>
-              <span className="profile-avatar-flip__face profile-avatar-flip__face--front">
+            <span className="profile-avatar__inner">
+              <span className="profile-avatar__photo">
                 <img
                   alt=""
                   className="absolute left-[-14.22%] top-[-10.86%] h-[185.21%] w-[138.91%] max-w-none"
                   draggable={false}
                   src={avatar}
                 />
-              </span>
-              <span className="profile-avatar-flip__face profile-avatar-flip__face--back">
-                <img alt="" className="size-full object-cover" draggable={false} src={alternateAvatar} />
               </span>
             </span>
           </button>
