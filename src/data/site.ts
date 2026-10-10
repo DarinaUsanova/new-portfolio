@@ -1,8 +1,8 @@
 import campaignBuilderCover from '@/assets/campaign-builder-cover.png'
 import customPromptsCover from '@/assets/custom-prompts-cover.png'
 import dataforceStudioCover from '@/assets/dataforce-studio-cover.png'
-import buzzSelfServeActivationCover from '@/assets/buzz-self-serve-activation-cover.png'
-import buzzSelfServeActivationVideo from '@/assets/buzz-self-serve-activation.mp4'
+import buzzSelfServeActivationPoster from '@/assets/buzz-self-serve-activation-poster.jpg'
+import buzzSelfServeActivationVideo from '@/assets/buzz-self-serve-activation-preview.mp4'
 import voiceMessagingCover from '@/assets/voice-messaging-cover.png'
 
 export const siteConfig = {
@@ -27,7 +27,7 @@ export const projects = [
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',
-    cover: buzzSelfServeActivationCover,
+    cover: buzzSelfServeActivationPoster,
     href: '/projects/buzz-self-serve-activation',
     video: buzzSelfServeActivationVideo,
   },

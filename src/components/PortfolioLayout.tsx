@@ -10,20 +10,18 @@ import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { ProfileSection } from '@/sections/ProfileSection'
 
 const reducedMotionVariants: Variants = {
-  hidden: { opacity: 1, transition: { duration: 0 } },
-  visible: { opacity: 1, transition: { duration: 0 } },
+  enter: { opacity: 1, y: 0, transition: { duration: 0 } },
+  center: { opacity: 1, y: 0, transition: { duration: 0 } },
+  exit: { opacity: 1, y: 0, transition: { duration: 0 } },
 }
 
 const contentMotionVariants: Variants = {
-  hidden: {
-    filter: 'blur(2px)',
+  enter: { opacity: 1, y: 0 },
+  center: { opacity: 1, y: 0, transition: { duration: 0 } },
+  exit: {
     opacity: 0,
-    transition: { duration: 0.14, ease: [0.4, 0, 1, 1] },
-  },
-  visible: {
-    filter: 'blur(0px)',
-    opacity: 1,
-    transition: { duration: 0.18, ease: [0.23, 1, 0.32, 1] },
+    y: 6,
+    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
   },
 }
 
@@ -40,12 +38,12 @@ export function PortfolioLayout() {
       <div className="flex flex-col gap-5">
         <ProfileSection />
         <div className="grid">
-          <AnimatePresence initial={false} mode="sync">
+          <AnimatePresence mode="wait">
             <motion.div
-              animate="visible"
+              animate="center"
               className="[grid-area:1/1]"
-              exit="hidden"
-              initial="hidden"
+              exit="exit"
+              initial="enter"
               key={location.pathname}
               variants={contentVariants}
             >

@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode } from 'react'
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { PortfolioLayout } from '@/components/PortfolioLayout'
@@ -8,41 +8,16 @@ import { BuzzSelfServeActivationCasePage } from '@/pages/BuzzSelfServeActivation
 import { CampaignBuilderCasePage } from '@/pages/CampaignBuilderCasePage'
 import { CustomPromptsCasePage } from '@/pages/CustomPromptsCasePage'
 import { DataforceStudioCasePage } from '@/pages/DataforceStudioCasePage'
+import { HomePage } from '@/pages/HomePage'
+import { NotFoundPage } from '@/pages/NotFoundPage'
+import { SandboxPage } from '@/pages/SandboxPage'
 import { VoiceNotesCasePage } from '@/pages/VoiceNotesCasePage'
 
-const HomePage = lazy(() =>
-  import('@/pages/HomePage').then(({ HomePage }) => ({ default: HomePage })),
-)
-const NotFoundPage = lazy(() =>
-  import('@/pages/NotFoundPage').then(({ NotFoundPage }) => ({
-    default: NotFoundPage,
-  })),
-)
-const SandboxPage = lazy(() =>
-  import('@/pages/SandboxPage').then(({ SandboxPage }) => ({ default: SandboxPage })),
-)
 const Agentation = import.meta.env.DEV
   ? lazy(() =>
       import('agentation').then(({ Agentation }) => ({ default: Agentation })),
     )
   : () => null
-function LazyRoute({ children }: { children: ReactNode }) {
-  return (
-    <Suspense
-      fallback={(
-        <div
-          aria-live="polite"
-          className="flex min-h-[240px] items-center justify-center text-sm text-muted"
-          role="status"
-        >
-          Loading page…
-        </div>
-      )}
-    >
-      {children}
-    </Suspense>
-  )
-}
 
 export default function App() {
   return (
@@ -51,22 +26,8 @@ export default function App() {
       <Routes>
         <Route element={<SiteLayout />}>
           <Route element={<PortfolioLayout />}>
-            <Route
-              index
-              element={
-                <LazyRoute>
-                  <HomePage />
-                </LazyRoute>
-              }
-            />
-            <Route
-              path="sandbox"
-              element={
-                <LazyRoute>
-                  <SandboxPage />
-                </LazyRoute>
-              }
-            />
+            <Route index element={<HomePage />} />
+            <Route path="sandbox" element={<SandboxPage />} />
           </Route>
           <Route
             path="projects/campaign-builder-discovery"
@@ -88,14 +49,7 @@ export default function App() {
             path="projects/voice-notes-for-outreach"
             element={<VoiceNotesCasePage />}
           />
-          <Route
-            path="*"
-            element={
-              <LazyRoute>
-                <NotFoundPage />
-              </LazyRoute>
-            }
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
       {import.meta.env.DEV && (

@@ -164,10 +164,56 @@ p {
   --marker-edge-end: 30%;
 }
 
-.project-cover-image,
-.project-cover-video {
+.project-cover-image {
+  transform: scale(1);
+  transition:
+    transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955),
+    opacity 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.project-cover-video-frame {
   transform: scale(1);
   transition: transform 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+
+.project-cover-video {
+  transition: opacity 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.project-cover-image[data-ready='false'],
+.project-cover-video[data-ready='false'] {
+  opacity: 0;
+}
+
+.preview-ghost {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: #f1f1f1;
+  transition: opacity 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.preview-ghost[data-ready='true'] {
+  opacity: 0;
+}
+
+.playground-preview-media {
+  transition: opacity 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.playground-preview-media[data-ready='false'] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-cover-image,
+  .project-cover-video-frame,
+  .project-cover-video,
+  .preview-ghost,
+  .playground-preview-media {
+    transition: none;
+  }
 }
 
 .profile-avatar-flip {
@@ -485,7 +531,7 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
   .project-cover:hover .project-cover-image,
-  .project-cover:hover .project-cover-video {
+  .project-cover:hover .project-cover-video-frame {
     transform: scale(1.025);
   }
 }
@@ -542,7 +588,7 @@ p {
   }
 
   .project-cover-image,
-  .project-cover-video {
+  .project-cover-video-frame {
     transform: none;
   }
 }

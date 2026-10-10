@@ -12,7 +12,9 @@ const pages = [
     title: 'Self-serve signup and onboarding | Darina Usanova',
     description:
       'I designed Buzz’s signup and onboarding experience so potential customers could explore the product independently and paying customers could complete essential setup without relying on onboarding calls.',
-    image: 'buzz-self-serve-activation-cover',
+    image: 'buzz-self-serve-activation-poster',
+    imageWidth: 960,
+    imageHeight: 578,
     imageAlt: 'Self-serve signup and onboarding project cover',
   },
   {
@@ -68,7 +70,7 @@ await writeFile(
 )
 
 for (const page of pages) {
-  const imageFile = assets.find((file) => file.startsWith(`${page.image}-`) && file.endsWith('.png'))
+  const imageFile = assets.find((file) => file.startsWith(`${page.image}-`) && /\.(png|jpg)$/.test(file))
   if (!imageFile) throw new Error(`Could not find the built cover image for ${page.path}`)
 
   const pageUrl = `${siteOrigin}/${page.path}`
@@ -83,8 +85,8 @@ for (const page of pages) {
     `<meta property="og:title" content="${title}" />`,
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:image" content="${imageUrl}" />`,
-    '<meta property="og:image:width" content="1800" />',
-    '<meta property="og:image:height" content="1200" />',
+    `<meta property="og:image:width" content="${page.imageWidth ?? 1800}" />`,
+    `<meta property="og:image:height" content="${page.imageHeight ?? 1200}" />`,
     `<meta property="og:image:alt" content="${escapeHtml(page.imageAlt)}" />`,
     '<meta name="twitter:card" content="summary_large_image" />',
     `<meta name="twitter:title" content="${title}" />`,

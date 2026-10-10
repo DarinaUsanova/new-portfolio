@@ -1,7 +1,12 @@
-import { useReducedMotion } from 'motion/react'
-import { useRef } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import {
+  reducedRevealItemVariants,
+  revealItemVariants,
+} from '@/components/ContentReveal'
+import { PreviewGhost } from '@/components/PreviewGhost'
 import { useViewportVideo } from '@/hooks/useViewportVideo'
 
 type ProjectCardProps = {
@@ -16,6 +21,8 @@ type ProjectCardProps = {
   video?: string
 }
 
+const loadedCoverSources = new Set<string>()
+
 function Dot() {
   return <span aria-hidden="true" className="size-0.5 rounded-full bg-muted" />
 }
@@ -25,14 +32,23 @@ function LoopingVideo({
   poster,
   priority,
   src,
+  onPosterLoad,
 }: {
   label: string
   poster: string
   priority: boolean
   src: string
+  onPosterLoad: () => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isVideoReady, setIsVideoReady] = useState(false)
   const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (videoRef.current && videoRef.current.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      setIsVideoReady(true)
+    }
+  }, [])
 
   useViewportVideo({
     replayDelay: 1000,
@@ -41,18 +57,34 @@ function LoopingVideo({
   })
 
   return (
-    <video
-      aria-label={label}
-      className="project-cover-video block h-auto w-4/5 max-w-[480px] rounded-[4px] object-contain [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]"
-      height={1080}
-      muted
-      playsInline
-      poster={poster}
-      preload={priority ? 'metadata' : 'none'}
-      ref={videoRef}
-      src={src}
-      width={1796}
-    />
+    <div className="project-cover-video-frame relative aspect-[1796/1080] w-4/5 max-w-[480px] overflow-hidden rounded-[4px] [box-shadow:0_6.4px_25.2px_0_rgba(35,44,96,0.09)]">
+      <img
+        alt=""
+        className="absolute inset-0 size-full object-contain"
+        decoding="async"
+        fetchPriority={priority ? 'high' : 'auto'}
+        height={1080}
+        loading={priority ? 'eager' : 'lazy'}
+        onLoad={onPosterLoad}
+        src={poster}
+        width={1796}
+      />
+      <video
+        aria-label={label}
+        className="project-cover-video absolute inset-0 size-full object-contain"
+        data-ready={isVideoReady}
+        height={1080}
+        muted
+        onLoadedData={() => setIsVideoReady(true)}
+        onPlaying={() => setIsVideoReady(true)}
+        playsInline
+        poster={poster}
+        preload={priority ? 'metadata' : 'none'}
+        ref={videoRef}
+        src={src}
+        width={1796}
+      />
+    </div>
   )
 }
 
@@ -67,17 +99,25 @@ export function ProjectCard({
   priority = false,
   video,
 }: ProjectCardProps) {
+  const shouldReduceMotion = useReducedMotion()
+  const [isCoverReady, setIsCoverReady] = useState(() =>
+    loadedCoverSources.has(cover),
+  )
+  const markCoverReady = () => {
+    loadedCoverSources.add(cover)
+    setIsCoverReady(true)
+  }
+
   const content = (
     <>
       <div
-        className={`project-cover relative flex h-auto aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f1f1f1] sm:h-[400px] sm:aspect-auto ${
-          video ? 'bg-cover bg-center' : ''
-        }`}
-        style={video ? { backgroundImage: `url(${cover})` } : undefined}
+        className="project-cover relative flex h-auto aspect-[3/2] w-full items-center justify-center overflow-hidden rounded-xl bg-[#f1f1f1] sm:h-[400px] sm:aspect-auto"
       >
+        <PreviewGhost ready={isCoverReady} />
         {video ? (
           <LoopingVideo
             label={`${title} project cover animation`}
+            onPosterLoad={markCoverReady}
             poster={cover}
             priority={priority}
             src={video}
@@ -90,6 +130,8 @@ export function ProjectCard({
             fetchPriority={priority ? 'high' : 'auto'}
             height={1200}
             loading={priority ? 'eager' : 'lazy'}
+            data-ready={isCoverReady}
+            onLoad={markCoverReady}
             src={cover}
             width={1800}
           />
@@ -111,7 +153,7 @@ export function ProjectCard({
   )
 
   return (
-    <article>
+    <motion.article variants={shouldReduceMotion ? reducedRevealItemVariants : revealItemVariants}>
       {href ? (
         <Link
           aria-label={`Open ${title}`}
@@ -123,6 +165,6 @@ export function ProjectCard({
       ) : (
         content
       )}
-    </article>
+    </motion.article>
   )
 }
