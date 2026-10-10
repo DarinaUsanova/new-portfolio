@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { CaseStudyPlaceholder } from '@/components/CaseStudyPlaceholder'
 import { CaseStudySections } from '@/components/CaseStudySections'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
+import { scrollToCaseSection } from '@/components/scrollToCaseSection'
 import { buzzSelfServeActivationCase } from '@/data/buzzSelfServeActivationCase'
 
 const markerDefinitions = [
@@ -195,7 +196,7 @@ function CaseStudyAside() {
               }`}
               href={`#${sectionId}`}
               key={item.title}
-              onClick={() => setActiveSection(sectionId)}
+              onClick={(event) => scrollToCaseSection(event, sectionId)}
             >
               {item.label}
             </a>

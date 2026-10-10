@@ -6,6 +6,7 @@ import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStu
 import { CaseStudySections } from '@/components/CaseStudySections'
 import type { CaseStudyBlockContent } from '@/components/CaseStudyBlock'
 import { PortfolioFooter } from '@/components/PortfolioFooter'
+import { scrollToCaseSection } from '@/components/scrollToCaseSection'
 
 type CaseStudy = {
   title: string
@@ -144,7 +145,7 @@ function CaseStudyAside({ sections }: { sections: CaseStudy['sections'] }) {
               className={`transition-colors duration-150 [transition-timing-function:ease] hover:text-ink focus-visible:rounded-sm focus-visible:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink ${isActive ? 'text-ink' : 'text-muted'}`}
               href={`#${sectionId}`}
               key={section.title}
-              onClick={() => setActiveSection(sectionId)}
+              onClick={(event) => scrollToCaseSection(event, sectionId)}
             >
               {section.title}
             </a>
