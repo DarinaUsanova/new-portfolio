@@ -15,16 +15,36 @@ let hasPlayedPageIntro = false
 const reducedMotionVariants: Variants = {
   enter: { opacity: 1, y: 0, transition: { duration: 0 } },
   center: { opacity: 1, y: 0, transition: { duration: 0 } },
-  exit: { opacity: 1, y: 0, transition: { duration: 0 } },
+  hidden: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0 } },
 }
 
-const contentMotionVariants: Variants = {
+const initialContentVariants: Variants = {
   enter: { opacity: 1, y: 0 },
-  center: { opacity: 1, y: 0, transition: { duration: 0 } },
-  exit: {
+  center: {
+    opacity: 1,
+    y: 0,
+    transition: { delayChildren: 0.78 },
+  },
+  hidden: {
     opacity: 0,
-    y: 6,
-    transition: { duration: 0.2, ease: [0.4, 0, 1, 1] },
+    filter: 'blur(2px)',
+    transition: { duration: 0.14, ease: [0.4, 0, 1, 1] },
+  },
+}
+
+const tabContentVariants: Variants = {
+  enter: { opacity: 1 },
+  center: {
+    opacity: 1,
+    transition: {
+      // The list adds 20 ms, so the first item starts after 80 ms total.
+      delayChildren: 0.06,
+    },
+  },
+  hidden: {
+    opacity: 0,
+    filter: 'blur(2px)',
+    transition: { duration: 0.14, ease: [0.4, 0, 1, 1] },
   },
 }
 
@@ -33,23 +53,23 @@ export function PortfolioLayout() {
   const outlet = useOutlet()
   const shouldReduceMotion = useReducedMotion()
   const [playPageIntro] = useState(() => !hasPlayedPageIntro)
+  const [initialPathname] = useState(location.pathname)
+  const [hasChangedRoute, setHasChangedRoute] = useState(false)
   const showPageIntro = playPageIntro && !shouldReduceMotion
+  const showContentIntro = showPageIntro && !hasChangedRoute && location.pathname === initialPathname
   const contentVariants = shouldReduceMotion
     ? reducedMotionVariants
-    : showPageIntro
-      ? {
-          ...contentMotionVariants,
-          center: {
-            opacity: 1,
-            y: 0,
-            transition: { delayChildren: 0.78 },
-          },
-        }
-      : contentMotionVariants
+    : showContentIntro
+      ? initialContentVariants
+      : tabContentVariants
 
   useEffect(() => {
     hasPlayedPageIntro = true
   }, [])
+
+  useEffect(() => {
+    if (location.pathname !== initialPathname) setHasChangedRoute(true)
+  }, [initialPathname, location.pathname])
 
   return (
     <main
@@ -63,7 +83,7 @@ export function PortfolioLayout() {
             <motion.div
               animate="center"
               className="[grid-area:1/1]"
-              exit="exit"
+              exit="hidden"
               initial="enter"
               key={location.pathname}
               variants={contentVariants}
