@@ -4,10 +4,13 @@ import {
   useReducedMotion,
   type Variants,
 } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { useLocation, useOutlet } from 'react-router-dom'
 
 import { PortfolioFooter } from '@/components/PortfolioFooter'
 import { ProfileSection } from '@/sections/ProfileSection'
+
+let hasPlayedPageIntro = false
 
 const reducedMotionVariants: Variants = {
   enter: { opacity: 1, y: 0, transition: { duration: 0 } },
@@ -29,12 +32,30 @@ export function PortfolioLayout() {
   const location = useLocation()
   const outlet = useOutlet()
   const shouldReduceMotion = useReducedMotion()
+  const [playPageIntro] = useState(() => !hasPlayedPageIntro)
+  const showPageIntro = playPageIntro && !shouldReduceMotion
   const contentVariants = shouldReduceMotion
     ? reducedMotionVariants
-    : contentMotionVariants
+    : showPageIntro
+      ? {
+          ...contentMotionVariants,
+          center: {
+            opacity: 1,
+            y: 0,
+            transition: { delayChildren: 0.78 },
+          },
+        }
+      : contentMotionVariants
+
+  useEffect(() => {
+    hasPlayedPageIntro = true
+  }, [])
 
   return (
-    <main className="mx-auto mt-10 flex w-[calc(100%-40px)] max-w-[600px] flex-col gap-10 pb-5 sm:pb-10 min-[1346px]:mt-20">
+    <main
+      className="mx-auto mt-10 flex w-[calc(100%-40px)] max-w-[600px] flex-col gap-10 pb-5 sm:pb-10 min-[1346px]:mt-20"
+      data-page-intro={showPageIntro}
+    >
       <div className="flex flex-col gap-5">
         <ProfileSection />
         <div className="grid">
@@ -52,7 +73,9 @@ export function PortfolioLayout() {
           </AnimatePresence>
         </div>
       </div>
-      <PortfolioFooter />
+      <div className="portfolio-intro-footer">
+        <PortfolioFooter />
+      </div>
     </main>
   )
 }
