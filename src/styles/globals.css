@@ -110,58 +110,15 @@ p {
 }
 
 .case-marker {
-  --marker-color: #FFB2F9;
-  --marker-edge-start: 50%;
-  --marker-near-start: 90%;
-  --marker-near-end: 70%;
-  --marker-edge-end: 30%;
-
   display: inline;
-  margin: -0.1em -0.04em -0.2em -0.46em;
-  padding: 0.1em 0.04em 0.2em 0.46em;
-  border-radius: 0.5em 0.3em;
+  margin: 0;
+  padding: 0.14em 2px 0.16em;
+  border-inline: 1px solid #ff71f3;
+  border-radius: 0;
   color: inherit;
-  background-color: rgb(255 178 249 / 18%);
+  background-color: rgb(255 113 243 / 16%);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-}
-
-.case-marker--open {
-  margin-left: 0;
-  padding-left: 0;
-}
-
-@supports (background-image: linear-gradient(90deg, color-mix(in srgb, red, transparent))) {
-  .case-marker {
-    background-image: linear-gradient(
-      89.9deg,
-      color-mix(in srgb, var(--marker-color), transparent var(--marker-edge-start)),
-      color-mix(in srgb, var(--marker-color), transparent var(--marker-near-start)) 4%,
-      color-mix(in srgb, var(--marker-color), transparent var(--marker-near-end)) 96%,
-      color-mix(in srgb, var(--marker-color), transparent var(--marker-edge-end))
-    );
-  }
-}
-
-.case-marker--left-heavy {
-  --marker-edge-start: 48%;
-  --marker-near-start: 88%;
-  --marker-near-end: 88%;
-  --marker-edge-end: 82%;
-}
-
-.case-marker--right-heavy {
-  --marker-edge-start: 82%;
-  --marker-near-start: 88%;
-  --marker-near-end: 88%;
-  --marker-edge-end: 48%;
-}
-
-.case-marker--both-heavy {
-  --marker-edge-start: 50%;
-  --marker-near-start: 90%;
-  --marker-near-end: 70%;
-  --marker-edge-end: 30%;
 }
 
 .project-cover-image {

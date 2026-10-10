@@ -21,23 +21,6 @@ type MarkerDefinition = {
   context: string
 }
 
-const markerGradientVariants = ['left-heavy', 'right-heavy', 'both-heavy'] as const
-
-function getMarkerVariant(phrase: string) {
-  let hash = 0
-
-  for (const character of phrase) {
-    hash = (hash * 31 + character.charCodeAt(0)) >>> 0
-  }
-
-  const gradientVariant = markerGradientVariants[hash % markerGradientVariants.length]
-  const spacingVariant = Math.floor(hash / markerGradientVariants.length) % 2 === 0
-    ? 'case-marker--closed'
-    : 'case-marker--open'
-
-  return `case-marker--${gradientVariant} ${spacingVariant}`
-}
-
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
@@ -55,7 +38,7 @@ function renderMarkedText(text: string, markers: readonly MarkerDefinition[]): R
   return text.split(pattern).map((part, index) =>
     phrases.has(part) ? (
       <mark
-        className={`case-marker ${getMarkerVariant(part)}`}
+        className="case-marker"
         data-marker="true"
         key={`${part}-${index}`}
       >
