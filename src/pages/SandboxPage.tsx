@@ -5,7 +5,7 @@ import flowImage from '@/assets/image-flow.png'
 import menuImage from '@/assets/image-menu.png'
 import promptBoxImage from '@/assets/prompt-box.png'
 import aiAssistantImage from '@/assets/ai-assistant.png'
-import statusesImage from '@/assets/statuses.png'
+import statusesImage from '@/assets/statuses.webp'
 import {
   reducedRevealItemVariants,
   reducedRevealListVariants,
