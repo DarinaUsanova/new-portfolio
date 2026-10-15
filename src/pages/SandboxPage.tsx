@@ -64,7 +64,17 @@ function PlaygroundImage({
   )
 }
 
-function NotificationPreview() {
+function PlaygroundEmbed({
+  caption,
+  height,
+  src,
+  title,
+}: {
+  caption: string
+  height: number
+  src: string
+  title: string
+}) {
   const shouldReduceMotion = useReducedMotion()
   const [ready, setReady] = useState(false)
 
@@ -73,7 +83,10 @@ function NotificationPreview() {
       className="flex w-full max-w-[600px] flex-col gap-3"
       variants={shouldReduceMotion ? reducedRevealItemVariants : revealItemVariants}
     >
-      <div className="relative h-[400px] w-full overflow-hidden rounded-[12px] border border-surface bg-surface">
+      <div
+        className="relative w-full overflow-hidden rounded-[12px] border border-surface bg-surface"
+        style={{ height }}
+      >
         <PreviewGhost ready={ready} />
         <iframe
           className="playground-preview-media size-full border-0"
@@ -81,12 +94,12 @@ function NotificationPreview() {
           loading="lazy"
           onLoad={() => setReady(true)}
           scrolling="no"
-          src="https://animated-notification-stack.vercel.app/"
-          title="Animated notification stack"
+          src={src}
+          title={title}
         />
       </div>
       <figcaption className="text-center text-sm text-muted">
-        Animated notification stack
+        {caption}
       </figcaption>
     </motion.figure>
   )
@@ -106,7 +119,7 @@ export function SandboxPage() {
 
   return (
     <motion.section
-      aria-label="Animated notification stack playground"
+      aria-label="Playground"
       className="flex flex-col items-center gap-10"
       variants={shouldReduceMotion ? reducedRevealListVariants : revealListVariants}
     >
@@ -117,6 +130,12 @@ export function SandboxPage() {
         priority
         src={statusesImage}
         width={1800}
+      />
+      <PlaygroundEmbed
+        caption="Intro chat"
+        height={680}
+        src="https://ask-about-darina.vercel.app/"
+        title="Ask about Darina"
       />
       <PlaygroundImage
         alt="Hero prompt box"
@@ -132,7 +151,12 @@ export function SandboxPage() {
         src={aiAssistantImage}
         width={1800}
       />
-      <NotificationPreview />
+      <PlaygroundEmbed
+        caption="Animated notification stack"
+        height={400}
+        src="https://animated-notification-stack.vercel.app/"
+        title="Animated notification stack"
+      />
       <PlaygroundImage
         alt="Playground menu"
         caption="Action menu"
