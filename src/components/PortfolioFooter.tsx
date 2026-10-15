@@ -62,7 +62,7 @@ export function PortfolioFooter() {
           {belgradeTime}
         </time>
       </div>
-      <span>Last updated Sep 2026</span>
+      <span>Last updated Oct 2026</span>
     </div>
   )
 }
