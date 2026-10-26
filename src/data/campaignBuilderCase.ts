@@ -1,12 +1,16 @@
 import guidedStart from '@/assets/campaign-builder-case/empty-state-choose-first-block.png'
 import campaignGuidanceIcon from '@/assets/campaign-builder-case/insights/campaign-guidance.svg'
 import launchChecklist from '@/assets/campaign-builder-case/checklist-item-points.png'
+import oldManualTask from '@/assets/campaign-builder-case/manual-task-configuration-old.png'
 import legacyBuilder from '@/assets/campaign-builder-case/smart-campaign-case-v2.png'
+import impactEffortMatrix from '@/assets/campaign-builder-case/impact-effort-matrix.png'
 import researchBoard from '@/assets/campaign-builder-case/campaigns-research.png'
 import saveRecoveryIcon from '@/assets/campaign-builder-case/insights/save-recovery.svg'
 import sidePanelEditing from '@/assets/campaign-builder-case/manual-task-configuration.png'
 import workflowOrderIcon from '@/assets/campaign-builder-case/insights/workflow-order.svg'
 import workflowBranching from '@/assets/campaign-builder-case/workflow-overview-with-visible-issues-and-checklist-guidance.png'
+import wyndeRenameTest from '@/assets/campaign-builder-case/wynde-rename-first-click.png'
+import type { CaseStudyComparisonProps } from '@/components/CaseStudyComparison'
 
 type CaseStudyFigure = {
   src: string
@@ -21,6 +25,7 @@ type CaseStudySubsection = {
   title: string
   paragraphs: string[]
   figures: CaseStudyFigure[]
+  comparison?: CaseStudyComparisonProps
   icon?: string
 }
 
@@ -43,153 +48,154 @@ export const campaignBuilderCase: CampaignBuilderCase = {
   title: 'Unified campaign builder',
   metadata: [
     'Scope: Campaign structure, editor and launch checklist',
-    'Team: Product Manager and Lead Engineer',
-    'Status: MVP concept',
+    'Team: Head of Product and Lead Engineer',
+    'Status: Discovery completed; MVP concept',
   ],
   introduction: [
-    "I researched and designed an MVP concept for Buzz.ai's campaign builder. The proposal brought sequential and branching campaigns into one workflow.",
+    "The project started as a redesign of Buzz.ai's Smart Campaign Builder. After reviewing feedback on both campaign types, I proposed a single builder for simple and branching campaigns.",
   ],
   heroFigure: {
     src: workflowBranching,
     alt: 'Proposed campaign builder with a branching workflow and launch checklist open',
     caption:
-      'The proposed builder keeps every campaign in one vertical sequence, with branches and launch issues visible in context',
+      'The proposed editor starts with a sequence and adds branches when a campaign needs them.',
     height: 1500,
     priority: true,
     width: 2400,
   },
   sections: [
     {
-      title: 'Why the builder needed to change',
+      title: 'Challenge',
       paragraphs: [
         'Buzz.ai helps sales and marketing teams automate outreach. Its campaign builder is where they set up the steps of a campaign and decide what should happen next.',
-        'The product had two campaign modes. Simple Campaigns let users arrange steps in a single sequence. Smart Campaigns added conditions and branches in a canvas editor, where users arranged steps manually.',
-        'Long campaigns were hard to scan in the canvas. Users had to follow long sequences and branches while editing individual steps. New users also had to choose between Simple and Smart Campaigns before they understood which one they needed.',
-        'One customer interview exposed a saving problem. A customer could rename a campaign and keep working, believing the change was saved. The interface still required a separate confirmation.',
+        'Customers chose between Simple Campaigns, which followed a single sequence, and Smart Campaigns, which added conditions and branches on a manually arranged canvas.',
+        'Long branching campaigns were difficult to scan. People also had to choose a campaign mode before they knew whether they would need conditions.',
       ],
       figures: [
         {
           src: legacyBuilder,
           alt: 'Legacy Smart Campaign Builder with a manually arranged branching workflow',
           caption:
-            'In the old editor, users had to arrange the canvas as well as build the campaign.',
+            'The previous Smart editor asked users to arrange the canvas as well as build the campaign.',
           height: 1560,
           width: 2400,
         },
       ],
     },
     {
-      title: 'What I owned',
+      title: 'My role',
       paragraphs: [
-        'I was the sole product designer, working closely with the Product Manager. A Lead Engineer helped validate the product matrix.',
-        'I interviewed customers, reviewed feedback, and turned the findings into questions and MVP priorities. I then designed the workflow structure and interface, built prototypes, and presented the proposal to the team. I also defined the MVP design system.',
+        'I owned the research and concept as the sole product designer. I identified problems shared by both campaign modes and reviewed the priorities with the Head of Product and Lead Engineer.',
+        'I designed the prototypes, ran an internal study, interviewed three customers, and delivered the discovery summary.',
       ],
       figures: [],
     },
     {
-      title: 'Research and evidence',
+      title: 'Research and priorities',
       paragraphs: [
-        'I spoke with three Buzz.ai customers about how they built campaigns and showed them early prototypes. Their feedback pointed to three needs: less visual clutter, easier-to-follow campaign logic, and a starting point that did not require choosing a campaign type upfront.',
-        "I also reviewed 15 to 20 campaign editor suggestions in Canny, the product's feedback board. They raised concerns about campaign structure, editing, and setup. Support tickets and team feedback kept raising the same question. When is a campaign ready to launch?",
-        'The issues went beyond the canvas.',
+        'I mapped roughly 15–20 Canny suggestions from customers and the internal team into eight problem clusters, then drew out five insights. Users reported problems in both Simple and Smart Campaigns.',
+        'For example, several comments described having to save in more than one place or assuming a change had been saved when it had not. I took that as a sign that the editor needed clearer save feedback. An unsaved-changes warning became one hypothesis to explore.',
       ],
       figures: [
         {
           src: researchBoard,
-          alt: 'Research board connecting customer feedback to workflow and editing decisions',
+          alt: 'Discovery board with Canny feedback clusters, interface audit, competitor research, hypotheses and interview analysis',
           caption:
-            'Customer feedback connected research evidence to decisions about workflow structure, starting a campaign, and editing',
+            'The board contains Canny clusters, interface issues, comparable products, hypotheses, and test findings.',
           height: 1560,
           width: 2400,
         },
       ],
-    },
-    {
-      title: 'Key insights',
-      paragraphs: [],
-      figures: [],
       subsections: [
         {
-          title: 'Long workflows needed a predictable reading order',
+          title: 'Find the recurring problems',
           icon: workflowOrderIcon,
           paragraphs: [
-            'The existing canvas made complex sequences difficult to scan as they grew. I translated that finding into a vertical workflow where each step had a clear place in the sequence.',
+            'Long workflows were hard to read. Users also struggled to start a campaign and tell whether their work was saved. Some had to leave the campaign to edit a step; others were blocked by validation before they had finished a draft.',
           ],
           figures: [],
         },
         {
-          title: 'Users needed guidance before choosing a campaign type',
+          title: 'Audit the interface and study other builders',
           icon: campaignGuidanceIcon,
           paragraphs: [
-            'Users had to choose between Simple and Smart Campaigns before they understood what building a campaign involved. I designed one starting flow. Users could add steps first, then add conditions or branches when needed.',
+            'I audited the existing step editor and recorded issues with required fields, crowded controls, and error messages. I also looked at Apollo, Lemlist, Attio, Dify, and Amplemarket to see how they handled workflow creation.',
+            'I explored a guided first step, fixed positions for new steps, settings in a side panel, and validation at launch. These were ideas to test with Buzz customers.',
           ],
           figures: [],
         },
         {
-          title: 'Users needed to see what was saved and be able to recover their work',
+          title: 'Choose priorities for the first iterations',
           icon: saveRecoveryIcon,
           paragraphs: [
-            'A customer interview showed that it was not always clear whether changes had been saved. Six of seven colleagues in the internal test also prioritised warnings and ways to recover work. Together, these findings set three MVP priorities: drafts, warnings, and recovery options.',
+            'I put the hypotheses on an impact–effort matrix and reviewed them with the Head of Product and Lead Engineer.',
+            'The high-impact, lower-effort ideas in green became the starting point for the first iterations. They included a guided start, a launch checklist, clearer validation, a warning about unsaved changes, and step duplication. I also prototyped a vertical workflow and side-panel editing from the higher-effort group to see how one builder could handle both campaign types.',
           ],
-          figures: [],
+          figures: [
+            {
+              src: impactEffortMatrix,
+              alt: 'Impact–effort matrix of campaign builder hypotheses, with high-impact ideas grouped by lower and higher implementation effort',
+              caption: 'Green notes mark the first-iteration priorities. Blue notes group ideas that needed more effort.',
+              height: 1590,
+              width: 2400,
+            },
+          ],
         },
       ],
     },
     {
-      title: 'The proposal: one vertical workflow',
+      title: 'One builder for both',
       paragraphs: [
-        'I considered improving the Smart Campaign canvas, but keeping it would still require users to arrange steps manually and choose between two campaign modes.',
-        'I proposed a single builder with a vertical workflow. Each step had a predictable place in the sequence, and users could add conditions and branches when the campaign needed them. The trade-off was less freedom to arrange steps, but a consistent reading order. Branches still needed to be easy to follow. A vertical layout alone would not solve that.',
+        'I proposed one builder where people could start with a simple sequence and add conditions or branches when the campaign needed them.',
+        'I considered keeping free placement on the canvas. In a vertical workflow, the system positioned each step, so users could follow the sequence without arranging it themselves. This reduced their control over the layout. I still needed to test whether long branches stayed readable.',
       ],
       figures: [],
       subsections: [
         {
-          title: 'Give people a clear first step',
+          title: 'Start with a step, not a campaign mode',
           paragraphs: [
-            'I removed the choice between Simple and Smart Campaigns from the proposed starting flow. The side panel showed the available steps so users could begin building the campaign straight away.',
-            'Conditions and branches appeared when relevant. The same flow still supported branches when a campaign needed them.',
+            'Users could add a first step before deciding whether the campaign needed conditions. The same workflow could grow branches later.',
           ],
           figures: [
             {
               src: guidedStart,
               alt: 'Campaign builder with a guided starting point and available steps in a side panel',
               caption:
-                'Start by adding a step. Add conditions and branches as the campaign takes shape.',
+                'The empty state points to the first step in the side panel.',
             },
           ],
         },
         {
-          title: 'Keep the campaign in view while editing a step',
+          title: 'Keep the workflow visible while editing',
           paragraphs: [
-            'Selecting a step opened its settings in a side panel, with the workflow still visible alongside it. Users could focus on the details of a task and still see where it belonged in the sequence.',
+            'I chose a side panel instead of a full-screen modal. Users could still see the selected step and its position in the campaign while editing it.',
           ],
-          figures: [
-            {
-              src: sidePanelEditing,
-              alt: 'Campaign builder step settings open in a side panel beside the workflow',
-              caption:
-                'The selected step and its place in the campaign stay visible beside its settings.',
-            },
-          ],
+          figures: [],
+          comparison: {
+            beforeSrc: oldManualTask,
+            afterSrc: sidePanelEditing,
+            beforeAlt: 'Old Smart Campaign Builder with a Manual Task modal covering the workflow',
+            afterAlt: 'Proposed Manual Task settings in a side panel beside the visible workflow',
+            caption: 'Manual Task in the old Smart Campaign Builder (left) and my proposed side-panel editor (right), which keeps the workflow visible.',
+          },
         },
         {
-          title: 'Let people build a draft, then check it before launch',
+          title: 'Let people finish the draft before validating launch',
           paragraphs: [
-            'The flow let users work on an incomplete campaign. When they were ready to launch, a checklist showed what was missing and pointed to the step that needed attention.',
-            'Missing information and connection issues appeared alongside the workflow, so users could see where each problem occurred without leaving the campaign.',
+            'Users could leave steps incomplete while building a campaign. When they tried to launch it, a checklist pointed to the fields and connections that still needed work.',
           ],
           figures: [
             {
               src: launchChecklist,
               alt: 'Campaign builder launch checklist pointing to an incomplete step',
               caption:
-                'Each checklist item points to something that needs fixing before launch.',
+                'The checklist links missing task content to its step in the workflow.',
             },
             {
               src: workflowBranching,
               alt: 'Campaign builder workflow with readable branching paths and launch issues in context',
               caption:
-                'The workflow keeps branch paths and connection issues visible while users prepare the campaign for launch',
+                'A disconnected Enrich data step appears beside the campaign branches and in the launch checklist.',
               height: 1500,
               width: 2400,
             },
@@ -198,20 +204,45 @@ export const campaignBuilderCase: CampaignBuilderCase = {
       ],
     },
     {
-      title: 'What the internal test told me',
+      title: 'Prototype testing',
       paragraphs: [
-        'I ran a concept test in Windy with seven colleagues from Sales, Customer Success, Support, and Product. It showed prototypes and asked multiple-choice and open-ended questions about building a campaign.',
-        'Six of the seven participants prioritised warnings about unsaved changes and the ability to undo a deletion or recover a step. Together with the customer interview, these findings set two MVP priorities: showing whether changes were saved and letting users recover their work. I explored drafts, warnings, and recovery options in the editing flow.',
-        'The test showed what the team considered most important. It did not show whether customers could build or edit campaigns more easily; that still needed to be tested with campaign creators.',
+        'I showed the prototypes to three customers and ran an 11-question Wynde study with seven colleagues who worked closely with customers.',
+        'In the internal study, all seven participants added the first campaign step. Five of seven found and fixed a validation error before saving the campaign, and five of seven configured both branches of a condition. Of the two remaining participants, one was blocked by a prototype bug and the other skipped some questions, so their incomplete results were inconclusive.',
+        'The results gave me confidence in the guided start and supported the checklist and condition flows. I would retest the latter two with a stable prototype and longer, more complex customer campaigns.',
       ],
       figures: [],
+      subsections: [
+        {
+          title: 'One place to rename a campaign',
+          paragraphs: [
+            'In a Wynde first-click task, colleagues looked for the rename action in both the header and side panel. In the customer interviews, the title in the header was the expected place.',
+            'I kept one rename action beside the title in the final concept.',
+          ],
+          figures: [
+            {
+              src: wyndeRenameTest,
+              alt: 'Wynde first-click heatmap for the question of where to rename a campaign, with clicks in the header and side panel',
+              caption: 'The first-click heatmap shows clicks in both the header and side panel.',
+              height: 1590,
+              width: 2400,
+            },
+          ],
+        },
+        {
+          title: 'Safe editing became a priority',
+          paragraphs: [
+            'In the internal study, unsaved-changes warnings and undo or recovery were among the most selected priorities. A customer also described renaming a campaign and continuing to work without realising a separate confirmation was still needed.',
+            'We included an unsaved-changes warning among the first-iteration priorities. Undo and recovery needed more engineering work, so they stayed in the higher-effort group.',
+          ],
+          figures: [],
+        },
+      ],
     },
     {
-      title: 'Where the project ended',
+      title: 'Outcome and next step',
       paragraphs: [
-        'Product priorities changed, and the project stopped before development.',
-        'I delivered a proposal for one builder that could support simple and branching campaigns. It included MVP priorities and prototypes for setup, step editing, and launch checks. The proposal went beyond the original request to update Smart Campaign Builder.',
-        'The next step would have been to test the full flow with customers. Could they build a campaign, follow its branches, change a step, and resolve an issue before launch? Those results would have helped the team decide what to include in the MVP.',
+        'I took a request to redesign Smart Campaign Builder and turned it into a research-backed MVP direction for one builder. Customer interviews and internal testing confirmed the key findings from my discovery. I gave the team clear priorities and tested prototypes to build from.',
+        'Development paused while the company focused its resources elsewhere. The MVP remains the direction we plan to move forward with when capacity returns. The next round of testing will focus on longer, more complex campaigns.',
       ],
       figures: [],
     },
