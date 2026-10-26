@@ -38,7 +38,7 @@ export const projects = [
   {
     title: 'Unified campaign builder',
     description:
-      "I researched and designed an MVP concept for Buzz.ai's campaign builder, bringing sequential and branching campaigns into one workflow.",
+      "I researched and designed an MVP concept for Buzz.ai's campaign builder. One workflow supports both simple sequences and branching campaigns.",
     company: 'Buzz.ai',
     role: 'Product Designer',
     year: '2026',

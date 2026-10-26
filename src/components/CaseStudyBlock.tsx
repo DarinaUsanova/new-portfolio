@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { CaseStudyCarouselPlaceholder } from '@/components/CaseStudyCarouselPlaceholder'
+import { CaseStudyComparison, type CaseStudyComparisonProps } from '@/components/CaseStudyComparison'
 import { CaseStudyFigure, type CaseStudyFigureProps } from '@/components/CaseStudyFigure'
 import { CaseStudyPlaceholder, type CaseStudyPlaceholderProps } from '@/components/CaseStudyPlaceholder'
 
@@ -15,6 +16,7 @@ export type CaseStudyBlockContent = {
   paragraphs?: readonly string[]
   bullets?: readonly string[]
   figures?: readonly (CaseStudyFigureProps | CaseStudyPlaceholderProps)[]
+  comparison?: CaseStudyComparisonProps
   carousel?: readonly CaseStudyPlaceholderProps[]
   journeys?: readonly CaseStudyJourney[]
   metrics?: readonly { value: string; label: string }[]
@@ -27,6 +29,7 @@ export function hasCaseStudyContent(block: CaseStudyBlockContent) {
     block.paragraphs?.length ||
     block.bullets?.length ||
     block.figures?.length ||
+    block.comparison ||
     block.carousel?.length ||
     block.journeys?.length ||
     block.metrics?.length,
@@ -40,10 +43,10 @@ export function CaseStudyBlock({
   block: CaseStudyBlockContent
   renderText?: (text: string) => ReactNode
 }) {
-  const { title, paragraphs = [], figures = [], carousel = [], journeys = [], metrics = [], metricsNote, bullets = [] } = block
+  const { title, paragraphs = [], figures = [], comparison, carousel = [], journeys = [], metrics = [], metricsNote, bullets = [] } = block
   // Keep an existing media-only gallery untitled, but always title narrative blocks.
   const showHeading = block.showHeading !== false || paragraphs.length > 0 || bullets.length > 0
-  const hasMedia = figures.length > 0 || carousel.length > 0
+  const hasMedia = figures.length > 0 || Boolean(comparison) || carousel.length > 0
 
   return (
     <div className="case-study-block flex flex-col gap-10">
@@ -123,6 +126,7 @@ export function CaseStudyBlock({
               <CaseStudyPlaceholder key={figure.caption} {...figure} />
             )
           ))}
+          {comparison ? <CaseStudyComparison {...comparison} /> : null}
           {carousel.length > 0 ? (
             <CaseStudyCarouselPlaceholder slides={carousel} />
           ) : null}

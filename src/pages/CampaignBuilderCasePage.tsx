@@ -3,24 +3,24 @@ import { campaignBuilderCase } from '@/data/campaignBuilderCase'
 
 const markers = [
   {
-    phrase: 'interviewed customers',
-    context: 'I interviewed customers, reviewed feedback',
+    phrase: 'eight problem clusters',
+    context: 'I mapped roughly 15–20 Canny suggestions from customers and the internal team into eight problem clusters',
   },
   {
-    phrase: 'MVP priorities',
-    context: 'turned the findings into questions and MVP priorities',
+    phrase: 'impact–effort matrix',
+    context: 'I put the hypotheses on an impact–effort matrix',
   },
   {
-    phrase: 'vertical workflow',
-    context: 'I proposed a single builder with a vertical workflow',
+    phrase: 'one builder',
+    context: 'I proposed one builder where people could start',
   },
   {
-    phrase: 'recover',
-    context: 'warnings and ways to recover work',
+    phrase: 'one rename action',
+    context: 'I kept one rename action beside the title',
   },
   {
-    phrase: 'launch checks',
-    context: 'step editing, and launch checks',
+    phrase: 'Development paused',
+    context: 'Development paused while the company focused its resources elsewhere',
   },
 ] as const
 
