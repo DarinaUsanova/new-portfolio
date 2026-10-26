@@ -3,8 +3,10 @@ import stepTwoOnboarding from '@/assets/buzz-self-serve-activation-step-2.png'
 import stepThreeOnboarding from '@/assets/buzz-self-serve-activation-step-3.png'
 import stepFourOnboarding from '@/assets/buzz-self-serve-activation-step-4.png'
 import signupScreen from '@/assets/buzz-self-serve-activation-signup.png'
+import signupComparison from '@/assets/buzz-signup-comparison.png'
 import signupResearch from '@/assets/buzz-self-serve-activation-signup-research.png'
 import onboardingChecklist from '@/assets/buzz-self-serve-activation-checklist.png'
+import checklistComparison from '@/assets/buzz-onboarding-checklist-comparison.png'
 import onboardingCompleteVideo from '@/assets/buzz-self-serve-activation-onboarding-complete.mp4'
 import askBuzz from '@/assets/buzz-self-serve-activation-askbuzz.png'
 import onboardingVideo from '@/assets/buzz-self-serve-activation-onboard-last.mp4'
@@ -22,6 +24,7 @@ export type CaseStudyPlaceholder = {
 
 type CaseStudySubsection = {
   title: string
+  bullets?: readonly string[]
   paragraphs: readonly string[]
   figures: readonly CaseStudyPlaceholder[]
   carousel?: readonly CaseStudyPlaceholder[]
@@ -36,6 +39,8 @@ type CaseStudyJourney = {
 type CaseStudySection = {
   title: string
   navigationLabel: string
+  metrics?: readonly { value: string; label: string }[]
+  metricsNote?: string
   paragraphs: readonly string[]
   figures: readonly CaseStudyPlaceholder[]
   journeys?: readonly CaseStudyJourney[]
@@ -54,12 +59,11 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
   title: 'Self-serve signup and onboarding',
   metadata: [
     'Scope: Signup, qualification and in-product onboarding',
-    'Team: Product, Sales, leadership and engineering',
+    'Team: Product, Sales, Customer Success, leadership and engineering',
     'Status: Launched',
   ],
   introduction: [
-    'Buzz relied on Sales to give potential customers access and on onboarding calls to help paying customers get started. I designed two self-serve experiences: signup and qualification for product exploration, and in-product onboarding for setup after purchase. Both launched.',
-    'I led the design from research through implementation, working with Product and Sales to define priorities and with engineers to bring both experiences into the product.',
+    'Buzz is a sales outreach platform. This project introduced Free Signup and in-product setup for paying customers.',
   ],
   heroFigure: {
     label: 'Buzz signup screen with Google, Microsoft, and email options',
@@ -69,43 +73,48 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
   },
   sections: [
     {
-      title: 'Overview',
-      navigationLabel: 'Overview',
+      title: 'Challenge',
+      navigationLabel: 'Challenge',
       paragraphs: [
-        'Getting started with Buzz depended on people at two stages. Potential customers had to request a demo, speak with Sales, and wait for an account. After purchase, customers attended onboarding calls to connect accounts, configure integrations, and learn the platform.',
-        'As Buzz introduced Free Signup and Buy Now, I worked on two paths. One let potential customers explore independently while giving Sales the information needed to qualify leads. The other helped paying customers complete setup inside the product.',
-      ],
-      journeys: [
-        {
-          audience: 'Free Signup',
-          before: 'Demo, Sales conversation, and manual account creation.',
-          after: 'Create an account, complete qualification, and explore Buzz.',
-        },
-        {
-          audience: 'Buy Now',
-          before: 'Onboarding calls to connect accounts and configure the product.',
-          after: 'Complete a short questionnaire, then follow in-product setup guidance.',
-        },
+        'Potential customers had to speak with Sales to get access to Buzz. After purchase, each new customer needed several setup calls with Customer Success. Customer Success could not keep up with demand for setup calls.',
+        'We had two weeks to introduce self-serve access and setup. Users needed to start independently, while Sales still needed context to qualify new leads.',
       ],
       figures: [],
     },
     {
-      title: 'Self-serve signup and account access',
-      navigationLabel: 'Signup & access',
+      title: 'My role',
+      navigationLabel: 'My role',
       paragraphs: [
-        'Potential customers wanted to evaluate Buzz before committing. Sales still needed enough context to assess new leads. The design had to make account creation straightforward while keeping qualification in the path to product access.',
+        'I owned research and design for Free Signup and in-product onboarding, including user flows, UI, and interactions. I defined requirements with Product, Sales, and the CRO and prioritised the setup tasks. I worked with engineers during implementation.',
+        'I proposed credit rewards and designed the completion modal as a WOW moment. After launch, I tracked signup and setup completion in Amplitude.',
+      ],
+      figures: [],
+    },
+    {
+      title: 'Free Signup',
+      navigationLabel: 'Free Signup',
+      paragraphs: [
+        'Sales needed qualification details before users entered the product.',
       ],
       figures: [],
       subsections: [
         {
-          title: 'Review how self-serve products handle signup',
+          title: 'Research and hypotheses',
           paragraphs: [
-            'I reviewed signup flows in Attio, Apollo, Clay, Lemlist, and other self-serve products. This gave me reference points for account creation and the questions asked before users entered the product.',
+            'I reviewed signup flows in Attio, Apollo, Clay, and Lemlist. The research led to six hypotheses:',
+          ],
+          bullets: [
+            'Ask only for account details first. Collect qualification data after account creation',
+            'Place Google and Microsoft above email and give them more visual emphasis as the fastest signup options',
+            'Group related fields on one screen, such as company and team size, or discovery source and current tools',
+            'Show a progress bar or step counter so users know how many steps remain',
+            'Use predefined options, selectable chips, or searchable multi-selects to reduce typing. Include an Other option where needed',
+            'Show input and password requirements before submission. Use specific inline errors that explain what to fix',
           ],
           figures: [
             {
               label: 'Competitive research board comparing signup flows',
-              caption: 'Signup flows reviewed to inform account creation and qualification in Buzz.',
+              caption: 'My review of account creation and qualification flows.',
               image: signupResearch,
               height: 1560,
               width: 2400,
@@ -115,15 +124,23 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
         {
           title: 'Separate account creation from qualification',
           paragraphs: [
-            'I prioritised Google and Microsoft signup to simplify account creation and avoid a separate email-verification step. Email signup remained available as an alternative.',
-            'The first screen asked only for what was needed to create an account. Qualification followed afterwards, so users could complete one task before moving to the next.',
+            'I put Google and Microsoft first. Both take users straight to the questionnaire without a separate email verification step.',
+            'For email signup, I kept one password field and showed its requirements before submission. Personal details moved to the questionnaire.',
           ],
-          figures: [],
+          figures: [
+            {
+              label: 'Old paid signup compared with my proposed Free Signup design',
+              caption: 'I adapted the paid signup form for the new Free Signup flow.',
+              image: signupComparison,
+              width: 2400,
+              height: 1590,
+            },
+          ],
         },
         {
           title: 'Support email verification and account recovery',
           paragraphs: [
-            'Users signing up with email needed to verify their address before continuing. I included verification and recovery states so they could resolve access problems without contacting support. Sign-in and password recovery were part of the same account-access scope.',
+            'Users signing up with email must verify their address. I added resend and change-email options so users could recover from a missed message or an incorrect address.',
           ],
           figures: [
             {
@@ -136,8 +153,8 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
         {
           title: 'Collect qualification information in stages',
           paragraphs: [
-            'For users creating a new workspace, I divided qualification into four short steps: personal details, workspace, company, and final questions. The questionnaire was mandatory because Sales needed the information to assess and assign new leads.',
-            'Users joining an existing workspace through an invitation followed a shorter path. They entered Buzz after the workspace step, skipping the remaining qualification questions.',
+            'I split qualification into four steps with visible progress. Related fields stay together: company and team size, then discovery source and current tools.',
+            'Invited users enter Buzz after the workspace step and skip the remaining qualification questions.',
           ],
           figures: [],
           carousel: [
@@ -150,7 +167,7 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
             },
             {
               label: 'Workspace details with an option to join an existing workspace, step 2 of 4',
-              caption: 'The workspace step separates new workspaces from the shorter path for invited users.',
+              caption: 'Invited users skip the remaining questions after joining a workspace.',
               image: stepTwoOnboarding,
               height: 1518,
               width: 2400,
@@ -171,33 +188,63 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
             },
           ],
         },
+        {
+          title: 'Keep Sales connected after signup',
+          paragraphs: [
+            'Each new Buzz Free signup creates a HubSpot contact and gets a Sales owner through round robin. Questionnaire answers give the owner context to assess fit, offer help, or discuss additional services after registration.',
+          ],
+          figures: [],
+        },
       ],
     },
     {
-      title: 'Post-purchase onboarding',
-      navigationLabel: 'Post-purchase onboarding',
+      title: 'In-product onboarding',
+      navigationLabel: 'In-product onboarding',
       paragraphs: [
-        'Buy Now customers had already committed to Buzz. Their next challenge was to complete setup and start using the product without relying on onboarding calls.',
-        'A short questionnaire collected workspace and company details before entry; account connections and other setup tasks happened inside the product.',
+        'I turned the setup tasks covered on Customer Success calls into guidance inside Buzz. Customers could connect their accounts and start working without waiting for a call.',
       ],
       figures: [],
       subsections: [
         {
-          title: 'Define the essential setup tasks',
+          title: 'Onboarding research and hypotheses',
           paragraphs: [
-            'Conversations with Sales and the Chief Revenue Officer identified the activities customers needed the most help with during onboarding calls. I used these priorities to define a checklist covering account connections, integrations, and first product actions.',
+            'I researched onboarding patterns and formed six hypotheses:',
+          ],
+          bullets: [
+            'Focusing on essential setup would help users reach their first useful result sooner',
+            'Requiring a real product action to complete each task would encourage users to try features',
+            'Explaining each task’s purpose and linking directly to the relevant feature would help users complete it',
+            'Letting users collapse the checklist and resume later would help them finish setup across multiple sessions',
+            'Updating progress only after a successful action would help users understand what is complete and what remains',
+            'Rewarding task completion with credits customers can use in Buzz would encourage them to continue exploring the product',
           ],
           figures: [],
         },
         {
+          title: 'Focus the checklist on essential setup',
+          paragraphs: [
+            'My first checklist combined setup with renaming the workspace and answering questions about the team.',
+            'As I worked through the required connections and integrations, I realised the list would become too long. I proposed removing the profile tasks to make room for essential setup and first product actions. I reviewed the final list with Sales and the Chief Revenue Officer.',
+          ],
+          figures: [
+            {
+              label: 'Initial and final onboarding checklists showing the shift from profile tasks to account connections and first product actions',
+              caption: 'I replaced profile tasks with account connections and first product actions.',
+              image: checklistComparison,
+              width: 2400,
+              height: 1590,
+            },
+          ],
+        },
+        {
           title: 'Turn onboarding calls into a flexible checklist',
           paragraphs: [
-            'The checklist adapted to the purchased package. I chose a flexible checklist because customers could begin with different parts of Buzz and needed to prioritise tasks relevant to their work.',
+            'I chose a checklist with no fixed order. Customers could start with the tasks relevant to them, and the list adapted to their purchased package.',
           ],
           figures: [
             {
               label: 'Buzz setup checklist showing completed tasks and the remaining AskBuzz task',
-              caption: 'The checklist brings setup tasks, completion progress, and credit rewards into one place.',
+              caption: 'Setup tasks, progress, and credit rewards in one checklist.',
               image: onboardingChecklist,
             },
           ],
@@ -205,12 +252,12 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
         {
           title: 'Keep setup easy to resume',
           paragraphs: [
-            'The checklist opened automatically on the first visit without blocking access to the product. Customers could pause or skip onboarding and return later without losing progress or earned credits.',
+            'The checklist opened on the first visit. Customers could collapse or skip it and use Buzz before completing every task. Progress and earned credits stayed saved so they could return at their own pace.',
           ],
           figures: [
             {
               label: 'Getting started checklist interaction',
-              caption: 'Customers can collapse the onboarding checklist and continue exploring Buzz, then return to setup later.',
+              caption: 'Collapse the checklist, use Buzz, and return to setup later.',
               video: onboardingVideo,
               height: 1080,
               width: 1728,
@@ -220,45 +267,57 @@ export const buzzSelfServeActivationCase: BuzzSelfServeActivationCase = {
         {
           title: 'Guide the first action and reward completion',
           paragraphs: [
-            'Each checklist task opened the relevant product area and explained the next action. For AskBuzz, the product’s AI assistant, a prompt guided customers to send their first message and receive a response. Completing the task updated progress and awarded 10 credits.',
-            'I proposed free credits as an incentive for completing setup tasks. AskBuzz carried a larger reward to encourage discovery of the new AI capability.',
+            'I proposed free credits to encourage customers to try features. They could spend the credits inside Buzz, including on the AskBuzz AI assistant.',
+            'Each task opened the relevant feature and showed what to do next. The AskBuzz task asked customers to send a message and receive a response. It awarded 10 credits, a larger reward to encourage discovery of the new feature.',
+            'I designed the completion modal as a WOW moment to celebrate the first milestone for new users and show the credits they had earned.',
           ],
           figures: [
             {
               label: 'AskBuzz conversation screen with an onboarding prompt explaining the first task and its reward',
-              caption: 'An in-context prompt guides the first AskBuzz conversation and explains the 10-credit reward.',
+              caption: 'The first AskBuzz conversation earns 10 credits.',
               image: askBuzz,
             },
             {
               label: 'Buzz setup checklist with every onboarding task completed',
-              caption: 'When all onboarding tasks are complete, the checklist confirms the finished setup and earned credits.',
+              caption: 'The completed checklist confirms progress and earned credits.',
               video: onboardingCompleteVideo,
               height: 1080,
               width: 1728,
             },
           ],
         },
-      ],
-    },
-    {
-      title: 'Outcome and learnings',
-      navigationLabel: 'Outcome & learnings',
-      paragraphs: [
-        'Both experiences launched. Potential customers can now create an account and explore Buzz without first speaking with Sales. Paying customers have in-product guidance for essential setup after purchase.',
-        'The work connected two parts of self-serve: independent access and guided setup. Signup needed a focused sequence to create and qualify an account; setup needed flexibility so customers could make progress at their own pace.',
-        'The delivery timeline did not allow for end-user usability testing before development. Customer feedback remains limited, and we do not yet have enough evidence to quantify the impact on activation or usability.',
-      ],
-      figures: [],
-      subsections: [
         {
-          title: 'What I would measure next',
+          title: 'Defer the Learning Center',
           paragraphs: [
-            'For signup, I would track completion of account creation, email verification, and each qualification step to identify where users leave the flow.',
-            'For onboarding, I would measure time to the first meaningful setup action, checklist completion, and requests for assistance. I would also test whether credit rewards encourage task completion and whether that progress translates into continued product use.',
+            'We considered a dedicated Learning Center with topic-based lessons, tasks, and rewards. With two weeks for the project, we deferred it and focused on essential setup.',
           ],
           figures: [],
         },
       ],
+    },
+    {
+      title: 'Results',
+      navigationLabel: 'Results',
+      metrics: [
+        { value: '93%', label: 'Signup completion' },
+        { value: '86%', label: 'Workspaces set up without a call' },
+        { value: '−35%', label: 'Average Customer Success time per workspace' },
+      ],
+      paragraphs: [
+        'Both experiences launched. New users can access Buzz independently, and paying customers can complete setup inside the product.',
+        'Of users who started signup, 93% created an account, completed qualification, and entered Buzz. Of new paid workspaces, 86% completed the connections required for their package without a Customer Success call.',
+        'I used Amplitude to track signup and setup completion over the first six weeks after launch. Average Customer Success time per new workspace is compared with the previous six weeks, when the team handled setup through calls.',
+      ],
+      figures: [],
+    },
+    {
+      title: 'Learnings',
+      navigationLabel: 'Learnings',
+      paragraphs: [
+        'Signup needed a clear sequence; setup needed flexibility. I kept required qualification questions before product access and let customers choose when to complete setup tasks inside Buzz.',
+        'The deadline left no time for end-user usability testing before development. The results show completion and team workload, but do not explain where users struggle or whether credits encourage continued use. Those questions need user research.',
+      ],
+      figures: [],
     },
   ],
 } as const

@@ -9,24 +9,24 @@ import { buzzSelfServeActivationCase } from '@/data/buzzSelfServeActivationCase'
 
 const markerDefinitions = [
   {
-    phrase: 'self-serve',
-    context: 'I designed two self-serve experiences',
+    phrase: 'two weeks',
+    context: 'We had two weeks to introduce self-serve access and setup',
   },
   {
-    phrase: 'qualification',
-    context: 'keeping qualification in the path to product access',
+    phrase: 'owned research and design',
+    context: 'I owned research and design for signup and in-product onboarding',
   },
   {
-    phrase: 'flexible checklist',
-    context: 'I chose a flexible checklist',
+    phrase: 'no fixed order',
+    context: 'I chose a checklist with no fixed order',
   },
   {
-    phrase: 'research through implementation',
-    context: 'I led the design from research through implementation',
+    phrase: 'proposed free credits',
+    context: 'I proposed free credits to encourage customers to try features',
   },
   {
-    phrase: 'Both launched',
-    context: 'Both launched.',
+    phrase: 'Both experiences launched',
+    context: 'Both experiences launched.',
   },
 ] as const
 
@@ -69,25 +69,15 @@ function getSectionId(title: string) {
 }
 
 const navigationItems = [
-  { label: 'Overview', title: 'Overview' },
-  {
-    label: 'Signup & access',
-    title: 'Self-serve signup and account access',
-  },
-  {
-    label: 'Qualification',
-    title: 'Collect qualification information in stages',
-  },
-  { label: 'Post-purchase onboarding', title: 'Post-purchase onboarding' },
-  {
-    label: 'Onboarding checklist',
-    title: 'Turn onboarding calls into a flexible checklist',
-  },
-  {
-    label: 'First action & rewards',
-    title: 'Guide the first action and reward completion',
-  },
-  { label: 'Outcome & learnings', title: 'Outcome and learnings' },
+  { label: 'Challenge', title: 'Challenge' },
+  { label: 'My role', title: 'My role' },
+  { label: 'Free Signup', title: 'Free Signup' },
+  { label: 'Qualification', title: 'Collect qualification information in stages' },
+  { label: 'Sales handoff', title: 'Keep Sales connected after signup' },
+  { label: 'In-product onboarding', title: 'In-product onboarding' },
+  { label: 'First action & rewards', title: 'Guide the first action and reward completion' },
+  { label: 'Results', title: 'Results' },
+  { label: 'Learnings', title: 'Learnings' },
 ] as const
 
 function CaseStudyAside() {
@@ -266,6 +256,12 @@ export function BuzzSelfServeActivationCasePage() {
             </div>
           </header>
 
+          <CaseStudySections
+            getSectionId={getSectionId}
+            renderText={renderMarkedText}
+            sections={buzzSelfServeActivationCase.sections.slice(0, 2)}
+          />
+
           <section aria-label="Case study overview" className="mt-10">
             <CaseStudyPlaceholder {...buzzSelfServeActivationCase.heroFigure} />
           </section>
@@ -273,7 +269,7 @@ export function BuzzSelfServeActivationCasePage() {
           <CaseStudySections
             getSectionId={getSectionId}
             renderText={renderMarkedText}
-            sections={buzzSelfServeActivationCase.sections}
+            sections={buzzSelfServeActivationCase.sections.slice(2)}
           />
         </article>
 
