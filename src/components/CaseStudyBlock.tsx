@@ -13,18 +13,23 @@ type CaseStudyJourney = {
 export type CaseStudyBlockContent = {
   title: string
   paragraphs?: readonly string[]
+  bullets?: readonly string[]
   figures?: readonly (CaseStudyFigureProps | CaseStudyPlaceholderProps)[]
   carousel?: readonly CaseStudyPlaceholderProps[]
   journeys?: readonly CaseStudyJourney[]
+  metrics?: readonly { value: string; label: string }[]
+  metricsNote?: string
   showHeading?: boolean
 }
 
 export function hasCaseStudyContent(block: CaseStudyBlockContent) {
   return Boolean(
     block.paragraphs?.length ||
+    block.bullets?.length ||
     block.figures?.length ||
     block.carousel?.length ||
-    block.journeys?.length,
+    block.journeys?.length ||
+    block.metrics?.length,
   )
 }
 
@@ -35,19 +40,32 @@ export function CaseStudyBlock({
   block: CaseStudyBlockContent
   renderText?: (text: string) => ReactNode
 }) {
-  const { title, paragraphs = [], figures = [], carousel = [], journeys = [] } = block
+  const { title, paragraphs = [], figures = [], carousel = [], journeys = [], metrics = [], metricsNote, bullets = [] } = block
   // Keep an existing media-only gallery untitled, but always title narrative blocks.
-  const showHeading = block.showHeading !== false || paragraphs.length > 0
+  const showHeading = block.showHeading !== false || paragraphs.length > 0 || bullets.length > 0
   const hasMedia = figures.length > 0 || carousel.length > 0
 
   return (
     <div className="case-study-block flex flex-col gap-10">
-      {showHeading || paragraphs.length > 0 || journeys.length > 0 ? (
+      {showHeading || paragraphs.length > 0 || journeys.length > 0 || bullets.length > 0 ? (
         <div className="mx-auto flex w-full max-w-[600px] flex-col gap-2 text-sm leading-5">
           {showHeading ? (
             <h2 className="case-study-heading text-base font-medium leading-6 text-ink">
               {title}
             </h2>
+          ) : null}
+          {metrics.length > 0 ? (
+            <div className="my-5 flex flex-col gap-5">
+              {metricsNote ? <p className="text-muted">{metricsNote}</p> : null}
+              <dl className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-9">
+                {metrics.map((metric) => (
+                  <div className="flex flex-col gap-2" key={metric.label}>
+                    <dt className="order-2 text-muted">{metric.label}</dt>
+                    <dd className="order-1 text-2xl font-medium leading-none tracking-tight text-[#ff71f3] sm:text-3xl">{metric.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           ) : null}
           {paragraphs.length > 0 ? (
             <div className="flex flex-col gap-2">
@@ -55,6 +73,13 @@ export function CaseStudyBlock({
                 <p key={paragraph}>{renderText(paragraph)}</p>
               ))}
             </div>
+          ) : null}
+          {bullets.length > 0 ? (
+            <ul className="list-disc space-y-2 pl-5">
+              {bullets.map((bullet) => (
+                <li key={bullet}>{renderText(bullet)}</li>
+              ))}
+            </ul>
           ) : null}
           {journeys.length > 0 ? (
             <table className="mt-3 w-full table-fixed text-left text-sm leading-5">
